@@ -1,0 +1,157 @@
+{
+  "schema": "housingwizard.plan/1",
+  "name": "Sample house (fictional)",
+  "units": "ft",
+  "front_faces_deg": 200,
+  "declared_area": {"value": 1790, "source": "tax record (fictional)"},
+  "source": {
+    "image": "floorplan.svg",
+    "kind": "listing plan",
+    "scale_px_per_unit": 12,
+    "scale_from": "First floor overall width label 28'0\" = 336 px",
+    "scale_check": "Living room label 14'7\" x 17'7\" matches the polygon within 0.2 ft",
+    "notes": "Three floors drawn side by side. The listing plan shows no ceiling heights."
+  },
+  "floors": [
+    {
+      "id": "B", "name": "Basement", "elevation": -7.8, "height": 7.0, "height_source": "assumed",
+      "image_origin_px": [40, 70],
+      "walls": [
+        {"id": "w1", "a": [0, 0], "b": [28, 0], "thick": 0.8, "exterior": true},
+        {"id": "w2", "a": [28, 0], "b": [28, 32], "thick": 0.8, "exterior": true},
+        {"id": "w3", "a": [28, 32], "b": [0, 32], "thick": 0.8, "exterior": true},
+        {"id": "w4", "a": [0, 32], "b": [0, 0], "thick": 0.8, "exterior": true},
+        {"id": "w5", "a": [18, 0], "b": [18, 22], "thick": 0.4},
+        {"id": "w6", "a": [18, 14], "b": [28, 14], "thick": 0.4},
+        {"id": "w7", "a": [18, 22], "b": [28, 22], "thick": 0.4}
+      ],
+      "openings": [
+        {"id": "o1", "wall": "w5", "kind": "door", "offset": 4, "width": 2.6, "hinge": "a", "swing": "left", "name": "Utility door"},
+        {"id": "o2", "wall": "w5", "kind": "opening", "offset": 16, "width": 3, "name": "To laundry"},
+        {"id": "o3", "wall": "w1", "kind": "window", "offset": 4, "width": 2.5, "sill": 5.0, "head": 6.3},
+        {"id": "o4", "wall": "w3", "kind": "window", "offset": 16, "width": 2.5, "sill": 5.0, "head": 6.3},
+        {"id": "o5", "wall": "w4", "kind": "window", "offset": 10, "width": 2.5, "sill": 5.0, "head": 6.3}
+      ],
+      "rooms": [
+        {"id": "B1", "name": "Rec room", "use": "living", "poly": [[0.4, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]], "label_dims": "17'5\" x 31'2\"", "note": "Listing calls it a finished basement. Legal use depends on ceiling height and grade."},
+        {"id": "B2", "name": "Utility", "use": "utility", "poly": [[18.2, 0.4], [27.6, 0.4], [27.6, 13.8], [18.2, 13.8]]},
+        {"id": "B3", "name": "Laundry", "use": "laundry", "poly": [[18.2, 14.2], [27.6, 14.2], [27.6, 21.8], [18.2, 21.8]]}
+      ],
+      "stairs": [{"id": "s1", "poly": [[15.2, 19.5], [17.8, 19.5], [17.8, 30], [15.2, 30]], "up": "-y", "to": "1F"}],
+      "fixtures": [
+        {"id": "f1", "kind": "boiler", "at": [25, 3], "size": [3, 3], "note": "Plate reads 1985 (listing photo)"},
+        {"id": "f2", "kind": "water-heater", "at": [21, 2.5], "size": [2, 2]},
+        {"id": "f3", "kind": "panel", "at": [27.3, 10], "size": [0.4, 1.4], "note": "Brand and amperage not visible"},
+        {"id": "f4", "kind": "washer", "at": [20, 20.4], "size": [2.3, 2.3]},
+        {"id": "f5", "kind": "dryer", "at": [22.6, 20.4], "size": [2.3, 2.3]}
+      ],
+      "unknown": [
+        {"poly": [[18.2, 22.2], [27.6, 22.2], [27.6, 31.6], [18.2, 31.6]], "note": "Not drawn on the listing plan. Could be storage or an old oil tank room"}
+      ]
+    },
+    {
+      "id": "1F", "name": "First floor", "elevation": 0, "height": 8.5, "height_source": "plan-label",
+      "image_origin_px": [440, 70],
+      "walls": [
+        {"id": "w1", "a": [0, 0], "b": [28, 0], "thick": 0.5, "exterior": true},
+        {"id": "w2", "a": [28, 0], "b": [28, 32], "thick": 0.5, "exterior": true},
+        {"id": "w3", "a": [28, 32], "b": [0, 32], "thick": 0.5, "exterior": true},
+        {"id": "w4", "a": [0, 32], "b": [0, 0], "thick": 0.5, "exterior": true},
+        {"id": "w5", "a": [0, 14], "b": [15, 14], "thick": 0.4},
+        {"id": "w6", "a": [12, 0], "b": [12, 14], "thick": 0.4},
+        {"id": "w7", "a": [15, 14], "b": [15, 32], "thick": 0.4},
+        {"id": "w8", "a": [22, 14], "b": [22, 19], "thick": 0.4},
+        {"id": "w9", "a": [22, 19], "b": [28, 19], "thick": 0.4},
+        {"id": "w10", "a": [15, 14], "b": [28, 14], "thick": 0.4}
+      ],
+      "openings": [
+        {"id": "o1", "wall": "w3", "kind": "exterior-door", "offset": 4.5, "width": 3, "hinge": "a", "swing": "right", "name": "Front door"},
+        {"id": "o2", "wall": "w3", "kind": "window", "offset": 16, "width": 3.5},
+        {"id": "o3", "wall": "w3", "kind": "window", "offset": 21.5, "width": 3.5},
+        {"id": "o4", "wall": "w3", "kind": "window", "offset": 1, "width": 2.5},
+        {"id": "o5", "wall": "w1", "kind": "window", "offset": 3.5, "width": 4, "sill": 3.5},
+        {"id": "o6", "wall": "w1", "kind": "exterior-door", "offset": 16, "width": 3, "hinge": "a", "swing": "right", "name": "Back door"},
+        {"id": "o7", "wall": "w1", "kind": "window", "offset": 21, "width": 3.5},
+        {"id": "o8", "wall": "w2", "kind": "window", "offset": 5, "width": 3},
+        {"id": "o9", "wall": "w2", "kind": "window", "offset": 22, "width": 3},
+        {"id": "o10", "wall": "w4", "kind": "window", "offset": 7, "width": 3},
+        {"id": "o11", "wall": "w4", "kind": "window", "offset": 23, "width": 3},
+        {"id": "o12", "wall": "w6", "kind": "opening", "offset": 4, "width": 6, "name": "Kitchen to dining"},
+        {"id": "o13", "wall": "w5", "kind": "door", "offset": 6, "width": 2.8, "hinge": "a", "swing": "left", "name": "Kitchen door"},
+        {"id": "o14", "wall": "w5", "kind": "opening", "offset": 12.3, "width": 2.4},
+        {"id": "o15", "wall": "w10", "kind": "opening", "offset": 0.5, "width": 3},
+        {"id": "o16", "wall": "w9", "kind": "door", "offset": 1, "width": 2.5, "hinge": "a", "swing": "left", "name": "Powder room door"},
+        {"id": "o17", "wall": "w7", "kind": "opening", "offset": 11, "width": 5.5, "name": "Living to foyer"}
+      ],
+      "rooms": [
+        {"id": "K", "name": "Kitchen", "use": "kitchen", "poly": [[0.25, 0.25], [11.8, 0.25], [11.8, 13.8], [0.25, 13.8]], "label_dims": "11'7\" x 13'7\""},
+        {"id": "D", "name": "Dining", "use": "dining", "poly": [[12.2, 0.25], [27.75, 0.25], [27.75, 13.8], [12.2, 13.8]], "label_dims": "15'7\" x 13'7\""},
+        {"id": "L", "name": "Living room", "use": "living", "poly": [[0.25, 14.2], [14.8, 14.2], [14.8, 31.75], [0.25, 31.75]], "label_dims": "14'7\" x 17'7\""},
+        {"id": "P", "name": "Powder room", "use": "bath", "poly": [[22.2, 14.2], [27.75, 14.2], [27.75, 18.8], [22.2, 18.8]]},
+        {"id": "F", "name": "Foyer", "use": "hall", "poly": [[15.2, 14.2], [21.8, 14.2], [21.8, 19.2], [27.75, 19.2], [27.75, 31.75], [15.2, 31.75]]}
+      ],
+      "stairs": [{"id": "s1", "poly": [[15.2, 19.5], [18.5, 19.5], [18.5, 30], [15.2, 30]], "up": "-y", "to": "2F"}],
+      "fixtures": [
+        {"id": "f1", "kind": "sink", "at": [5.5, 1.3], "size": [2.6, 2.0]},
+        {"id": "f2", "kind": "range", "at": [1.35, 11], "size": [2.2, 2.5]},
+        {"id": "f3", "kind": "fridge", "at": [10.2, 1.6], "size": [3, 2.6]},
+        {"id": "f4", "kind": "toilet", "at": [26.6, 16.5], "size": [2.3, 1.6]},
+        {"id": "f5", "kind": "sink", "at": [23.3, 15.1], "size": [1.8, 1.4]}
+      ]
+    },
+    {
+      "id": "2F", "name": "Second floor", "elevation": 9.5, "height": 8.0, "height_source": "scan",
+      "image_origin_px": [840, 70],
+      "walls": [
+        {"id": "w1", "a": [0, 0], "b": [28, 0], "thick": 0.5, "exterior": true},
+        {"id": "w2", "a": [28, 0], "b": [28, 32], "thick": 0.5, "exterior": true},
+        {"id": "w3", "a": [28, 32], "b": [0, 32], "thick": 0.5, "exterior": true},
+        {"id": "w4", "a": [0, 32], "b": [0, 0], "thick": 0.5, "exterior": true},
+        {"id": "w5", "a": [0, 13], "b": [28, 13], "thick": 0.4},
+        {"id": "w6", "a": [11, 0], "b": [11, 13], "thick": 0.4},
+        {"id": "w7", "a": [18, 0], "b": [18, 13], "thick": 0.4},
+        {"id": "w9", "a": [0, 19], "b": [15, 19], "thick": 0.4},
+        {"id": "w10", "a": [15, 19], "b": [15, 32], "thick": 0.4},
+        {"id": "w11", "a": [19, 19], "b": [28, 19], "thick": 0.4},
+        {"id": "w12", "a": [19, 19], "b": [19, 32], "thick": 0.4}
+      ],
+      "openings": [
+        {"id": "o1", "wall": "w5", "kind": "door", "offset": 8, "width": 2.6, "hinge": "a", "swing": "left", "name": "Back-left bedroom door"},
+        {"id": "o2", "wall": "w5", "kind": "door", "offset": 12, "width": 2.4, "hinge": "a", "swing": "left", "name": "Bath door"},
+        {"id": "o3", "wall": "w5", "kind": "door", "offset": 20, "width": 2.6, "hinge": "a", "swing": "left", "name": "Back-right bedroom door"},
+        {"id": "o4", "wall": "w9", "kind": "door", "offset": 12, "width": 2.8, "hinge": "b", "swing": "right", "name": "Primary door"},
+        {"id": "o5", "wall": "w11", "kind": "door", "offset": 1, "width": 2.6, "hinge": "a", "swing": "right", "name": "Front-right bedroom door"},
+        {"id": "o6", "wall": "w1", "kind": "window", "offset": 3.5, "width": 3},
+        {"id": "o7", "wall": "w1", "kind": "window", "offset": 13.5, "width": 2, "sill": 4},
+        {"id": "o8", "wall": "w1", "kind": "window", "offset": 21.5, "width": 3},
+        {"id": "o9", "wall": "w3", "kind": "window", "offset": 3.5, "width": 3},
+        {"id": "o10", "wall": "w3", "kind": "window", "offset": 16, "width": 3.5},
+        {"id": "o11", "wall": "w3", "kind": "window", "offset": 21.5, "width": 3.5},
+        {"id": "o12", "wall": "w2", "kind": "window", "offset": 5, "width": 3},
+        {"id": "o13", "wall": "w2", "kind": "window", "offset": 24, "width": 3},
+        {"id": "o14", "wall": "w4", "kind": "window", "offset": 6, "width": 3},
+        {"id": "o15", "wall": "w4", "kind": "window", "offset": 24, "width": 3}
+      ],
+      "rooms": [
+        {"id": "R1", "name": "Back-left bedroom", "use": "bedroom", "poly": [[0.25, 0.25], [10.8, 0.25], [10.8, 12.8], [0.25, 12.8]]},
+        {"id": "R2", "name": "Bath", "use": "bath", "poly": [[11.2, 0.25], [17.8, 0.25], [17.8, 12.8], [11.2, 12.8]]},
+        {"id": "R3", "name": "Back-right bedroom", "use": "bedroom", "poly": [[18.2, 0.25], [27.75, 0.25], [27.75, 12.8], [18.2, 12.8]]},
+        {"id": "R4", "name": "Hall", "use": "hall", "poly": [[0.25, 13.2], [27.75, 13.2], [27.75, 18.8], [18.8, 18.8], [18.8, 31.75], [15.2, 31.75], [15.2, 18.8], [0.25, 18.8]]},
+        {"id": "R5", "name": "Primary bedroom", "use": "bedroom", "poly": [[0.25, 19.2], [14.8, 19.2], [14.8, 31.75], [0.25, 31.75]]},
+        {"id": "R6", "name": "Front-right bedroom", "use": "bedroom", "poly": [[19.2, 19.2], [27.75, 19.2], [27.75, 31.75], [19.2, 31.75]]}
+      ],
+      "stairs": [{"id": "s1", "poly": [[15.2, 19.5], [18.5, 19.5], [18.5, 30], [15.2, 30]], "void": true, "note": "Stair opening from the first floor"}],
+      "fixtures": [
+        {"id": "f1", "kind": "tub", "at": [14.5, 11.4], "size": [5, 2.5]},
+        {"id": "f2", "kind": "toilet", "at": [12.3, 5], "size": [1.6, 2.3]},
+        {"id": "f3", "kind": "sink", "at": [16.8, 5], "size": [1.8, 2.2]}
+      ]
+    }
+  ],
+  "checks": [
+    {"what": "Basement: clearance under the lowest beam or duct", "why": "Decides whether any basement room can legally be a bedroom", "value": null, "status": "to-measure"},
+    {"what": "Basement: floor to outside ground level", "why": "Decides basement vs cellar in some codes", "value": null, "status": "to-measure"},
+    {"what": "Second floor ceiling height", "why": "The scan value is not a measurement", "value": null, "status": "to-measure"},
+    {"what": "Basement: what is behind the undrawn area", "why": "Oil tank, sump or storage changes the budget", "value": null, "status": "to-measure"}
+  ]
+}

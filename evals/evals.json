@@ -1,0 +1,136 @@
+{
+  "about": "Behavior checks for the skills, in the skill-creator evals format. Each case is a realistic prompt, the behavior we expect, and assertions a grader can check. Run each with and without the skills installed and compare. Not yet run at scale; results welcome in issues.",
+  "evals": [
+    {
+      "id": 1,
+      "skill": "house-buying",
+      "name": "texas-buyer-no-new-york-leakage",
+      "prompt": "We're buying a house in Austin TX, offer accepted yesterday on the standard TREC contract with a 7 day option period. Do we need to finish every inspection before we sign the contract?",
+      "expected_output": "Explains that in Texas the signed offer is the contract and the option period is the window to inspect and terminate; does not import the New York rule that inspections must precede signing.",
+      "assertions": [
+        "Does not say inspections must be finished before the contract is signed",
+        "Mentions the option period as the inspection and termination window",
+        "Says to confirm the exact deadline with their agent or the contract",
+        "Ends with a human check"
+      ]
+    },
+    {
+      "id": 2,
+      "skill": "house-buying",
+      "name": "generic-mode-outside-us",
+      "prompt": "I'm buying a flat in Manchester, UK. What are the steps from here and what should my solicitor handle?",
+      "expected_output": "States that this pack has no UK reference and works in generic mode; describes only broad, clearly hedged steps and routes local specifics to the solicitor.",
+      "assertions": [
+        "Says it has no reference for this location or is working in generic mode",
+        "Does not quote US taxes, US forms or US contingencies as applying",
+        "Turns local specifics into questions for the solicitor"
+      ]
+    },
+    {
+      "id": 3,
+      "skill": "house-records",
+      "name": "zero-rows-is-not-clean",
+      "prompt": "I looked up 123 Example Ave in Queens and there are zero DOB violations and zero permits. The listing says the basement was fully finished in 2015. So it's all legal, right?",
+      "expected_output": "Explains that zero rows means nothing online, that a finished basement with no permits is a mismatch worth checking, gives the innocent explanation, and lists how to verify (microfilm, seller written answers, measurements).",
+      "assertions": [
+        "Says zero online records does not prove the work is legal",
+        "Points out the mismatch between renovation claims and missing permits",
+        "Gives at least one innocent explanation",
+        "Lists a concrete way to verify, such as ordering DOB microfilm or asking the seller in writing",
+        "Mentions measuring basement ceiling height"
+      ]
+    },
+    {
+      "id": 4,
+      "skill": "house-money",
+      "name": "joint-model-not-sequential",
+      "prompt": "We have $260k cash total, want to keep $30k as emergency fund, and the most we'll pay monthly is $6,000 all in. Rates are about 6.75%, taxes around 1.3% of price. What's the most we can pay for a house in New Jersey?",
+      "expected_output": "Solves cash, reserve and monthly limits together, reports the binding limit, shows a down payment range, labels assumptions, and notes New Jersey closing costs and taxes are estimates in generic mode.",
+      "assertions": [
+        "Gives a single maximum price or a narrow range",
+        "Names which limit binds",
+        "Keeps the $30k reserve out of the purchase cash",
+        "Labels insurance and closing costs as assumptions unless given",
+        "Does not apply New York City mansion tax or recording tax"
+      ]
+    },
+    {
+      "id": 5,
+      "skill": "house-inspection",
+      "name": "short-list-after-seller-concession",
+      "prompt": "Inspection report attached (summary: 35-year-old furnace working, water heater relief valve missing discharge pipe, loose handrail on the basement stairs, Zinsco panel, peeling exterior paint, gutters need cleaning, carpenter ant evidence at a sill). Seller already came down $8k last week. What do we ask for?",
+      "expected_output": "Sorts into tiers, asks only for safety and licensed items plus documents, treats the boiler as a money item or drops it given the prior concession, leaves cosmetics out, and drafts a short letter for the buyer's agent.",
+      "assertions": [
+        "Puts the relief valve, handrail, panel and pest items in the must-have tier",
+        "Does not ask for exterior paint or gutter cleaning",
+        "Treats the working old furnace as a credit item or leaves it out, not a repair demand",
+        "Acknowledges the earlier price reduction when sizing the request",
+        "Drafts a letter addressed to the buyer's own agent"
+      ]
+    },
+    {
+      "id": 6,
+      "skill": "house-contract",
+      "name": "seller-name-mismatch-and-lead-waiver",
+      "prompt": "Contract says sellers are Jane Roe and Mark Poe. Public records show the owner is Alice Roe, and there's a 2009 deed that kept a life estate for her. Rider paragraph 22 says the buyer had adequate opportunity to test for lead paint and waives it. House built 1925, we may have kids soon. Anything to worry about?",
+      "expected_output": "Flags the owner mismatch and life estate as a title and capacity question for the attorney, flags the lead waiver on a pre-1978 house, and phrases both as confirming questions.",
+      "assertions": [
+        "Flags that the sellers named differ from the owner of record",
+        "Asks the attorney to confirm chain of title or the sellers' capacity",
+        "Flags the lead paint waiver as a risk for a pre-1978 house",
+        "Offers options: restore the inspection period or test before signing",
+        "Does not present its answer as legal advice"
+      ]
+    },
+    {
+      "id": 7,
+      "skill": "house-offer",
+      "name": "leak-check",
+      "prompt": "Check this text before I send it to the listing agent: 'Hi! We absolutely love the house, it's our dream home. We offered 1.1M but honestly we could go up to 1.18M if needed. Can you tell us if there are other offers?'",
+      "expected_output": "Flags the ceiling and emotional attachment as leaks, suggests routing through the buyer's own agent, and rewrites the message without the leaks.",
+      "assertions": [
+        "Flags the stated maximum of 1.18M as a leak",
+        "Flags 'dream home' or similar as weakening the position",
+        "Suggests the buyer's own agent should ask instead of messaging the listing agent directly",
+        "Provides a rewritten message without the maximum"
+      ]
+    },
+    {
+      "id": 8,
+      "skill": "house-floorplan",
+      "name": "no-scale-no-guessing",
+      "prompt": "Here's the listing floor plan screenshot (no dimensions on it). Can you tell me the square footage of each room and make a 3D model?",
+      "expected_output": "Explains that without any labeled dimension the scale is unknown, asks for one measured wall or a labeled dimension, and does not invent room sizes.",
+      "assertions": [
+        "Does not output room areas as facts",
+        "Asks for at least one real dimension or measurement",
+        "Explains the overlay check step before trusting any numbers"
+      ]
+    },
+    {
+      "id": 9,
+      "skill": "house-renovation",
+      "name": "family-labor-split",
+      "prompt": "My dad is a licensed contractor in Taiwan and can do everything. We're buying in Brooklyn. Contractors quoted $300k for the renovation. Can we assume we'll pay about half?",
+      "expected_output": "Explains New York City has no owner exemption for electrical, plumbing and gas, splits the budget into licensed, materials and labor layers, and does not apply a flat 50 percent discount.",
+      "assertions": [
+        "States that electrical, plumbing and gas need NYC licensed trades regardless of the father's skill",
+        "Splits the budget into licensed work, materials and unlicensed labor",
+        "Does not endorse a flat 50 percent discount",
+        "Notes a foreign license does not transfer"
+      ]
+    },
+    {
+      "id": 10,
+      "skill": "house-closing",
+      "name": "wire-instructions-email",
+      "prompt": "Just got an email from the title company with updated wiring instructions for closing tomorrow, different bank than before. Should I send the $412k now?",
+      "expected_output": "Tells the buyer not to wire yet, to call the title company or attorney at an independently found number, and treats changed instructions as a fraud signal.",
+      "assertions": [
+        "Advises not to send the wire until verified",
+        "Says to call using a phone number found independently, not from the email",
+        "Identifies changed wiring instructions as a common fraud pattern"
+      ]
+    }
+  ]
+}
