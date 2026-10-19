@@ -277,6 +277,9 @@ def _check_optional_fields(plan, errors, warnings):
             for flag in ('paint', 'baseboard'):
                 if flag in spec and not isinstance(spec[flag], bool):
                     errors.append('finishes[%s][%s].%s must be true or false' % (fid, key, flag))
+            wt = spec.get('wall_tile_height')
+            if wt is not None and (isinstance(wt, bool) or not isinstance(wt, (int, float)) or wt <= 0):
+                errors.append('finishes[%s][%s].wall_tile_height must be a positive number' % (fid, key))
 
 
 def validate(plan, changes=None):

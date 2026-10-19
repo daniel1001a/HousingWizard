@@ -96,5 +96,5 @@ A complete working example is in the repository at `examples/sample-house/`.
 - `why`: shown next to automatic flags; write it for the contractor who will read it.
 - `flags`: optional list of your own flags for that change (for example "fire-stop where it crosses the floor").
 - When a wall comes out, reshape the neighboring rooms with `room` changes, or the quantities will keep counting the removed wall's paint.
-- `finishes`: per floor, a `default` plus per-room overrides. `floor` is free text that becomes the grouping in the quantities; `paint` defaults to true indoors. `baseboard` (boolean) defaults to true indoors; set it false where there is no baseboard or none will be installed.
+- `finishes`: per floor, a `default` plus per-room overrides. `floor` is free text that becomes the grouping in the quantities; `paint` defaults to true indoors. `baseboard` (boolean) defaults to true indoors; set it false where there is no baseboard or none will be installed. `wall_tile_height` (positive number, plan units) asks the takeoff for wall tile up to that height in the room; without it no tile line is produced.
 - `plan.json` may carry its own optional `finishes` block in the same shape. It describes what is on site today and is used for the existing-conditions quantities; a proposal's `finishes` block replaces it for the proposed quantities.

@@ -97,6 +97,13 @@ class OptionalFieldTests(unittest.TestCase):
         self.plan['finishes'] = ['x']
         self.assertTrue(any('finishes must be' in e for e in self.errors()))
 
+    def test_wall_tile_height_must_be_positive_number(self):
+        self.plan['finishes'] = {'1F': {'default': {'wall_tile_height': 4}}}
+        self.assertEqual(self.errors(), [])
+        for bad in (0, -1, 'tall', True):
+            self.plan['finishes'] = {'1F': {'default': {'wall_tile_height': bad}}}
+            self.assertTrue(any('wall_tile_height' in e for e in self.errors()), bad)
+
     def test_finishes_for_unknown_floor_is_a_warning(self):
         self.plan['finishes'] = {'9Z': {'default': {'floor': 'oak'}}}
         errors, warnings, _ = pt.validate(self.plan)
