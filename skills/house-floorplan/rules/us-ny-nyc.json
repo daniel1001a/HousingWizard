@@ -1,0 +1,223 @@
+{
+  "schema": "housingwizard.rules/1",
+  "jurisdiction": "us-ny-nyc",
+  "name": "New York City: DOB, DCWP and EPA rules read from official pages",
+  "checked_on": "2026-10-19",
+  "note": "Every rule was read on its source_url on the checked_on date. The DOB pages show no last-updated date, so checked_on is the date they were read, not the date DOB last changed them. A rule that does not match the facts given, or whose conditions are not all known, is reported as unknown_confirm. Exemption from a permit never removes other obligations: licensing, zoning, landmarks, other agencies, and related filings.",
+  "trade_notes": {
+    "partition": "New partition walls are not on DOB's permit-exempt list (DOB 'Do I need a permit' page and 1 RCNY 101-14 read 2026-10-19). That does not say a permit is required; confirm with a registered design professional or DOB.",
+    "stairs": "No verified rule is held for stairs. Stairs are structural and code-governed; confirm with a registered design professional.",
+    "carpentry": "Trim, baseboard and door installation have no rule in this file.",
+    "tiling": "Wall and floor tile have no rule in this file."
+  },
+  "rules": [
+    {
+      "id": "NYC-ELEC-LIC-001",
+      "trades": ["electrical"],
+      "topic": "license",
+      "result": "required",
+      "summary": "Electrical work must be done by a NYC Licensed Master Electrician (LME). No owner exemption is described.",
+      "conditions": [],
+      "citation": "NYC DOB, Electrical work: project requirements for owners",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-electrical.page",
+      "checked_on": "2026-10-19",
+      "notes": "Minor electrical work also needs an LME and a permit."
+    },
+    {
+      "id": "NYC-ELEC-PERMIT-001",
+      "trades": ["electrical"],
+      "topic": "permit",
+      "result": "required",
+      "summary": "No installation or modification of electrical systems without a permit. General electrical work also gets a DOB inspection; minor work needs the permit but no DOB inspection.",
+      "conditions": [],
+      "citation": "NYC DOB, Electrical work: project requirements for owners",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-electrical.page",
+      "checked_on": "2026-10-19",
+      "notes": "Installations of 1,000 kVA or more need a registered design professional to file construction documents. This tool does not size electrical loads."
+    },
+    {
+      "id": "NYC-PLUMB-LIC-001",
+      "trades": ["plumbing"],
+      "topic": "license",
+      "result": "required",
+      "summary": "Plumbing and fuel gas piping work listed on the DOB page can only be performed by a NYC Licensed Master Plumber (LMP). The page does not address owners doing their own plumbing.",
+      "conditions": [],
+      "citation": "NYC DOB, Plumbing work: project requirements for owners",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-plumbing.page",
+      "checked_on": "2026-10-19",
+      "notes": "Plumbing fixture replacement needs an LMP even though it needs no permit (see NYC-PLUMB-PERMIT-001)."
+    },
+    {
+      "id": "NYC-PLUMB-PERMIT-001",
+      "trades": ["plumbing"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Plumbing fixture replacement is on DOB's list of work that does not need a permit. The page does not say 'bathroom' and sets no size limit.",
+      "conditions": [
+        {"fact": "plumbing_work", "op": "equals", "value": "fixture_replacement", "text": "The plumbing work is only replacing existing fixtures, with no new or moved supply, drain, vent or gas piping."}
+      ],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": "Other plumbing work: no verified permit rule is held here, so it stays unknown_confirm."
+    },
+    {
+      "id": "NYC-PAINT-PERMIT-001",
+      "trades": ["painting"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Painting is on DOB's list of work that does not need a permit. No limits are listed.",
+      "conditions": [],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": "Lead-safe rules can still apply (see the EPA rules)."
+    },
+    {
+      "id": "NYC-PLASTER-PERMIT-001",
+      "trades": ["plastering"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Plastering is on DOB's list of work that does not need a permit. No limits are listed.",
+      "conditions": [],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": "Lead-safe rules can still apply (see the EPA rules)."
+    },
+    {
+      "id": "NYC-CAB-PERMIT-001",
+      "trades": ["cabinets"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Installing new cabinets is on DOB's list of work that does not need a permit. DOB's footnote says contractors must be licensed through DCWP.",
+      "conditions": [],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": ""
+    },
+    {
+      "id": "NYC-FLOOR-PERMIT-001",
+      "trades": ["flooring"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Resurfacing floors is on DOB's list of work that does not need a permit. DOB's footnote says contractors must be licensed through DCWP.",
+      "conditions": [
+        {"fact": "floor_work", "op": "equals", "value": "resurfacing", "text": "The floor work is resurfacing or refinishing an existing floor, with no subfloor, joist or structural repair."}
+      ],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": "New flooring over a changed subfloor is not covered by this rule."
+    },
+    {
+      "id": "NYC-ROOF-PERMIT-001",
+      "trades": ["roofing"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Non-structural roof repair is on DOB's list of work that does not need a permit.",
+      "conditions": [
+        {"fact": "roof_work", "op": "equals", "value": "non_structural_repair", "text": "The roof work is non-structural repair only."}
+      ],
+      "citation": "NYC DOB, Do I need a permit? (work that does not require a permit)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/do-i-need-a-permit.page",
+      "checked_on": "2026-10-19",
+      "notes": ""
+    },
+    {
+      "id": "NYC-WALL-PERMIT-001",
+      "trades": ["wall_removal"],
+      "topic": "permit",
+      "result": "exempt",
+      "summary": "Permanent removal of a non-load-bearing, non-fire-rated partition in a Group R occupancy needs no permit when the removed part is the lesser of 50 percent of that wall surface or 45 square feet.",
+      "conditions": [
+        {"fact": "occupancy_group", "op": "equals", "value": "R", "text": "The building is a Group R occupancy (residential)."},
+        {"fact": "exterior_wall", "op": "equals", "value": false, "text": "The wall is an interior partition, not an exterior wall."},
+        {"fact": "load_bearing", "op": "equals", "value": false, "text": "The wall is not load-bearing (needs an engineer)."},
+        {"fact": "fire_rated", "op": "equals", "value": false, "text": "The wall is not fire-rated."},
+        {"fact": "removal_share_of_wall", "op": "max", "value": 0.5, "text": "The removed part is at most 50 percent of that wall surface."},
+        {"fact": "removal_area_sqft", "op": "max", "value": 45, "text": "The removed part is at most 45 square feet."},
+        {"fact": "wall_removal_exception_area", "op": "equals", "value": false, "text": "The dwelling unit is not in the Special Hudson Yards District, Preservation Area P-2 of the Special Garment Center District, the Special Clinton District, the Special West Chelsea District or the Greenpoint-Williamsburg anti-harassment areas, and is not in a single room occupancy multiple dwelling."}
+      ],
+      "citation": "1 RCNY 101-14, Table 2 (all buildings), item 2",
+      "source_url": "https://www.nyc.gov/assets/buildings/rules/1_RCNY_101-14.pdf",
+      "checked_on": "2026-10-19",
+      "notes": "The rule's exception text joins its two conditions with 'either' and 'and'; this file treats the exception as applying if the area or the single room occupancy condition holds, the cautious reading. Changing the layout of rooms in an exception area is a material alteration that needs a permit. The exemption does not remove the duty to file for related structural, electrical or plumbing work."
+    },
+    {
+      "id": "NYC-HIC-001",
+      "trades": ["painting", "plastering", "cabinets", "flooring", "tiling", "carpentry", "stairs", "roofing", "wall_removal", "partition", "general_contractor"],
+      "topic": "license",
+      "result": "required",
+      "summary": "A contractor doing home improvement work (remodeling or repairs) needs a DCWP Home Improvement Contractor (HIC) license, and gives the license number when obtaining a DOB permit.",
+      "conditions": [
+        {"fact": "who_does_work", "op": "equals", "value": "contractor", "text": "A contractor, not the owner, does the work."}
+      ],
+      "citation": "NYC DOB, Home Improvement Contractor permit requirements; NYC DCWP home improvement licensing page",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/home-improvement-contractor-permit-requirements.page",
+      "checked_on": "2026-10-19",
+      "notes": "DCWP says the license is needed for work that costs more than $200 and does not cover new home construction, plumbing or purely electrical work. DOB's footnote names cabinets and floor resurfacing explicitly; the other trades fall under DCWP's wording 'remodeling or repairs', which does not list trades, so confirm the trade with DCWP (https://www.nyc.gov/site/dca/consumers/shopping-services-home-improvement.page, read 2026-10-19)."
+    },
+    {
+      "id": "NYC-HIC-002",
+      "trades": ["painting", "plastering", "cabinets", "flooring", "tiling", "carpentry", "stairs", "roofing", "wall_removal", "partition", "general_contractor"],
+      "topic": "license",
+      "result": "exempt",
+      "summary": "A homeowner doing their own work does not need an HIC license.",
+      "conditions": [
+        {"fact": "who_does_work", "op": "equals", "value": "owner", "text": "The homeowner does the work personally."}
+      ],
+      "citation": "NYC DOB, Home Improvement Contractor permit requirements",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/home-improvement-contractor-permit-requirements.page",
+      "checked_on": "2026-10-19",
+      "notes": "This is about the HIC license only. It does not exempt electrical or plumbing work from the LME and LMP rules."
+    },
+    {
+      "id": "NYC-RDP-001",
+      "trades": ["general_contractor"],
+      "topic": "design_professional",
+      "result": "required",
+      "summary": "No work requiring a permit can be performed by a General Contractor without the owner first hiring a Registered Design Professional (RDP) to file the drawings.",
+      "conditions": [
+        {"fact": "permit_required", "op": "equals", "value": true, "text": "The work needs a DOB permit."}
+      ],
+      "citation": "NYC DOB, Alteration project requirements for owners (residential)",
+      "source_url": "https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-alt-residential.page",
+      "checked_on": "2026-10-19",
+      "notes": "Work that stays inside the exempt categories needs no permit and so no RDP filing."
+    },
+    {
+      "id": "EPA-RRP-001",
+      "trades": ["painting", "plastering", "carpentry", "cabinets", "wall_removal"],
+      "topic": "lead",
+      "result": "required",
+      "summary": "Paid work that disturbs more than 6 square feet of paint per room inside (20 square feet outside) in housing built before 1978 must be done by an EPA RRP-certified firm using lead-safe work practices.",
+      "conditions": [
+        {"fact": "year_built", "op": "max", "value": 1977, "text": "The house was built before 1978."},
+        {"fact": "paid_work", "op": "equals", "value": true, "text": "Someone is paid to do the work."},
+        {"fact": "disturbed_paint_sqft_per_room", "op": "gt", "value": 6, "text": "The work disturbs more than 6 square feet of paint in a room (interior)."}
+      ],
+      "citation": "EPA Renovation, Repair and Painting (RRP) Rule, contractors page and 2026 small entity compliance guide",
+      "source_url": "https://www.epa.gov/lead/renovation-repair-and-painting-program-contractors",
+      "checked_on": "2026-10-19",
+      "notes": "The EPA contractor page does not address owner-occupants doing their own unpaid work. Exterior limit is 20 square feet."
+    },
+    {
+      "id": "EPA-RRP-002",
+      "trades": ["painting", "plastering", "carpentry", "cabinets", "wall_removal"],
+      "topic": "lead",
+      "result": "required",
+      "summary": "Window replacement and demolition in paid work on pre-1978 housing are covered by the RRP Rule whatever the area of paint disturbed.",
+      "conditions": [
+        {"fact": "year_built", "op": "max", "value": 1977, "text": "The house was built before 1978."},
+        {"fact": "paid_work", "op": "equals", "value": true, "text": "Someone is paid to do the work."},
+        {"fact": "work_type", "op": "in", "value": ["window_replacement", "demolition"], "text": "The work is window replacement or demolition."}
+      ],
+      "citation": "EPA Renovation, Repair and Painting (RRP) Rule, 2026 small entity compliance guide",
+      "source_url": "https://www.epa.gov/system/files/documents/2026-05/508-small-entity-guide-2026.pdf",
+      "checked_on": "2026-10-19",
+      "notes": "Read from the EPA guide as summarized on 2026-10-19; re-read the guide text before relying on this rule."
+    }
+  ]
+}
