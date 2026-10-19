@@ -328,7 +328,8 @@ def summary(c):
     if w['lines']:
         out.append('wage_floor (not in the total, not a quote): %s to %s' % (_fmt(w['floor_low'], cur), _fmt(w['floor_high'], cur)))
     for u in c['unpriced']:
-        out.append('  unpriced: %s %s %s %g %s' % (u['rule'], u.get('floor') or '', u.get('room') or '', u['quantity'], u['unit']))
+        qty = '%g' % u['quantity'] if u['quantity'] is not None else 'quantity unknown'
+        out.append('  unpriced: %s %s %s %s %s' % (u['rule'], u.get('floor') or '', u.get('room') or '', qty, u['unit']))
     out.append('\nThis tool cannot check:')
     out.extend('  - ' + m for m in c['cannot_check'])
     return '\n'.join(out)
