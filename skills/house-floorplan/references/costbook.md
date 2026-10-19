@@ -49,6 +49,9 @@ Refused: rsmeans.com, homewyse.com, angi.com and homeadvisor.com, in `source_url
 - `rule`: optional takeoff rule ID (for example R-FLOOR-001) this price is meant for. Must exist in `takeoff.py`.
 - `checked_on`: the date a person looked at the source, as YYYY-MM-DD. Not in the future. Optional only for `assumption`.
 - `bls_wage` entries also need `occupation`, `area`, `period` (for example `2025-05`), `statistic` (mean or median) and `"label": "wage_floor"`. A wage is what a worker earns per hour, not what a contractor charges, so it is a floor and never a quote.
+- `layer` (optional): `licensed`, `materials` or `labor`. Overrides the default layer that `costs.py` uses (retail is materials, quote and assumption are labor). Not allowed on `bls_wage` or `productivity`.
+- `finish` (optional): free text. When present, the entry prices only takeoff lines with that finish (for example `new oak`).
+- `wage_entry` (productivity only): the `id` of a `bls_wage` entry in the same costbook. `costs.py` uses the pair to compute `wage_floor`.
 - `assumption` entries need a `note` saying what the number rests on.
 - `example`: set `true` only for illustrations. The entry must carry `"label": "example, not a price"`, the label is not allowed without `example: true`, and example entries are never used to price a line.
 
