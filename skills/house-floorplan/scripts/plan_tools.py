@@ -335,7 +335,9 @@ def room_openings(floor, room):
 
 
 def quantities(plan, finishes=None):
-    finishes = finishes or {}
+    # An explicit finishes block (a proposal's) wins; otherwise use the plan's own optional
+    # `finishes` block, which describes what is on site today.
+    finishes = finishes if finishes is not None else (plan.get('finishes') or {})
     rows = []
     for f in plan['floors']:
         h = f.get('height', 8)
@@ -359,12 +361,13 @@ def quantities(plan, finishes=None):
             fin.update(ff.get(r['id'], {}))
             outdoor = r.get('use') in ('outdoor', 'porch')
             paint = fin.get('paint', not outdoor)
+            baseboard = fin.get('baseboard', not outdoor)
             rows.append({
                 'floor': f['id'], 'room': r['id'], 'name': r.get('name', ''), 'use': r.get('use', ''),
                 'floor_area': round(area, 1), 'floor_finish': fin.get('floor', 'unspecified'),
                 'wall_paint_area': round(max(0.0, perim * h - open_area), 1) if paint else 0.0,
                 'ceiling_area': round(area, 1) if paint else 0.0,
-                'baseboard_length': round(max(0.0, perim - door_w), 1) if not outdoor else 0.0,
+                'baseboard_length': round(max(0.0, perim - door_w), 1) if baseboard else 0.0,
                 'openings': len(ops), 'height': h, 'height_source': f.get('height_source'),
             })
     totals = {}

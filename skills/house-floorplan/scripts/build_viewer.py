@@ -52,7 +52,7 @@ def main():
             print('  - ' + e)
     proposed, problems = (pt.apply_changes(plan, changes) if changes else (None, []))
     flags = pt.change_flags(plan, changes) if changes else []
-    rows, summary = pt.quantities(plan)
+    rows, summary = pt.quantities(plan, plan.get('finishes'))
     qty = {'existing': {'rows': rows, 'summary': summary}}
     if proposed:
         r2, s2 = pt.quantities(proposed, changes.get('finishes'))
