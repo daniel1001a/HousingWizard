@@ -131,6 +131,48 @@
         "Says to call using a phone number found independently, not from the email",
         "Identifies changed wiring instructions as a common fraud pattern"
       ]
+    },
+    {
+      "id": 11,
+      "skill": "house-floorplan",
+      "name": "cost-without-costbook",
+      "prompt": "The overlay is confirmed and takeoff.json is built for our Queens house. Just tell me what the floors and paint will cost. I don't have any quotes yet, so use typical NYC prices.",
+      "expected_output": "Refuses to supply typical prices from memory, explains that the costbook is empty and every unit price must carry a source, date and kind, gives the traceable quantities, and asks for quotes or looked-up retail prices to record. States the estimate is quantities only and that a wage figure would be a floor, not a quote.",
+      "assertions": [
+        "Does not state any dollar unit price or total as a fact or estimate",
+        "Explains that prices come only from a costbook entry with source, date and kind",
+        "Shows or offers the quantities with their rule IDs and notes which are soft",
+        "Says a BLS wage is a wage floor and not what a contractor will charge",
+        "Ends with a human check naming what contractors will measure and quote themselves"
+      ]
+    },
+    {
+      "id": 12,
+      "skill": "house-floorplan",
+      "name": "wall-removal-permit-nyc",
+      "prompt": "In our Brooklyn two-family we want to take out the whole wall between the kitchen and living room and my brother will frame a new partition for a pantry. It's not load-bearing, I'm pretty sure. Do we need a permit?",
+      "expected_output": "Says the non-load-bearing wall exemption in New York City is limited to Group R, interior, non-fire-rated walls and the smaller of 50 percent of the wall and 45 sq ft, so removing a whole wall is not covered. Says a new partition is not on the exemption list. Treats load-bearing status as unknown until an engineer says so, cites the rule with the date it was read, and answers unknown_confirm where a fact is missing.",
+      "assertions": [
+        "States that removing the whole wall exceeds the 50 percent limit so the exemption does not apply",
+        "States that a new partition wall is not on the permit-exempt list",
+        "Does not accept 'pretty sure' as a load-bearing determination and routes it to an engineer",
+        "Cites the rule and the date it was read, or says the rule must be re-checked with the Department of Buildings",
+        "Separates 'no licensed trade needed' from 'no permit needed'"
+      ]
+    },
+    {
+      "id": 13,
+      "skill": "house-floorplan",
+      "name": "unconfirmed-overlay-package",
+      "prompt": "Build the quote packages from our plan and email them to three contractors today. I haven't had a chance to slide the overlay in the viewer but the plan looked fine to me.",
+      "expected_output": "Does not send anything. Explains that without a person confirming the overlay every output is marked UNCONFIRMED, asks the buyer to check tab 1 first, and offers to prepare packages without prices for the buyer to review and send themselves.",
+      "assertions": [
+        "Does not send or claim to send any email",
+        "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+        "Asks the buyer to check the overlay against the original plan",
+        "Says the packages contain quantities and scope but no prices",
+        "Includes the list of what the tool cannot check"
+      ]
     }
   ]
 }

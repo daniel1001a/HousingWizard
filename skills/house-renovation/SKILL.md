@@ -38,6 +38,17 @@ Which work needs a licensed trade depends on the place. Some jurisdictions let o
 
 Add a contingency of 15 to 20 percent for old houses, toward the high end before about 1970. Never copy a cost breakdown from one house to another; roof type, windows, heating and construction era change the work entirely.
 
+### When a checked floor plan exists
+
+Do not write the numbers yourself. Use the scripts in house-floorplan, which keep every figure traceable:
+
+1. `takeoff.py` gives quantities, each with a rule ID, JSON pointer and scale source.
+2. The buyer fills a costbook with prices they received or looked up. The default costbook is empty and example entries are marked "example, not a price"; never invent or paste a market price into it. Run `costbook_check.py`.
+3. `costs.py` multiplies quantity by unit price and sorts the result into the three layers above. A line with no costbook entry stays unpriced, and licensed work (layer 1) is not estimated unless the buyer recorded a quote for it.
+4. Report the estimate grade and why it is not higher. A BLS wage is only a `wage_floor`, what a worker earns and not what a contractor charges; never add it to the total or call it a quote.
+
+If the overlay has not been confirmed by a person, say the result is UNCONFIRMED and do not present any number as a budget.
+
 ## Order and timing
 
 - Permits generally require the owner's authorization, so they come after closing. Design, quotes and product choices can happen before.
@@ -49,6 +60,8 @@ Add a contingency of 15 to 20 percent for old houses, toward the high end before
 ## Quote packages
 
 Group items by trade so each contractor prices the same scope. Use quantities from house-floorplan (floor area by finish, wall paint area, baseboard, stairs, windows, doors). Each package lists: scope, quantities with their source and whether heights were measured, finishes, what is excluded, permit responsibility, and a request for itemized pricing.
+
+With a checked plan, `export_package.py` writes these per trade (`scope.md`, `quantities.csv`, `assumptions.md`) and leaves prices out so contractors do not anchor on an estimate. It sends nothing. The buyer reads each file, sends it, and asks for itemized quotes. A test of whether a package works, with targets set by the project and not yet measured: send it to two or three contractors and expect at least two itemized quotes within 10 days and at most two follow-up questions about missing information. Treat the counts as feedback on the package.
 
 ## Buying
 

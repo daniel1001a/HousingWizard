@@ -1,6 +1,6 @@
 ---
 name: house-floorplan
-description: Turn a 2D floor plan image (listing plan, agent plan, CubiCasa, Matterport export, scan export or a hand sketch) into a checked digital plan, then into a single HTML page with an overlay check against the original, a 2D plan, a 3D before-and-after model from the same camera, per-room floor, paint and baseboard quantities for quotes, and a list of what must be measured or cleared by a professional. Also reviews a proposed layout for circulation, blocked doors, wasted window light and code conflicts. Use when a buyer shares a floor plan, asks "what would this look like if we...", "how many square feet of flooring", "can we move this wall", "where does the office go", or wants renovation ideas visualized.
+description: Turn a 2D floor plan image (listing plan, agent plan, CubiCasa, Matterport export, scan export or a hand sketch) into a checked digital plan, then into a single HTML page with an overlay check against the original, a 2D plan, a 3D before-and-after model from the same camera, per-room floor, paint and baseboard quantities for quotes, and a list of what must be measured or cleared by a professional. Optionally turns the checked plan into a traceable takeoff, a sourced cost range, dated NYC permit and license answers and per-trade quote packages, all by deterministic scripts. Also reviews a proposed layout for circulation, blocked doors, wasted window light and code conflicts. Use when a buyer shares a floor plan, asks "what would this look like if we...", "how many square feet of flooring", "can we move this wall", "where does the office go", or wants renovation ideas visualized.
 ---
 
 # House floorplan
@@ -44,14 +44,29 @@ If the plan has no dimensions at all, stop and ask for one tape measurement of a
 6. **Rebuild** with `--changes changes.json` and hand over the HTML. Tab 3 keeps the same camera between Existing and Proposed and can save a side-by-side image. Tab 4 has the quantities; tab 5 has everything to verify.
 7. **Iterate cheaply.** Expect several rounds. Change `changes.json`, rebuild, and bump the version with a one-line "what changed".
 
+### Cost and quote packages (optional, after the overlay is confirmed)
+
+Set `source.overlay_confirmed` in plan.json only after a person has checked the overlay. Without it every output below is marked UNCONFIRMED, and `--require-confirmed` refuses to write it. The AI transcribes and explains; every number and every rule answer below comes from the scripts.
+
+8. **Takeoff**: `python3 scripts/takeoff.py plan.json --changes changes.json --out takeoff.json`. Each quantity carries a rule ID, the JSON pointers it read, a hard or soft flag and the scale source. Soft means a tape measure will move it. See `references/schema.md`.
+9. **Costbook**: the default costbook is empty on purpose. Copy `assets/costbook.template.json`, record only prices the buyer received or looked up (each with source, date, kind and license), then run `python3 scripts/costbook_check.py costbook.json`. Entries marked "example, not a price" are never used. See `references/costbook.md`.
+10. **Cost range**: `python3 scripts/costs.py takeoff.json costbook.json --year-built N --out costs.json`. Quantity times unit price, sorted into the three layers of house-renovation, with contingency and an E0 to E3 grade. Unpriced lines stay unpriced. A BLS wage is a `wage_floor`, never a quote and never in the total. See `references/costs.md`.
+11. **Permit and license answers**: `python3 scripts/trades.py plan.json --changes changes.json --out trades.json`. Each answer is `required`, `exempt` or `unknown_confirm`, with the rule ID, citation, official URL and the date the rule was read. A missing fact gives `unknown_confirm`, never a guess. Only New York City has a rules file; elsewhere every answer is `unknown_confirm`. See `references/trades.md`.
+12. **Quote packages**: `python3 scripts/export_package.py takeoff.json --trades-file trades.json --out packages` writes `scope.md`, `quantities.csv` and `assumptions.md` per trade, with no prices so contractors price on their own basis. The script writes files and sends nothing; the buyer reviews and sends them. See `references/package.md`.
+13. **Look at it together**: `python3 scripts/build_viewer.py plan.json --changes changes.json --costs costs.json --trades-file trades.json` adds tab 6, "Cost & packages". Without `--costs` the tab prices nothing; without `--trades-file` it decides no permit question.
+
+Every cost output, rule answer and package ends with a fixed "This tool cannot check" block. Copy it into the reply instead of shortening it.
+
 If the environment cannot run Python, write plan.json and changes.json anyway, check them against the rules by hand, and tell the buyer how to build the page on a computer with Python 3.
 
 ## Honest limits
 
 - The 3D is massing: walls, openings, floors, stairs, fixtures and furniture as boxes. It is for layout, circulation and before-and-after, not finishes or lighting mood.
 - Quantities are takeoffs for comparing quotes. Contractors re-measure and add waste.
+- A cost range is arithmetic on prices the buyer recorded, not a quote and not an order list. It has no waste, delivery, disposal or small-job minimums, does not estimate licensed work, and cannot tell whether two entries count the same work twice.
+- Permit and license answers are dated snapshots of official pages for New York City only. They say what the page says, not whether an agency will accept a filing.
 - Nothing here decides whether a wall is load-bearing, whether a basement room is legal, or where pipes run. Those become flags for a structural engineer, architect, licensed trade or the building department.
 
 ## Output
 
-The HTML file, plus a short message: what was transcribed and from what, the overlay confirmation status, design questions still open with the defaults used, the change flags, and the "measure on site" list. Record the version and open questions in the case file.
+The HTML file, plus a short message: what was transcribed and from what, the overlay confirmation status, design questions still open with the defaults used, the change flags, and the "measure on site" list. When the cost steps were run, add the estimate grade and its `why_not_higher`, the unpriced lines, and any `unknown_confirm` answers. Record the version and open questions in the case file.
