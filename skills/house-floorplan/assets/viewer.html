@@ -45,6 +45,12 @@ ul.list li{margin:4px 0}
 .legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:4px}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 h2{font-size:16px;margin:16px 0 8px}
+.banner{border:1px solid var(--warn);border-radius:10px;padding:10px 12px;margin:0 0 12px;color:var(--warn);background:var(--panel)}
+.banner.bad{border-color:var(--bad);color:var(--bad)}
+.cannot{border:2px solid var(--line)}
+details.pkg{border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:6px 0;background:var(--panel)}
+details.pkg summary{cursor:pointer}
+pre.file{white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:8px 0;max-height:360px;overflow:auto}
 </style>
 </head>
 <body>
@@ -57,6 +63,7 @@ h2{font-size:16px;margin:16px 0 8px}
     <button role="tab" data-tab="three" aria-selected="false">3. 3D before / after</button>
     <button role="tab" data-tab="qty" aria-selected="false">4. Quantities</button>
     <button role="tab" data-tab="verify" aria-selected="false">5. To verify</button>
+    <button role="tab" data-tab="cost" aria-selected="false">6. Cost &amp; packages</button>
   </nav>
 </header>
 <main>
@@ -101,6 +108,10 @@ h2{font-size:16px;margin:16px 0 8px}
 
   <section id="tab-verify" hidden>
     <div id="verifyBody" class="grid2"></div>
+  </section>
+
+  <section id="tab-cost" hidden>
+    <div id="costBody"></div>
   </section>
 </main>
 
@@ -344,12 +355,119 @@ function renderVerify(){
     card('Errors', V.errors.concat(V.problems||[]), 'bad');
 }
 
+// ---------- 6. cost & packages ----------
+// Nothing here is computed in the browser. The takeoff comes from takeoff.py, prices from a costs.json
+// made by costs.py (none unless you passed one), and the package text from export_package.py.
+function renderCost(){
+  const C = D.cost, useProposed = hasProposed && state.mode !== 'existing';
+  const tk = (useProposed ? C.takeoff.proposed : C.takeoff.existing) || C.takeoff.proposed || C.takeoff.existing;
+  const safeUrl = u => /^https:\/\//.test(u || '') ? u : '';
+  let h = '';
+  if (!tk){
+    h += '<div class="banner bad">No takeoff could be computed, so there is nothing to show here.</div>';
+  } else if (tk.status !== 'CONFIRMED'){
+    h += '<div class="banner"><b>UNCONFIRMED.</b> ' + esc(tk.overlay) + ' Every number below rests on a transcription that no person has checked against the original drawing. Use tab 1, then set <code>source.overlay_confirmed</code> in plan.json.</div>';
+  }
+  C.errors.forEach(m => h += '<div class="banner bad">' + esc(m) + '</div>');
+  C.warnings.forEach(m => h += '<div class="banner">' + esc(m) + '</div>');
+
+  if (tk){
+    h += '<h2>Quantities (' + esc(tk.state) + ')</h2><p class="note" style="margin-top:0">Each line carries the rule that produced it, the JSON pointers it read and the scale source. Soft lines depend on a value the plan does not measure.</p>';
+    h += '<div class="tablewrap card"><table><thead><tr><th>Item</th><th>Floor</th><th>Room</th><th class="n">Quantity</th><th>Unit</th><th>Rule</th><th>Softness</th><th>Finish</th><th>Scale source</th><th>Inputs</th></tr></thead><tbody>';
+    tk.lines.forEach(l => { h += `<tr><td>${esc(l.item)}</td><td>${esc(l.floor)}</td><td>${esc(l.room)}</td><td class="n">${fmt(l.quantity,2)}</td><td>${esc(l.unit)}</td><td>${esc(l.rule)}</td><td class="${l.softness === 'soft' ? 'warn' : ''}" title="${esc((l.soft_reasons||[]).join('; '))}">${esc(l.softness)}</td><td>${esc(l.finish)}</td><td>${esc(l.scale_source)}</td><td>${esc((l.inputs||[]).join(' | '))}</td></tr>`; });
+    h += '</tbody></table></div>';
+  }
+
+  h += '<h2>Cost range</h2>';
+  const K = C.costs;
+  if (!K){
+    h += '<div class="card"><p class="note" style="margin:0">No prices. This page does not price anything on its own and the default costbook is empty. Fill a costbook with sourced prices, run <code>costs.py</code>, then rebuild this page with <code>--costs costs.json</code>.</p></div>';
+  } else {
+    const g = K.estimate_grade, cur = K.currency || 'USD';
+    const money = v => v == null ? 'n/a' : Number(v).toLocaleString(undefined,{style:'currency',currency:cur,maximumFractionDigits:0});
+    h += '<div class="card"><p style="margin:0 0 6px"><span class="tag">' + esc(g.grade) + '</span>' + esc(g.meaning) + '</p>';
+    if ((g.why_not_higher||[]).length) h += '<p class="note" style="margin:0 0 6px">Why not higher: ' + esc(g.why_not_higher.join('; ')) + '.</p>';
+    if (K.status !== 'CONFIRMED') h += '<p class="warn" style="margin:0 0 6px">UNCONFIRMED: this cost run rests on an unchecked transcription.</p>';
+    if (K.state !== (tk && tk.state)) h += '<p class="warn" style="margin:0 0 6px">This costs.json is for the ' + esc(K.state) + ' takeoff; the quantities above are ' + esc(tk && tk.state) + '.</p>';
+    if (K.totals){
+      const t = K.totals;
+      h += '<p style="margin:0 0 6px"><b>' + money(t.total.low) + ' to ' + money(t.total.high) + '</b> (mid ' + money(t.total.mid) + ') including contingency ' + esc(t.contingency.pct_low) + ' to ' + esc(t.contingency.pct_high) + ' percent.</p><p class="note" style="margin:0">' + esc(t.note) + ' ' + esc(t.contingency.basis) + '</p>';
+    } else {
+      h += '<p style="margin:0">No takeoff line was priced, so there is no total.</p>';
+    }
+    h += '</div>';
+    h += '<div class="tablewrap card" style="margin-top:8px"><table><thead><tr><th>Layer</th><th class="n">Low</th><th class="n">Mid</th><th class="n">High</th><th class="n">Lines</th></tr></thead><tbody>';
+    Object.keys(K.layers).forEach(k => { const v = K.layers[k]; h += `<tr><td>${esc(v.label)}</td><td class="n">${money(v.low)}</td><td class="n">${money(v.mid)}</td><td class="n">${money(v.high)}</td><td class="n">${v.lines}</td></tr>`; });
+    h += '</tbody></table></div>';
+    h += '<p class="note">Licensed layer: ' + esc(K.layers.licensed.note || '') + '</p>';
+    const priced = K.lines.filter(l => l.components.length);
+    if (priced.length){
+      h += '<h2>Priced lines and where each price came from</h2><div class="tablewrap card"><table><thead><tr><th>Item</th><th>Room</th><th class="n">Quantity</th><th>Layer</th><th class="n">Unit price</th><th class="n">Cost range</th><th>Costbook ID</th><th>Kind</th><th>Source</th><th>Date</th><th>License</th></tr></thead><tbody>';
+      priced.forEach(l => l.components.forEach(c => { const r = c.costbook; h += `<tr><td>${esc(l.item)}</td><td>${esc(l.room)}</td><td class="n">${fmt(l.quantity,2)} ${esc(l.unit)}</td><td>${esc(c.layer)}</td><td class="n">${fmt(c.unit_price,2)}</td><td class="n">${money(c.cost_low)} to ${money(c.cost_high)}</td><td>${esc(r.id)}</td><td>${esc(r.kind)}</td><td>${esc(r.source)}</td><td>${esc(r.checked_on)}</td><td>${esc(r.license)}</td></tr>`; }));
+      h += '</tbody></table></div>';
+    }
+    if (K.unpriced.length){
+      h += '<h2>Not priced <span class="tag">' + K.unpriced.length + '</span></h2><div class="card"><ul class="list">' + K.unpriced.map(u => `<li>${esc(u.item)}, ${esc(u.room || u.floor)}: ${fmt(u.quantity,2)} ${esc(u.unit)}. ${esc(u.why)}</li>`).join('') + '</ul></div>';
+    }
+    const w = K.wage_floor;
+    if (w && w.lines.length){
+      h += '<h2>' + esc(w.label) + ' (not in the total)</h2><div class="card"><p style="margin:0 0 6px"><b>' + money(w.floor_low) + ' to ' + money(w.floor_high) + '</b></p><p class="note" style="margin:0">' + esc(w.note) + '</p></div>';
+    }
+  }
+
+  h += '<h2>Permit and license answers</h2>';
+  const T = C.trades;
+  if (!T){
+    h += '<div class="card"><p class="note" style="margin:0">Not assessed. Run <code>trades.py</code> and rebuild with <code>--trades-file trades.json</code>. Until then nothing on this page says whether a permit or license is needed.</p></div>';
+  } else {
+    h += '<p class="note" style="margin-top:0">Rules file ' + esc(T.rules_file) + ', jurisdiction ' + esc(T.jurisdiction) + ', each rule read on the date shown. "unknown_confirm" means confirm with the official source or a registered design professional.</p>';
+    h += '<div class="tablewrap card"><table><thead><tr><th>Trade</th><th>Source</th><th>Permit</th><th>License</th><th>Design professional</th><th>Lead-safe</th></tr></thead><tbody>';
+    T.items.forEach(it => {
+      h += `<tr><td>${esc(it.trade)}</td><td>${esc(it.label)}${it.detail ? ' (' + esc(it.detail) + ')' : ''}</td>`;
+      ['permit','license','design_professional','lead'].forEach(k => {
+        const t = it.topics[k], cls = t.result === 'unknown_confirm' ? 'warn' : '';
+        const refs = (t.rules||[]).map(r => { const u = safeUrl(r.source_url); return esc(r.rule) + ' ' + esc(r.citation) + ' (read ' + esc(r.checked_on) + ')' + (u ? ' <a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">source</a>' : ''); }).join('<br>');
+        h += `<td class="${cls}" style="white-space:normal">${esc(t.result)}${refs ? '<br><span class="note">' + refs + '</span>' : ''}</td>`;
+      });
+      h += '</tr>';
+    });
+    h += '</tbody></table></div>';
+    if ((T.unassessed||[]).length) h += '<p class="note">Not assessed: ' + esc(T.unassessed.map(u => (u.label || u.what || JSON.stringify(u))).join('; ')) + '</p>';
+  }
+
+  h += '<h2>Quote packages</h2>';
+  const names = Object.keys(C.packages);
+  if (C.package_note) h += '<div class="banner bad">' + esc(C.package_note) + '</div>';
+  if (names.length){
+    h += '<p class="note" style="margin-top:0">One folder per trade, built from the ' + esc(C.package_state) + ' takeoff. No prices are included, so contractors price on their own basis. Review each file, then send it yourself: this page and the scripts send nothing. Equivalent command: <code>export_package.py takeoff.json --out packages</code>.</p>';
+    names.forEach(n => {
+      h += '<details class="pkg"><summary><b>' + esc(n) + '</b></summary>';
+      Object.keys(C.packages[n]).forEach(f => {
+        h += '<div class="bar" style="margin:8px 0 0"><span class="tag">' + esc(f) + '</span><button class="btn" data-dl="' + esc(n) + '/' + esc(f) + '">Download</button></div><pre class="file">' + esc(C.packages[n][f]) + '</pre>';
+      });
+      h += '</details>';
+    });
+  } else if (!C.package_note) {
+    h += '<div class="card"><p class="note" style="margin:0">No packages: nothing to export.</p></div>';
+  }
+
+  h += '<h2>This tool cannot check</h2><div class="card cannot"><ul class="list">' + C.cannot_check.map(m => '<li>' + esc(m) + '</li>').join('') + '</ul></div>';
+  $('#costBody').innerHTML = h;
+  $('#costBody').querySelectorAll('[data-dl]').forEach(b => b.onclick = () => {
+    const [t, f] = b.dataset.dl.split('/');
+    const a = document.createElement('a');
+    a.download = t + '-' + f; a.href = URL.createObjectURL(new Blob([C.packages[t][f]], {type: 'text/plain;charset=utf-8'}));
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+}
+
 function renderAll(){
   if (state.tab === 'check') renderOverlay();
   if (state.tab === 'plan') renderPlan();
   if (state.tab === 'three') renderThree();
   if (state.tab === 'qty') renderQty();
   if (state.tab === 'verify') renderVerify();
+  if (state.tab === 'cost') renderCost();
 }
 // Deep link: #tab=three&mode=proposed&floor=1F
 (function(){
