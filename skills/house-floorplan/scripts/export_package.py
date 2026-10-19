@@ -237,11 +237,17 @@ def _scope(trade, lines, items, ctx):
     if lines:
         tot = {}
         for ln in lines:
-            e = tot.setdefault(ln['item'], [0, ln['unit'], 0])
-            e[0] += ln['quantity']
+            e = tot.setdefault(ln['item'], [0, ln['unit'], 0, 0])
+            if ln['quantity'] is None:
+                e[3] += 1
+            else:
+                e[0] += ln['quantity']
             e[2] += 1
-        for item, (q, unit, n) in sorted(tot.items()):
-            scope.append('%s: %s %s over %d line(s)' % (ITEM_LABEL.get(item, item), _num(q), unit, n))
+        for item, (q, unit, n, unknown) in sorted(tot.items()):
+            s = '%s: %s %s over %d line(s)' % (ITEM_LABEL.get(item, item), _num(q), unit, n)
+            if unknown:
+                s += ' (%d line(s) have no quantity yet and are not in this sum; count them on site)' % unknown
+            scope.append(s)
     o.append((_bullets(scope) if scope else 'The inputs state no scope for this trade.') + '\n')
 
     o.append('## %s\n' % h[2])
@@ -257,7 +263,8 @@ def _scope(trade, lines, items, ctx):
                 basis += ': ' + '; '.join(ln['soft_reasons'])
             o.append('| %s | %s | %s | %s %s | %s | %s | %s | %s |' % (
                 ITEM_LABEL.get(ln['item'], ln['item']), ln.get('floor') or '', ln.get('room') or '',
-                _num(ln['quantity']), ln['unit'], ln['rule'], basis, hgt, ln.get('scale_source') or ''))
+                _num(ln['quantity']) if ln['quantity'] is not None else 'unknown', ln['unit'], ln['rule'], basis, hgt,
+                ln.get('scale_source') or ''))
         o.append('')
         o.append('"hard" means the quantity follows from the drawing as recorded. "soft" means it rests on an '
                  'assumption or an unmeasured value, stated after the colon. Formulas and input pointers are in '
