@@ -1,0 +1,21 @@
+{
+  "schema": "housingwizard.costbook/1",
+  "name": "Test fixture. Every number here is made up or copied from the project spec for tests; none is a price.",
+  "entries": [
+    {"id": "ex-paint-001", "kind": "assumption", "item": "Interior wall paint, two coats", "unit": "sf", "value": 1.0,
+     "source": "fixture", "license": "assumption", "example": true, "label": "example, not a price",
+     "note": "Placeholder to exercise the checker."},
+    {"id": "quote-floor-001", "kind": "quote", "item": "Refinish oak floor", "unit": "sf", "value": 4.5, "low": 4.0, "high": 5.0,
+     "rule": "R-FLOOR-001", "source": "Fixture Floors LLC, quote Q-1", "source_url": "file:quote-q1.pdf",
+     "checked_on": "2026-10-01", "license": "own-quote"},
+    {"id": "retail-tile-001", "kind": "retail", "item": "Ceramic wall tile 3x6", "unit": "sf", "value": 3.2,
+     "rule": "R-TILE-001", "source": "Fixture retailer product page", "source_url": "https://example.com/tile-3x6",
+     "checked_on": "2026-10-10", "license": "manual-retail"},
+    {"id": "bls-painter-mean", "kind": "bls_wage", "item": "Painters, construction and maintenance, mean hourly wage", "unit": "hour",
+     "value": 33.62, "label": "wage_floor", "occupation": "Painters", "area": "New York City", "period": "2025-05", "statistic": "mean",
+     "source": "BLS OEWS", "source_url": "https://www.bls.gov/oes/", "checked_on": "2026-09-14", "license": "bls-public",
+     "note": "Copied from the project spec; not re-verified against BLS in this test."},
+    {"id": "prod-paint-001", "kind": "productivity", "item": "Wall paint output", "unit": "sf per hour", "value": 120,
+     "source": "Own measurement on a past job", "source_url": "file:notes.txt", "checked_on": "2026-06-01", "license": "own-measurement"}
+  ]
+}
