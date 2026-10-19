@@ -1,5 +1,7 @@
 # Release notes: cost and quote packages
 
+## v0.1.0
+
 This release extends `house-floorplan` and `house-renovation` from "transcribe and check a plan" to "transcribe, take off, price from your own sources, answer permit questions with citations, and prepare quote packages". The skills are installed the same way as before: `npx skills add daniel1001a/HousingWizard`.
 
 ## What is new
@@ -11,6 +13,9 @@ This release extends `house-floorplan` and `house-renovation` from "transcribe a
 - Viewer tab 6, "Cost & packages", and the `--costs` and `--trades-file` options of `build_viewer.py`.
 - Two fixes to the transcription tools and optional plan fields for the new scripts (see the history for steps 1 to 3).
 - NYC reference fix: removing a non-load-bearing wall is permit-exempt only in Group R, for an interior non-fire-rated wall, within the smaller of 50 percent of that wall and 45 sq ft. A new partition wall is not on the exemption list. "No licensed trade" is no longer written as if it meant "no permit".
+- Overlay check (tab 1): room labels are a fixed 15px with a white halo so they read over any wall color, sit inside the top wall instead of crossing it, shrink down to the room's width (to a floor of 11px) in narrow rooms, and are pushed down instead of stacked when two would collide.
+- Overlay zoom and pan: "Fit to width" is the default and refits on resize, a new "100%" button, Ctrl/Cmd plus wheel or trackpad pinch zooms around the pointer, mouse drag pans, and the overlay no longer drifts from the image at non-default zoom.
+- Each trade's `assumptions.md` and viewer tab 6 now list a "Fill in before sending" checklist of blanks the inputs left (UNCONFIRMED overlay, a missing plan name, state or unit count, a line with no floor, an "unknown" quantity and its room, a missing finish, an unassessed or undecided permit topic). Nothing on the list is filled in for you.
 
 ## How it stays transparent
 
