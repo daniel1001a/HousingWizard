@@ -308,6 +308,12 @@ class Output(unittest.TestCase):
                         self.assertTrue(ref['source_url'].startswith('https://'))
                         self.assertTrue(ref['checked_on'])
 
+    def test_change_items_carry_a_detail_and_others_do_not(self):
+        r = run(['painting'], changes=remove_wall('w5'))
+        wr = next(it for it in r['items'] if it['trade'] == 'wall_removal')
+        self.assertIn('wall w5', wr['detail'])
+        self.assertNotIn('detail', next(it for it in r['items'] if it['trade'] == 'painting'))
+
     def test_no_em_dash_in_output_or_rules(self):
         dash = chr(0x2014)
         self.assertNotIn(dash, json.dumps(run(['painting', 'electrical'], who='owner')))
