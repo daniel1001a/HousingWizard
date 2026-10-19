@@ -1,0 +1,31 @@
+{
+  "schema": "housingwizard.plan/1",
+  "name": "Fixture: one room",
+  "units": "ft",
+  "source": {
+    "kind": "hand sketch",
+    "scale_from": "Fixture, exact coordinates, no image",
+    "scale_check": "Fixture, exact coordinates, no image"
+  },
+  "floors": [
+    {
+      "id": "1F",
+      "name": "First floor",
+      "elevation": 0,
+      "height": 8,
+      "height_source": "measured",
+      "walls": [
+        {"id": "w1", "a": [0, 0], "b": [12.5, 0], "thick": 0.5, "exterior": true},
+        {"id": "w2", "a": [12.5, 0], "b": [12.5, 10.5], "thick": 0.5, "exterior": true},
+        {"id": "w3", "a": [12.5, 10.5], "b": [0, 10.5], "thick": 0.5, "exterior": true},
+        {"id": "w4", "a": [0, 10.5], "b": [0, 0], "thick": 0.5, "exterior": true}
+      ],
+      "openings": [
+        {"id": "d1", "wall": "w3", "kind": "door", "offset": 4, "width": 3, "hinge": "a", "swing": "left"}
+      ],
+      "rooms": [
+        {"id": "R1", "name": "Room", "use": "bedroom", "poly": [[0.25, 0.25], [12.25, 0.25], [12.25, 10.25], [0.25, 10.25]]}
+      ]
+    }
+  ]
+}
