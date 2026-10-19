@@ -15,6 +15,10 @@ Takeoff items map to trades by a fixed table (ITEM_TRADE). A trade named only in
 plumbing, wall removal, partitions) gets a package with no quantity lines: the plan does not give a quantity
 for it, and the contractor measures on site.
 
+Blanks the inputs leave (no plan name, a quantity of "unknown", no finish, a permit section that says "Not
+assessed") are listed per trade under "Fill in before sending" in assumptions.md and in the printed summary,
+so they are not missed. They are listed, never filled in.
+
 If either input is UNCONFIRMED (source.overlay_confirmed missing) every file says so; with
 --require-confirmed nothing is written. The script reads files and writes files. It sends nothing anywhere:
 you decide what to send to whom.
@@ -136,7 +140,8 @@ def _check_inputs(tk, tr):
 
 
 def build(tk, tr=None, only=None, today=None):
-    """Return {'packages': {trade: {filename: text}}, 'status': ..., 'warnings': [...], 'unmapped': [...]}."""
+    """Return {'packages': {trade: {filename: text}}, 'status': ..., 'warnings': [...], 'unmapped': [...],
+    'to_fill': {trade: [...]}}."""
     _check_inputs(tk, tr)
     today = today or datetime.date.today()
     status = 'CONFIRMED' if tk.get('status') == 'CONFIRMED' and (tr is None or tr.get('status') == 'CONFIRMED') \
@@ -179,16 +184,61 @@ def build(tk, tr=None, only=None, today=None):
     if not names:
         raise ExportError('Nothing to package: the takeoff has no mappable lines and no trades file was given.')
 
-    packages = {}
+    packages, to_fill = {}, {}
     ctx = {'tk': tk, 'tr': tr, 'status': status, 'overlay': overlay, 'warnings': warnings, 'today': today}
     for t in names:
         lines, items = by_trade_lines.get(t, []), by_trade_items.get(t, [])
+        to_fill[t] = ctx['to_fill'] = _to_fill(lines, items, ctx)
         packages[t] = {
             'scope.md': _scope(t, lines, items, ctx),
             'quantities.csv': _csv(t, lines, ctx),
             'assumptions.md': _assumptions(t, lines, items, ctx),
         }
-    return {'packages': packages, 'status': status, 'warnings': warnings, 'unmapped': unmapped}
+    return {'packages': packages, 'status': status, 'warnings': warnings, 'unmapped': unmapped, 'to_fill': to_fill}
+
+
+def _where(lines):
+    return ', '.join(sorted(set(' '.join(x for x in (ln.get('floor'), ln.get('room')) if x) or 'no room' for ln in lines)))
+
+
+def _to_fill(lines, items, ctx):
+    """Places in this package where the inputs left a blank or a placeholder that a person has to fill or decide
+    before sending. Each entry names the blank and what to do. Nothing is filled in here."""
+    tk, tr = ctx['tk'], ctx['tr']
+    out = []
+    if ctx['status'] != 'CONFIRMED':
+        out.append('The transcription overlay is not confirmed, so every file is marked UNCONFIRMED. Check the overlay '
+                   'and rerun with source.overlay_confirmed set, or tell the contractor the quantities are unchecked.')
+    for key, what in (('plan_name', 'Plan name (section 1 says "not named"): add the property address or a name '
+                                    'the contractor will recognize.'),
+                      ('state', 'Plan state (section 1 says "not stated"): say whether this is the existing house or '
+                                'the proposal.'),
+                      ('units', 'Units (section 1 says "not stated"): say whether quantities are in feet or meters.')):
+        if not tk.get(key):
+            out.append(what)
+    # Per-floor counts (door leaves) have no room by design, so only a missing floor is a blank.
+    nowhere = [ln for ln in lines if not ln.get('floor')]
+    if nowhere:
+        out.append('%d quantity line(s) have no floor in section 3. Say where that work is.' % len(nowhere))
+    unknown = [ln for ln in lines if ln.get('quantity') is None]
+    if unknown:
+        out.append('%d quantity line(s) say "unknown" (%s). Measure them, or ask the contractor to measure and say '
+                   'so in section 2.' % (len(unknown), _where(unknown)))
+    if not lines:
+        out.append('Section 3 has no quantities for this trade. Describe the extent in section 2 or arrange a site '
+                   'visit.')
+    elif not any(ln.get('finish') is not None or ln.get('wall_tile_height') is not None for ln in lines):
+        out.append('Section 4 has no finish. Name the product, grade or color you want priced, or let the '
+                   'contractor state theirs.')
+    if tr is None or not items:
+        out.append('Section 6 says "Not assessed". Run trades.py for this trade, or ask the contractor and the '
+                   'building department about permits.')
+    else:
+        open_topics = sorted(set(trades_mod.TOPIC_LABELS[t] for it in items for t in trades_mod.TOPICS
+                                 if it['topics'][t]['result'] == 'unknown_confirm'))
+        if open_topics:
+            out.append('Section 6 leaves these undecided: %s. Confirm them before work starts.' % ', '.join(open_topics))
+    return out
 
 
 def _cannot_check(ctx):
@@ -339,6 +389,8 @@ def _csv(trade, lines, ctx):
 def _assumptions(trade, lines, items, ctx):
     tk, tr = ctx['tk'], ctx['tr']
     o = ['%s# Assumptions: %s\n' % (_banner(ctx), _title(trade))]
+    o.append('## Fill in before sending\n')
+    o.append((_bullets(ctx['to_fill']) if ctx['to_fill'] else 'Nothing: no blank was found in the inputs.') + '\n')
     o.append('## Takeoff assumptions\n')
     o.append(_bullets(tk.get('assumptions') or ['None recorded.']) + '\n')
     soft = [ln for ln in lines if ln.get('softness') == 'soft']
@@ -398,6 +450,10 @@ def summary(result):
     lines.append('Packages: %s' % ', '.join(result['packages']))
     for w in result['warnings']:
         lines.append('Warning: ' + w)
+    for trade, todo in (result.get('to_fill') or {}).items():
+        if todo:
+            lines.append('Fill in before sending %s:' % trade)
+            lines.extend('  - ' + t for t in todo)
     return '\n'.join(lines)
 
 

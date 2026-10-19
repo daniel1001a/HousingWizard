@@ -27,9 +27,13 @@ label.inline{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
 .note{font-size:13px;color:var(--muted);margin:8px 0 0}
 section[hidden]{display:none}
-#overlayWrap{position:relative;overflow:auto;background:#fff;border-radius:8px}
-#overlayWrap img{display:block;max-width:none}
+#overlayWrap{overflow:auto;max-height:78vh;background:#fff;border-radius:8px;overscroll-behavior:contain;cursor:grab}
+#overlayWrap.dragging{cursor:grabbing;user-select:none}
+#overlayStage{position:relative;width:max-content}
+#overlayStage img{display:block;max-width:none;-webkit-user-drag:none}
 #overlaySvg{position:absolute;left:0;top:0}
+#overlaySvg text{paint-order:stroke;stroke:#fff;stroke-linejoin:round}
+#ovZoomVal{display:inline-block;min-width:3.5em;font-variant-numeric:tabular-nums}
 #planSvg{display:block;width:100%;height:auto;max-height:78vh;background:var(--panel);border-radius:8px}
 #planSvg text{paint-order:stroke;stroke:rgba(255,255,255,.85);stroke-width:.12px;stroke-linejoin:round}
 #three{width:100%;height:min(70vh,640px);border-radius:8px;overflow:hidden;background:#d9d6cf;touch-action:none}
@@ -79,11 +83,13 @@ pre.file{white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,
   <section id="tab-check">
     <div class="bar">
       <label class="inline">Overlay <input type="range" id="ovOpacity" min="0" max="1" step="0.05" value="0.75"></label>
-      <label class="inline">Zoom <input type="range" id="ovZoom" min="0.5" max="3" step="0.1" value="1"></label>
+      <label class="inline">Zoom <input type="range" id="ovZoom" min="0.2" max="4" step="0.05" value="1"> <span id="ovZoomVal">100%</span></label>
+      <button class="btn" id="ovFit">Fit to width</button>
+      <button class="btn" id="ovActual">100%</button>
     </div>
     <div id="overlayWrap" class="card"></div>
     <div class="legend"><span><i style="background:#e53935"></i>walls as transcribed</span><span><i style="background:#1e88e5"></i>windows</span><span><i style="background:#43a047"></i>doors and openings</span></div>
-    <p class="note">Nothing downstream is better than this step. Slide the overlay on and off. Every red line should sit on a drawn wall, every blue or green mark on a drawn window or door, and no room should be missing. If something is off, fix plan.json and rebuild before you look at the other tabs.</p>
+    <p class="note">Nothing downstream is better than this step. Slide the overlay on and off. Drag to pan; Ctrl or Cmd with the scroll wheel, or a trackpad pinch, zooms around the pointer. Every red line should sit on a drawn wall, every blue or green mark on a drawn window or door, and no room should be missing. If something is off, fix plan.json and rebuild before you look at the other tabs.</p>
   </section>
 
   <section id="tab-plan" hidden>
@@ -170,23 +176,116 @@ document.querySelectorAll('nav button').forEach(b => b.addEventListener('click',
 }));
 
 // ---------- 1. overlay check ----------
+// ov.z is screen pixels per source-image pixel. ov.fit keeps the image at the box width until the user zooms.
+const ov = {z:1, fit:true};
+const OV_LABEL_PX = 15, OV_LABEL_MIN_PX = 11;
 function renderOverlay(){
   const wrap = $('#overlayWrap');
   if (!D.image){ wrap.innerHTML = '<p class="note">No source image was given to the build, so there is nothing to overlay. Rebuild with the listing floor plan image next to plan.json (source.image).</p>'; return; }
   if (!wrap.dataset.ready){
     wrap.innerHTML = '';
-    const img = new Image(); img.src = D.image; img.alt = 'Source floor plan';
+    // img and svg share one positioned box, so the svg origin is the image origin at every zoom.
+    const stage = document.createElement('div'); stage.id = 'overlayStage';
+    const img = new Image(); img.src = D.image; img.alt = 'Source floor plan'; img.draggable = false;
     const svg = el('svg', {id:'overlaySvg'});
-    wrap.appendChild(img); wrap.appendChild(svg);
-    img.onload = () => { wrap.dataset.w = img.naturalWidth; wrap.dataset.h = img.naturalHeight; drawOverlay(); };
+    stage.appendChild(img); stage.appendChild(svg); wrap.appendChild(stage);
+    img.onload = () => { wrap.dataset.w = img.naturalWidth; wrap.dataset.h = img.naturalHeight; fitOverlay(); };
     wrap.dataset.ready = '1';
-    $('#ovOpacity').oninput = drawOverlay; $('#ovZoom').oninput = drawOverlay;
-  } else drawOverlay();
+    $('#ovOpacity').oninput = drawOverlay;
+    $('#ovZoom').oninput = () => zoomOverlay(+$('#ovZoom').value);
+    $('#ovFit').onclick = fitOverlay;
+    $('#ovActual').onclick = () => zoomOverlay(1);
+    // Ctrl/Cmd + wheel (and trackpad pinch, which arrives as ctrl + wheel) zooms around the pointer; a plain wheel scrolls.
+    wrap.addEventListener('wheel', e => {
+      if (!(e.ctrlKey || e.metaKey) || !+wrap.dataset.w) return;
+      e.preventDefault();
+      const r = wrap.getBoundingClientRect();
+      zoomOverlay(ov.z * Math.exp(-e.deltaY * 0.002), e.clientX - r.left - wrap.clientLeft, e.clientY - r.top - wrap.clientTop);
+    }, {passive:false});
+    // Mouse drag pans. Touch keeps the browser's own scrolling.
+    let drag = null;
+    wrap.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = {x:e.clientX, y:e.clientY, l:wrap.scrollLeft, t:wrap.scrollTop};
+      wrap.setPointerCapture(e.pointerId); wrap.classList.add('dragging');
+    });
+    wrap.addEventListener('pointermove', e => { if (!drag) return; wrap.scrollLeft = drag.l - (e.clientX - drag.x); wrap.scrollTop = drag.t - (e.clientY - drag.y); });
+    const endDrag = () => { drag = null; wrap.classList.remove('dragging'); };
+    wrap.addEventListener('pointerup', endDrag); wrap.addEventListener('pointercancel', endDrag);
+    window.addEventListener('resize', () => { if (ov.fit && state.tab === 'check') fitOverlay(); });
+  } else if (ov.fit) fitOverlay(); else drawOverlay();
+}
+function setOverlayZoom(z){
+  const s = $('#ovZoom'); ov.z = Math.min(+s.max, Math.max(+s.min, z));
+  s.value = ov.z; $('#ovZoomVal').textContent = Math.round(ov.z*100) + '%';
+  drawOverlay();
+}
+function fitOverlay(){
+  const wrap = $('#overlayWrap'), W = +wrap.dataset.w; if (!W || !wrap.clientWidth) return;
+  // Twice: a vertical scrollbar that appears after the first pass narrows the box.
+  const cs = getComputedStyle(wrap), pad = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+  for (let i = 0; i < 2; i++) setOverlayZoom((wrap.clientWidth - pad) / W);
+  ov.fit = true; wrap.scrollLeft = 0;
+}
+// Zoom keeping the image point under (ax, ay) fixed; (ax, ay) is in box pixels and defaults to the box centre.
+function zoomOverlay(z, ax, ay){
+  const wrap = $('#overlayWrap'); if (!+wrap.dataset.w) return;
+  const centred = ax == null; if (centred){ ax = wrap.clientWidth/2; ay = wrap.clientHeight/2; }
+  const cs = getComputedStyle(wrap), pl = parseFloat(cs.paddingLeft), pt = parseFloat(cs.paddingTop);
+  const px = (wrap.scrollLeft + ax - pl)/ov.z, py = (wrap.scrollTop + ay - pt)/ov.z;
+  setOverlayZoom(z); ov.fit = false;
+  // The box can grow taller as the image grows; keep the point at the new centre.
+  if (centred){ ax = wrap.clientWidth/2; ay = wrap.clientHeight/2; }
+  wrap.scrollLeft = px*ov.z + pl - ax; wrap.scrollTop = py*ov.z + pt - ay;
+}
+// Top and bottom of the longest vertical run of polygon p along x, or null. With the axes swapped it gives a horizontal run.
+function colSpan(p, x){
+  x += 1e-6; const ys = [];
+  for (let i=0;i<p.length;i++){ const a=p[i], b=p[(i+1)%p.length]; if ((a[0] < x) !== (b[0] < x)) ys.push(a[1] + (b[1]-a[1])*(x-a[0])/(b[0]-a[0])); }
+  ys.sort((m,n)=>m-n); let best = null;
+  for (let i=0;i+1<ys.length;i+=2) if (!best || ys[i+1]-ys[i] > best[1]-best[0]) best = [ys[i], ys[i+1]];
+  return best;
+}
+// Room label, red with a white halo, at a fixed size on screen whatever the zoom. It sits just inside the top wall, above
+// the middle of the room where listing plans print their own room names, so it covers neither the wall line nor that text.
+// Two lines if they fit there, else one line, else centred. The font shrinks (not below OV_LABEL_MIN_PX) to the room
+// width. A label that would overlap one already placed moves down below it. Returns the box it used.
+function overlayLabel(r, P, inset, z, dim, svg, taken){
+  const xs = r.poly.map(p=>p[0]), k = P([1,0])[0] - P([0,0])[0];
+  let cx = (Math.min(...xs)+Math.max(...xs))/2, span = colSpan(r.poly, cx); if (!span) return;
+  // In an L-shaped room, centre on the run across the top where the label goes, not on the bounding box.
+  const flip = r.poly.map(p => [p[1], p[0]]), row = colSpan(flip, span[0] + (inset + OV_LABEL_PX/z) / k);
+  let runW = Math.max(...xs) - Math.min(...xs);
+  if (row){ cx = (row[0] + row[1]) / 2; runW = row[1] - row[0]; span = colSpan(r.poly, cx) || span; }
+  const top = P([cx, span[0]])[1], bot = P([cx, span[1]])[1], x = P([cx, 0])[0];
+  const room = runW * k - 2*inset;
+  const name = r.name, sq = fmt(area(r.poly),0) + ' sq ' + U;
+  const t = el('text',{x:x,'text-anchor':'middle',fill:'#b3261e','stroke-width':3/z,opacity:dim?0.45:1},svg);
+  const set = lines => {
+    t.textContent = '';
+    const spans = lines.map((s, i) => { const ts = el('tspan',{x:x,'font-weight':i ? 600 : 700},t); ts.textContent = s; return ts; });
+    let fs = OV_LABEL_PX / z; t.setAttribute('font-size', fs);
+    const wide = Math.max(...spans.map(ts => ts.getComputedTextLength()));
+    if (wide > room && room > 0){ fs = Math.max(OV_LABEL_MIN_PX / z, fs * room / wide); t.setAttribute('font-size', fs); }
+    return {spans, fs, h: lines.length * fs * 1.15};
+  };
+  const mid = (top + bot) / 2;
+  let L = set([name, sq]), y0 = top + inset;
+  if (y0 + L.h > mid - L.fs*0.6){ const one = set([name + '  ' + sq]); if (y0 + one.h <= mid - one.fs*0.6) L = one; else L = set([name, sq]); }
+  if (y0 + L.h > bot - inset) y0 = mid - L.h/2;
+  const place = () => L.spans.forEach((ts, i) => ts.setAttribute('y', y0 + L.fs*0.9 + i*L.fs*1.15));
+  place();
+  for (let guard = 0; guard < taken.length + 1; guard++){
+    const bb = t.getBBox(), hit = taken.find(o => bb.x < o.x+o.width && o.x < bb.x+bb.width && bb.y < o.y+o.height && o.y < bb.y+bb.height);
+    if (!hit) break;
+    y0 += hit.y + hit.height + 2/z - bb.y; place();
+  }
+  taken.push(t.getBBox());
 }
 function drawOverlay(){
   const wrap = $('#overlayWrap'), img = wrap.querySelector('img'), svg = wrap.querySelector('svg');
   const W = +wrap.dataset.w, H = +wrap.dataset.h; if (!W) return;
-  const z = +$('#ovZoom').value; img.style.width = (W*z) + 'px'; svg.setAttribute('width', W*z); svg.setAttribute('height', H*z); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  const z = ov.z; img.style.width = (W*z) + 'px'; svg.setAttribute('width', W*z); svg.setAttribute('height', H*z); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
   svg.style.opacity = $('#ovOpacity').value; svg.innerHTML = '';
   const S = (D.plan.source||{}).scale_px_per_unit || 10;
   D.plan.floors.forEach(f => {
@@ -198,11 +297,11 @@ function drawOverlay(){
     (f.openings||[]).forEach(op => { const w = walls[op.wall]; if(!w) return; const L=wlen(w), ux=(w.b[0]-w.a[0])/L, uy=(w.b[1]-w.a[1])/L;
       const s=P([w.a[0]+ux*op.offset, w.a[1]+uy*op.offset]), e=P([w.a[0]+ux*(op.offset+op.width), w.a[1]+uy*(op.offset+op.width)]);
       el('line',{x1:s[0],y1:s[1],x2:e[0],y2:e[1],stroke: op.kind==='window'?'#1e88e5':'#43a047','stroke-width':Math.max(3,(w.thick||0.4)*S*0.9),'stroke-opacity':dim?0.35:0.95},svg); });
-    (f.rooms||[]).forEach(r => { const xs=r.poly.map(p=>p[0]), ys=r.poly.map(p=>p[1]); const c=P([(Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2]);
-      const t = el('text',{x:c[0],y:c[1]-14,'text-anchor':'middle','font-size':11,fill:'#b3261e','font-weight':'600',opacity:dim?0.4:1},svg); t.textContent = r.name + ' ' + fmt(area(r.poly),0) + ' sq ' + U; });
+    const inset = Math.max(0.4, ...f.walls.map(w => w.thick||0.4)) * S / 2 + 4 / z;
+    const taken = [];
+    (f.rooms||[]).slice().sort((m,n) => area(n.poly) - area(m.poly)).forEach(r => overlayLabel(r, P, inset, z, dim, svg, taken));
   });
 }
-
 // ---------- 2. plan ----------
 function renderPlan(){
   const svg = $('#planSvg'); svg.innerHTML = '';
@@ -441,7 +540,9 @@ function renderCost(){
   if (names.length){
     h += '<p class="note" style="margin-top:0">One folder per trade, built from the ' + esc(C.package_state) + ' takeoff. No prices are included, so contractors price on their own basis. Review each file, then send it yourself: this page and the scripts send nothing. Equivalent command: <code>export_package.py takeoff.json --out packages</code>.</p>';
     names.forEach(n => {
-      h += '<details class="pkg"><summary><b>' + esc(n) + '</b></summary>';
+      const todo = (C.package_to_fill || {})[n] || [];
+      h += '<details class="pkg"><summary><b>' + esc(n) + '</b>' + (todo.length ? ' <span class="tag">' + todo.length + ' to fill in before sending</span>' : '') + '</summary>';
+      if (todo.length) h += '<ul class="note">' + todo.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>';
       Object.keys(C.packages[n]).forEach(f => {
         h += '<div class="bar" style="margin:8px 0 0"><span class="tag">' + esc(f) + '</span><button class="btn" data-dl="' + esc(n) + '/' + esc(f) + '">Download</button></div><pre class="file">' + esc(C.packages[n][f]) + '</pre>';
       });

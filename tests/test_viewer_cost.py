@@ -87,6 +87,21 @@ class ViewerCostTests(unittest.TestCase):
         for files in c['packages'].values():
             self.assertNotIn('$', ''.join(files.values()))
 
+    def test_package_blanks_are_embedded_per_trade(self):
+        self.assertEqual(self.build().returncode, 0)
+        html, d = self.data()
+        c = d['cost']
+        self.assertEqual(set(c['package_to_fill']), set(c['packages']))
+        self.assertTrue(all(any('Not assessed' in x for x in v) for v in c['package_to_fill'].values()))
+        self.assertIn('package_to_fill', html)
+
+    def test_overlay_has_one_stage_fit_button_and_haloed_labels(self):
+        self.assertEqual(self.build().returncode, 0)
+        html, _ = self.data()
+        self.assertIn('#overlayStage{position:relative', html)
+        self.assertIn('id="ovFit"', html)
+        self.assertIn('#overlaySvg text{paint-order:stroke', html)
+
     def test_takeoff_in_page_matches_takeoff_py(self):
         self.assertEqual(self.build().returncode, 0)
         _, d = self.data()
