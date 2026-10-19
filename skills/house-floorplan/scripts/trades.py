@@ -293,6 +293,12 @@ def _fact(value, source):
     return {'value': value, 'source': source}
 
 
+def _detail(c):
+    """One line naming what a change touches, copied from the change itself (no inference)."""
+    keys = ('floor', 'wall', 'id', 'kind', 'fixture', 'at', 'a', 'b')
+    return ', '.join('%s %s' % (k, c[k]) for k in keys if k in c)
+
+
 def derive_items(plan, changes):
     """Work items from a changes file. Returns (items, unassessed)."""
     items, unassessed = [], []
@@ -314,18 +320,18 @@ def derive_items(plan, changes):
                 area = _wall_area_sqft(plan, f, w)
                 if area is not None:
                     facts['removal_area_sqft'] = _fact(area, 'derived: wall length times floor height, floor %s' % f['id'])
-            items.append({'trade': 'wall_removal', 'label': label, 'source': src, 'facts': facts})
+            items.append({'trade': 'wall_removal', 'label': label, 'source': src, 'detail': _detail(c), 'facts': facts})
         elif op == 'add-wall':
-            items.append({'trade': 'partition', 'label': label, 'source': src, 'facts': {}})
+            items.append({'trade': 'partition', 'label': label, 'source': src, 'detail': _detail(c), 'facts': {}})
         elif op in ('add-fixture', 'remove-fixture'):
             kind = c.get('kind')
             if op == 'remove-fixture':
                 fx = next((x for x in f.get('fixtures', []) if x.get('id') == c.get('fixture')), None)
                 kind = (fx or {}).get('kind')
             if kind in PLUMBING_FIXTURES:
-                items.append({'trade': 'plumbing', 'label': label, 'source': src, 'facts': {}})
+                items.append({'trade': 'plumbing', 'label': label, 'source': src, 'detail': _detail(c), 'facts': {}})
             elif kind in ELECTRICAL_FIXTURES:
-                items.append({'trade': 'electrical', 'label': label, 'source': src, 'facts': {}})
+                items.append({'trade': 'electrical', 'label': label, 'source': src, 'detail': _detail(c), 'facts': {}})
             else:
                 unassessed.append({'source': src, 'what': label,
                                    'why': 'Fixture kind %r has no trade mapping in this tool.' % kind})
@@ -407,8 +413,11 @@ def compute(plan, changes=None, rules_doc=None, jurisdiction='us-ny-nyc', trades
                     fx['permit_required'] = _fact(True, 'derived from the permit answer for this item')
                 elif d['result'] == 'exempt':
                     fx['permit_required'] = _fact(False, 'derived from the permit answer for this item')
-        out_items.append({'id': 'T%d' % n, 'trade': it['trade'], 'label': it['label'], 'source': it['source'],
-                          'facts': fx, 'topics': topics})
+        row = {'id': 'T%d' % n, 'trade': it['trade'], 'label': it['label'], 'source': it['source']}
+        if it.get('detail'):
+            row['detail'] = it['detail']
+        row.update({'facts': fx, 'topics': topics})
+        out_items.append(row)
     status, detail = pt.overlay_status(plan)
     checked = _date((rules_doc or {}).get('checked_on'))
     assumptions = [

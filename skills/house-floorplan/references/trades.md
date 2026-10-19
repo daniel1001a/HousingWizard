@@ -64,6 +64,8 @@ The DOB pages show no last-updated date, so `checked_on` is the date the page wa
 
 ## Output
 
+An item may carry `detail`, one line copied from the change it came from (for example `floor 1F, wall w5`). Finish-derived and `--trades` items have none.
+
 Top level keys: `schema` (`housingwizard.trades/1`), `plan_name`, `state`, `status` (`CONFIRMED` or `UNCONFIRMED`), `overlay`, `jurisdiction`, `rules_file`, `rules_checked_on`, `warnings`, `items`, `unassessed`, `unused_facts`, `assumptions`, `cannot_check`, `generated_on`, `inputs`. Each item has the trade, where it came from, its facts with labeled sources, and four topics. A topic that is not `unknown_confirm` lists the rules that decided it with `rule`, `citation`, `source_url` and `checked_on`.
 
 ## UNCONFIRMED
