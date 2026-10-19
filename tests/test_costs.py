@@ -145,6 +145,14 @@ class PricingTests(unittest.TestCase):
         self.assertIn('1 of 5', c['totals']['note'])
         self.assertEqual(len(c['unpriced']), 4)
 
+    def test_summary_survives_a_line_with_no_quantity(self):
+        # A soft stair count can be None when the stair has no usable `to` and no `risers`.
+        t = tk()
+        t['lines'][0]['quantity'] = None
+        c = run(t, book())
+        text = costs.summary(c)
+        self.assertIn('quantity unknown', text)
+
     def test_mixed_currency_is_refused(self):
         with self.assertRaises(costs.CostError):
             run(tk(), book(quote('q', 'R-FLOOR-001', 4), retail('r', 'R-PAINT-WALL-001', 1, currency='EUR')))

@@ -233,6 +233,15 @@ class Inputs(unittest.TestCase):
         for files in r['packages'].values():
             self.assertNotIn('mystery', files['quantities.csv'])
 
+    def test_line_with_no_quantity_is_listed_not_summed(self):
+        tk, tr = make()
+        tk = copy.deepcopy(tk)
+        tk['lines'][0]['quantity'] = None
+        r = ep.build(tk, tr, None, TODAY)
+        scopes = '\n'.join(f['scope.md'] for f in r['packages'].values())
+        self.assertIn('no quantity yet', scopes)
+        self.assertIn('unknown', scopes)
+
     def test_mismatched_state_and_name_are_warned(self):
         tk, tr = make()
         tr['plan_name'] = 'Another plan'
