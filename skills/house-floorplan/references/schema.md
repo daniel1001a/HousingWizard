@@ -25,6 +25,7 @@ A complete working example is in the repository at `examples/sample-house/`.
     "scale_px_per_unit": 12,
     "scale_from": "Living room width label 14'7\" = 175 px",
     "scale_check": "Kitchen length label 13'7\" = 163 px, within 1%",
+    "overlay_confirmed": {"by": "Buyer name", "on": "2026-09-14", "note": "Checked every wall and door against the listing image"},
     "notes": ""
   },
   "floors": [
@@ -46,6 +47,7 @@ A complete working example is in the repository at `examples/sample-house/`.
 
 ### Fields
 
+- `source.overlay_confirmed`: `{by, on, note}`. Set only after a person has laid the overlay over the original plan and checked it. `by` names the person, `on` is a date as YYYY-MM-DD, `note` is free text. If it is missing or malformed the plan is UNCONFIRMED: `validate_plan.py` says so, and cost outputs must be marked UNCONFIRMED or refused. Do not fill it in on the buyer's behalf and do not copy it from an earlier version of the plan; a changed transcription needs a new check.
 - `elevation`: height of this floor's surface relative to the main floor. Basements are negative.
 - `height`: floor-to-ceiling. `height_source` is required; only `measured` means a tape or laser on site.
 - `image_origin_px`: where this floor's (0, 0) sits in the source image, used by the overlay.
@@ -56,6 +58,9 @@ A complete working example is in the repository at `examples/sample-house/`.
   - `hinge`: `"a"` or `"b"`, which end of the opening the hinge is at, counted along the wall from a to b.
   - `swing`: `"left"` or `"right"` of the wall direction a to b, which side the door opens into. In image coordinates (y down), for a wall drawn left to right, "left" is up the page.
 - `rooms[].use`: one of living, dining, kitchen, bedroom, bath, closet, hall, stair, office, laundry, utility, storage, garage, porch, outdoor, other. Name rooms by position or function (for example "back-left bedroom"), not by which relative will sleep there, unless the buyer asks otherwise.
+- `openings[].leaves` (optional): whole number of door leaves, used for door counts in the takeoff. Absent means the takeoff falls back to a default and marks the line soft.
+- `floors[].floor_thickness` (optional): thickness of the floor structure in the plan's units, for ceiling-to-ceiling checks. Not used for any quantity today.
+- `stairs[].risers` (optional): whole number of risers counted on site or read from the plan. Absent means any riser count is an estimate and is marked soft.
 - `stairs[]`: `up` is the direction of travel going up (`-y`, `+y`, `-x`, `+x`). On the upper floor, draw the stair opening with `"void": true`.
 - `fixtures[]`: `at` is the center, `size` is width and depth, `rot` in degrees clockwise. Kinds used by the viewer for height: toilet, sink, island, range, fridge, dishwasher, tub, shower, washer, dryer, boiler, water-heater, furnace, panel, counter.
 - `unknown[]`: areas the plan does not show. They become on-site checks.

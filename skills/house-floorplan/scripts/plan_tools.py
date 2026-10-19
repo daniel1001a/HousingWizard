@@ -4,6 +4,7 @@ Coordinates: x to the right, y down (same as the source image), in the plan's un
 Each floor has its own origin. Standard library only.
 """
 import copy
+import datetime
 import json
 import math
 
@@ -208,6 +209,76 @@ def _flag(i, c, label, text):
 
 # ---------- validation ----------
 
+def overlay_status(plan):
+    """('confirmed', info) or ('UNCONFIRMED', reason). Cost outputs must not be shown as firm when UNCONFIRMED.
+
+    The buyer confirms by checking the transcription overlay against the original image, then records
+    source.overlay_confirmed {by, on, note}. Nothing else counts: an AI saying the overlay looks right does not.
+    """
+    oc = (plan.get('source') or {}).get('overlay_confirmed')
+    if not oc:
+        return 'UNCONFIRMED', 'source.overlay_confirmed is missing: no person has checked the transcription overlay against the original plan.'
+    problems = _overlay_problems(oc)
+    if problems:
+        return 'UNCONFIRMED', 'source.overlay_confirmed is not usable: ' + '; '.join(problems) + '.'
+    return 'confirmed', oc
+
+
+def _overlay_problems(oc):
+    if not isinstance(oc, dict):
+        return ['must be an object with by, on and note']
+    out = []
+    if not isinstance(oc.get('by'), str) or not oc['by'].strip():
+        out.append('"by" must name the person who checked')
+    on = oc.get('on')
+    try:
+        if not isinstance(on, str) or len(on) != 10:
+            raise ValueError(on)
+        datetime.date.fromisoformat(on)
+    except ValueError:
+        out.append('"on" must be a date as YYYY-MM-DD')
+    if 'note' in oc and not isinstance(oc['note'], str):
+        out.append('"note" must be text')
+    return out
+
+
+def _check_optional_fields(plan, errors, warnings):
+    """Optional fields used by the takeoff: opening leaves, stair risers, floor thickness, plan finishes."""
+    for f in plan.get('floors', []):
+        fid = f.get('id', '?')
+        ft_ = f.get('floor_thickness')
+        if ft_ is not None and (isinstance(ft_, bool) or not isinstance(ft_, (int, float)) or ft_ <= 0):
+            errors.append('%s: floor_thickness must be a positive number' % fid)
+        for o in f.get('openings', []):
+            lv = o.get('leaves')
+            if lv is not None and (isinstance(lv, bool) or not isinstance(lv, int) or lv < 1):
+                errors.append('%s opening %s: leaves must be a whole number of 1 or more' % (fid, o.get('id')))
+        for st in f.get('stairs', []):
+            rs = st.get('risers')
+            if rs is not None and (isinstance(rs, bool) or not isinstance(rs, int) or rs < 1):
+                errors.append('%s stair %s: risers must be a whole number of 1 or more' % (fid, st.get('id')))
+    fin = plan.get('finishes')
+    if fin is None:
+        return
+    if not isinstance(fin, dict):
+        errors.append('finishes must be an object keyed by floor id')
+        return
+    floor_ids = {f.get('id') for f in plan.get('floors', [])}
+    for fid, block in fin.items():
+        if fid not in floor_ids:
+            warnings.append('finishes: floor %r is not in the plan, so it is ignored.' % fid)
+        if not isinstance(block, dict):
+            errors.append('finishes[%s] must be an object with default and per-room entries' % fid)
+            continue
+        for key, spec in block.items():
+            if not isinstance(spec, dict):
+                errors.append('finishes[%s][%s] must be an object' % (fid, key))
+                continue
+            for flag in ('paint', 'baseboard'):
+                if flag in spec and not isinstance(spec[flag], bool):
+                    errors.append('finishes[%s][%s].%s must be true or false' % (fid, key, flag))
+
+
 def validate(plan, changes=None):
     errors, warnings, human = [], [], []
     if plan.get('schema') != PLAN_SCHEMA:
@@ -219,6 +290,10 @@ def validate(plan, changes=None):
         warnings.append('source.scale_from is empty: say which labeled dimension set the scale.')
     if not src.get('scale_check'):
         warnings.append('source.scale_check is empty: check the scale against a second labeled dimension.')
+    status, detail = overlay_status(plan)
+    if status != 'confirmed':
+        human.append('UNCONFIRMED transcription: %s Lay the overlay over the original plan and check every wall, door and room before using any quantity or cost.' % detail)
+    _check_optional_fields(plan, errors, warnings)
     ft = plan.get('units') == 'ft'
     for f in plan.get('floors', []):
         fid = f.get('id', '?')
