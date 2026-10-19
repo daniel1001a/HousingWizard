@@ -40,8 +40,8 @@ So every skill here is built around the same idea: let the AI read, cross-check,
 | `house-inspection` | Turn the report into a short, credible request: what to repair, what to credit, what to leave out |
 | `house-contract` | Read the contract and riders: standard, risky, not worth raising; questions for your attorney; every deadline |
 | `house-closing` | Commitment dates, rate lock, insurance, final walkthrough, wire fraud protection, first week after closing |
-| `house-renovation` | Budget split by licensed work, materials and labor; permit order; quote packages; when and where to buy |
-| `house-floorplan` | Floor plan image to checked plan, 3D before and after, quantities, and a list of what to verify |
+| `house-renovation` | Budget split by licensed work, materials and labor; permit order; quote packages; when and where to buy. With a checked plan, costs come from your own sourced price book |
+| `house-floorplan` | Floor plan image to checked plan, 3D before and after, traceable quantities, a sourced cost range, dated NYC permit answers, per-trade quote packages, and a list of what to verify |
 
 Scripts are plain Python 3 with no packages to install.
 
@@ -58,6 +58,22 @@ Give it a listing or agent floor plan. It transcribes the plan, lays the transcr
 | ![3D before](docs/images/3d-before.png) | ![3D after](docs/images/3d-after.png) |
 
 It also produces floor, paint and baseboard quantities per room and a "to verify" list (unmeasured heights, areas the plan did not show, wall removals that need a structural check, a bedroom below grade that needs a legal-height check). Open `examples/sample-house/floorplan.html` to try it with a fictional house.
+
+### Cost and quote packages
+
+Once a person has confirmed the overlay, the same plan can go one step further. Plain Python scripts, no AI in the numbers:
+
+| Script | Writes | What it does |
+|---|---|---|
+| `takeoff.py` | `takeoff.json` | Every quantity with its rule ID, the JSON pointers it read, a hard or soft flag and the scale source |
+| `costbook_check.py` | (prints) | Checks your price book: every unit price needs a source, a date, a kind and a license |
+| `costs.py` | `costs.json` | Quantity times unit price in three layers (licensed, materials, labor), contingency, and an E0 to E3 grade. A BLS wage is a `wage_floor`, never a quote |
+| `trades.py` | `trades.json` | Permit, license, design-professional and lead-safe answers (`required`, `exempt` or `unknown_confirm`) with citation, official URL and the date read. New York City only |
+| `export_package.py` | `packages/<trade>/` | `scope.md`, `quantities.csv` and `assumptions.md` per trade, with no prices, for you to review and send |
+
+`build_viewer.py plan.json --costs costs.json --trades-file trades.json` adds tab 6, "Cost & packages", to the page.
+
+What keeps this honest: the default price book is empty, so nothing is priced until you record a quote or a looked-up price; a line with no price stays unpriced; if nobody confirmed the overlay every output says UNCONFIRMED; and every output ends with a fixed "This tool cannot check" list (load-bearing walls, hidden conditions, licensed work, waste and delivery, whether a rule is current, and what a contractor will actually quote). The scripts write files and send nothing. See [release notes](docs/release-notes.md).
 
 ## Install
 
@@ -144,7 +160,7 @@ Contributions for other states and cities are welcome; see [CONTRIBUTING.md](CON
 
 ## Privacy
 
-Your case file holds your finances and personal details. Keep it in a private folder; if you use git, use a private repository. The scripts only call public government APIs (NYC Open Data, NYC Geosearch, the US Census geocoder, FEMA) and send nothing else anywhere. The floor-plan page embeds your image and runs offline.
+Your case file holds your finances and personal details. Keep it in a private folder; if you use git, use a private repository. The scripts only call public government APIs (NYC Open Data, NYC Geosearch, the US Census geocoder, FEMA) and send nothing else anywhere. The floor-plan page embeds your image and runs offline. The cost, permit and package scripts read local files and write local files; they never send a package to anyone.
 
 ## Development
 
