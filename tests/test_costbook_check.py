@@ -186,6 +186,44 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(b, before)
 
 
+class LinkFieldTests(unittest.TestCase):
+    def errors(self, b):
+        return cc.check(b, TODAY)[0]
+
+    def test_valid_layer_finish_and_wage_link_pass(self):
+        b = book()
+        entry(b, 'quote-floor-001').update(layer='licensed', finish='refinish oak')
+        entry(b, 'prod-paint-001').update(wage_entry='bls-painter-mean')
+        self.assertEqual(self.errors(b), [])
+
+    def test_unknown_layer_is_an_error(self):
+        b = book()
+        entry(b, 'quote-floor-001')['layer'] = 'overhead'
+        self.assertTrue(any('layer must be one of' in e for e in self.errors(b)))
+
+    def test_wage_and_productivity_entries_have_no_layer(self):
+        b = book()
+        entry(b, 'bls-painter-mean')['layer'] = 'labor'
+        self.assertTrue(any('no layer' in e for e in self.errors(b)))
+
+    def test_empty_finish_is_an_error(self):
+        b = book()
+        entry(b, 'quote-floor-001')['finish'] = ' '
+        self.assertTrue(any('finish must be' in e for e in self.errors(b)))
+
+    def test_wage_entry_must_point_at_a_bls_wage_entry(self):
+        b = book()
+        entry(b, 'prod-paint-001')['wage_entry'] = 'quote-floor-001'
+        self.assertTrue(any('wage_entry' in e and 'not a bls_wage' in e for e in self.errors(b)))
+        entry(b, 'prod-paint-001')['wage_entry'] = 'nope'
+        self.assertTrue(any("wage_entry 'nope'" in e for e in self.errors(b)))
+
+    def test_wage_entry_only_on_productivity(self):
+        b = book()
+        entry(b, 'quote-floor-001')['wage_entry'] = 'bls-painter-mean'
+        self.assertTrue(any('belongs on a productivity entry' in e for e in self.errors(b)))
+
+
 class CliTests(unittest.TestCase):
     def run_cli(self, path, *args):
         return subprocess.run([sys.executable, SCRIPT, path, '--today', TODAY.isoformat()] + list(args),

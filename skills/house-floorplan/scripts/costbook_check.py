@@ -39,6 +39,10 @@ BLOCKED_DOMAINS = ('rsmeans.com', 'homewyse.com', 'angi.com', 'homeadvisor.com')
 
 KINDS = ('quote', 'retail', 'bls_wage', 'productivity', 'assumption')
 
+# The three budget layers of the house-renovation skill. An entry may name its layer; costs.py
+# supplies a default per kind when it does not.
+LAYERS = ('licensed', 'materials', 'labor')
+
 # License hard limit: which license values each kind may carry.
 LICENSES = {
     'quote': ('own-quote',),
@@ -152,6 +156,16 @@ def check(book, today=None, max_age=None, strict=False):
         for field in ('source', 'note'):
             for d in _blocked(e.get(field)):
                 errors.append('%s: %s mentions %s, which this project may not copy from' % (where, field, d))
+        layer = e.get('layer')
+        if layer is not None and layer not in LAYERS:
+            errors.append('%s: layer must be one of %s' % (where, ', '.join(LAYERS)))
+        if layer is not None and kind in ('bls_wage', 'productivity'):
+            errors.append('%s: a %s entry has no layer; it feeds wage_floor, not the total' % (where, kind))
+        fin = e.get('finish')
+        if fin is not None and (not isinstance(fin, str) or not fin.strip()):
+            errors.append('%s: finish must be non-empty text' % where)
+        if e.get('wage_entry') is not None and kind != 'productivity':
+            errors.append('%s: wage_entry belongs on a productivity entry' % where)
         _check_source_url(e, kind, where, errors)
         _check_date(e, kind, where, today, ages, strict, errors, warnings)
         if kind == 'bls_wage':
@@ -170,6 +184,11 @@ def check(book, today=None, max_age=None, strict=False):
             errors.append('%s: label "%s" requires example: true' % (where, EXAMPLE_LABEL))
         if e.get('example') is True:
             warnings.append('%s: example entry, never used to price a line' % where)
+    by_id = {e.get('id'): e for e in entries if isinstance(e, dict)}
+    for e in entries:
+        ref = e.get('wage_entry') if isinstance(e, dict) else None
+        if ref is not None and (ref not in by_id or by_id[ref].get('kind') != 'bls_wage'):
+            errors.append('entries (%s): wage_entry %r is not a bls_wage entry in this costbook' % (e.get('id'), ref))
     return errors, warnings
 
 
