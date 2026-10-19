@@ -315,5 +315,74 @@ class Cli(unittest.TestCase):
         self.assertNotEqual(self.run_cli(os.path.join(self.tmp.name, 'nope.json')).returncode, 0)
 
 
+class ToFill(unittest.TestCase):
+    """The "Fill in before sending" list names blanks the inputs left; it never fills them."""
+
+    def test_confirmed_full_inputs_leave_only_what_is_really_blank(self):
+        tk, tr = make()
+        r = ep.build(tk, tr, None, TODAY)
+        self.assertEqual(set(r['to_fill']), set(r['packages']))
+        for trade, files in r['packages'].items():
+            self.assertIn('## Fill in before sending', files['assumptions.md'], trade)
+            self.assertFalse(any('UNCONFIRMED' in x or 'not confirmed' in x for x in r['to_fill'][trade]), trade)
+
+    def test_unconfirmed_overlay_is_listed(self):
+        tk, tr = make(confirmed=False)
+        r = ep.build(tk, tr, None, TODAY)
+        self.assertTrue(all(any('not confirmed' in x for x in v) for v in r['to_fill'].values()))
+
+    def test_unknown_quantity_is_listed_with_its_room(self):
+        tk, tr = make()
+        tk = copy.deepcopy(tk)
+        tk['lines'][0]['quantity'] = None
+        trade = ep.ITEM_TRADE[tk['lines'][0]['item']]
+        r = ep.build(tk, tr, None, TODAY)
+        hit = [x for x in r['to_fill'][trade] if 'say "unknown"' in x]
+        self.assertEqual(len(hit), 1)
+        self.assertIn(tk['lines'][0]['room'], hit[0])
+
+    def test_missing_plan_name_is_listed(self):
+        tk, tr = make()
+        tk = copy.deepcopy(tk)
+        tk['plan_name'] = None
+        r = ep.build(tk, tr, None, TODAY)
+        self.assertTrue(all(any(x.startswith('Plan name') for x in v) for v in r['to_fill'].values()))
+
+    def test_without_trades_section_six_is_listed(self):
+        tk, _ = make(with_trades=False)
+        r = ep.build(tk, None, None, TODAY)
+        for trade, items in r['to_fill'].items():
+            self.assertTrue(any('Not assessed' in x for x in items), trade)
+
+    def test_no_finish_is_listed(self):
+        tk, tr = make()
+        r = ep.build(tk, tr, None, TODAY)
+        for trade in r['packages']:
+            lines = [ln for ln in tk['lines'] if ep.ITEM_TRADE.get(ln['item']) == trade]
+            blank = lines and all(ln.get('finish') is None and ln.get('wall_tile_height') is None for ln in lines)
+            self.assertEqual(bool(blank), any('no finish' in x for x in r['to_fill'][trade]), trade)
+
+    def test_nothing_is_invented(self):
+        tk, tr = make()
+        r = ep.build(tk, tr, None, TODAY)
+        for trade, files in r['packages'].items():
+            self.assertNotIn('$', files['assumptions.md'], trade)
+            for x in r['to_fill'][trade]:
+                self.assertIsNone(re.search(r'\d+(\.\d+)? ?(sq ft|ft|m2|m)\b', x), x)
+                self.assertFalse(EM_DASH in x or CJK.search(x), x)
+
+    def test_cli_summary_lists_the_blanks(self):
+        tk, tr = make(confirmed=False)
+        with tempfile.TemporaryDirectory() as d:
+            a = os.path.join(d, 'takeoff.json')
+            with open(a, 'w', encoding='utf-8') as f:
+                json.dump(tk, f)
+            p = subprocess.run([sys.executable, SCRIPT, a, '--out', os.path.join(d, 'pk')], capture_output=True, text=True)
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertTrue(p.stdout.startswith('UNCONFIRMED'))
+        self.assertIn('Fill in before sending painting:', p.stdout)
+        self.assertIn('Not assessed', p.stdout)
+
+
 if __name__ == '__main__':
     unittest.main()

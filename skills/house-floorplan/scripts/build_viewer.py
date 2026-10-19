@@ -61,7 +61,7 @@ def cost_block(plan, changes, proposed, problems, costs_doc, trades_doc):
     """Data for tab 6. Takeoffs are computed here from the plan; costs and trades are passed in, never computed,
     so a page built without them prices nothing and decides no permit question."""
     block = {'takeoff': {}, 'errors': [], 'warnings': [], 'costs': costs_doc, 'trades': trades_doc,
-             'packages': {}, 'package_note': None}
+             'packages': {}, 'package_to_fill': {}, 'package_note': None}
     try:
         tk = takeoff.compute(plan)
         tk['state'] = 'existing'
@@ -87,6 +87,7 @@ def cost_block(plan, changes, proposed, problems, costs_doc, trades_doc):
         try:
             res = export_package.build(tk, trades_doc)
             block['packages'] = res['packages']
+            block['package_to_fill'] = res['to_fill']
             block['warnings'].extend(res['warnings'])
             block['package_state'] = tk['state']
         except export_package.ExportError as exc:
