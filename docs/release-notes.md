@@ -1,6 +1,6 @@
 # Release notes: cost and quote packages
 
-## v0.1.0
+## v0.2.0
 
 This release extends `house-floorplan` and `house-renovation` from "transcribe and check a plan" to "transcribe, take off, price from your own sources, answer permit questions with citations, and prepare quote packages". The skills are installed the same way as before: `npx skills add daniel1001a/HousingWizard`.
 
