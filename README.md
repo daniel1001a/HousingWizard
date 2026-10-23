@@ -1,8 +1,6 @@
 # HousingWizard
 
-[![test](https://github.com/daniel1001a/HousingWizard/actions/workflows/test.yml/badge.svg)](https://github.com/daniel1001a/HousingWizard/actions/workflows/test.yml)
-[![License: MIT](https://img.shields.io/github/license/daniel1001a/HousingWizard)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/daniel1001a/HousingWizard)](https://github.com/daniel1001a/HousingWizard/releases/latest)
+[![test](https://github.com/daniel1001a/HousingWizard/actions/workflows/test.yml/badge.svg)](https://github.com/daniel1001a/HousingWizard/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/github/license/daniel1001a/HousingWizard)](LICENSE) [![Release](https://img.shields.io/github/v/release/daniel1001a/HousingWizard)](https://github.com/daniel1001a/HousingWizard/releases/latest)
 
 **Agent skills for people buying a home. Your AI works for your side of the deal, and it tells you what it cannot check.**
 
