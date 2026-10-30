@@ -38,6 +38,11 @@ import trades as trades_mod  # noqa: E402
 ASSETS = os.path.join(HERE, '..', 'assets')
 
 
+def read(path, **kw):
+    with open(path, encoding='utf-8', **kw) as fh:
+        return fh.read()
+
+
 def data_uri(path):
     mime = mimetypes.guess_type(path)[0] or 'application/octet-stream'
     if path.endswith('.svg'):
@@ -140,10 +145,11 @@ def main():
         'plan': plan, 'changes': changes, 'proposed': proposed, 'image': image, 'quantities': qty,
         'validation': {'errors': errors, 'warnings': warnings, 'human': human, 'flags': flags, 'problems': problems},
         'cost': cost_block(plan, changes, proposed, problems, costs_doc, trades_doc),
+        'measure': {'report': pt.measurement_report(plan), 'next': pt.measure_next(plan)},
         'built': datetime.date.today().isoformat(),
     }
-    tpl = open(os.path.join(ASSETS, 'viewer.html')).read()
-    vendor = '\n'.join(open(os.path.join(ASSETS, 'vendor', f)).read() for f in ('three.min.js', 'OrbitControls.js'))
+    tpl = read(os.path.join(ASSETS, 'viewer.html'))
+    vendor = '\n'.join(read(os.path.join(ASSETS, 'vendor', f)) for f in ('three.min.js', 'OrbitControls.js'))
     blob = json.dumps(data).replace('</', '<\\/')
     for key, val in (('/*__DATA__*/', blob), ('/*__VENDOR__*/', vendor)):
         assert key in tpl, key

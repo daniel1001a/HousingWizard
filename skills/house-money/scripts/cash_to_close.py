@@ -28,18 +28,33 @@ Presets:
            1.8% under $500k and 1.925% at $500k+ (checked 2026-09; the lender
            usually pays a further 0.25%). Seller customarily pays the city and
            state transfer taxes. Title insurance, attorney and misc are
-           assumptions.
+           assumptions. Rules older than 180 days print a warning (--today
+           sets the date for repeatable runs).
 
-Standard library only. Python 3.8+.
+Property type (nyc preset), --property:
+  house, condo  Mortgage recording tax applies to the loan.
+  coop          A co-op share loan is not a recorded mortgage, so no mortgage
+                recording tax (NYC Department of Finance, mortgage recording tax
+                statistical profiles). The mansion tax still applies to co-op
+                purchases of $1M or more (NYS Tax Law 1402-a; NYS Department of
+                Taxation TSB-A-10(2)R and form TP-584 instructions). Co-op
+                closings have other costs (flip tax, lien search, recognition
+                agreement) that this script does not know: pass them in --misc.
+
+Standard library only. Python 3.9+.
 """
 import argparse
+import datetime
 import json
+import math
 import sys
 
 NYC_MANSION = [  # (price at or above, rate on the full price)
     (25_000_000, 3.9), (20_000_000, 3.75), (15_000_000, 3.5), (10_000_000, 3.25),
     (5_000_000, 2.25), (3_000_000, 1.5), (2_000_000, 1.25), (1_000_000, 1.0),
 ]
+NYC_RULES_CHECKED = '2026-09-01'  # month-only source date read as the first of the month
+NYC_RULES_STALE_DAYS = 180  # same limit as house-floorplan/scripts/trades.py
 
 
 def pmt(loan, annual_pct, years):
@@ -65,9 +80,13 @@ def closing_costs(price, loan, a):
         return 'you' if flag in supplied else 'assumed'
     if a.preset == 'nyc':
         rate = nyc_mansion_rate(price)
-        items.append(('Mansion tax (%.2f%% of full price)' % rate, price * rate / 100, 'rule, checked 2026-09'))
-        mrt = 1.8 if loan < 500_000 else 1.925
-        items.append(('Mortgage recording tax, buyer share (%.3f%%)' % mrt, loan * mrt / 100, 'rule, checked 2026-09'))
+        rule = 'rule, checked ' + NYC_RULES_CHECKED
+        items.append(('Mansion tax (%.2f%% of full price)' % rate, price * rate / 100, rule))
+        if a.property == 'coop':
+            items.append(('Mortgage recording tax: none on a co-op share loan', 0, rule))
+        else:
+            mrt = 1.8 if loan < 500_000 else 1.925
+            items.append(('Mortgage recording tax, buyer share (%.3f%%)' % mrt, loan * mrt / 100, rule))
         items.append(('Title insurance (%.2f%% of price)' % a.title_pct, price * a.title_pct / 100, src('title_pct')))
         items.append(('Attorney', a.attorney, src('attorney')))
         items.append(('Lender, recording, other fees', a.misc, src('misc')))
@@ -100,6 +119,30 @@ def resolve_loan(price, a):
     return price * (100 - a.down_pct) / 100
 
 
+def stale_warnings(a):
+    """One warning when the nyc preset's rule date is older than NYC_RULES_STALE_DAYS."""
+    if a.preset != 'nyc':
+        return []
+    checked = datetime.date.fromisoformat(NYC_RULES_CHECKED)
+    age = (a.today - checked).days
+    if age <= NYC_RULES_STALE_DAYS:
+        return []
+    return ['NYC tax rates were checked on %s, %d days ago. Re-check the NYC Department of Finance and NYS '
+            'mansion tax pages before relying on them.' % (NYC_RULES_CHECKED, age)]
+
+
+def report_warnings(a, out):
+    """Put warnings in the JSON output, or print them to stderr for text output."""
+    w = stale_warnings(a)
+    if not w:
+        return
+    if a.json:
+        out['warnings'] = w
+    else:
+        for line in w:
+            print('WARNING: ' + line, file=sys.stderr)
+
+
 def cmd_scenario(a):
     price = a.price
     loan = resolve_loan(price, a)
@@ -114,15 +157,17 @@ def cmd_scenario(a):
         'monthly': {str(r): {k: round(v) for k, v in monthly(price, loan, r, a).items()} for r in rates},
     }
     if a.preset == 'nyc':
+        out['property'] = a.property
         out['contract_deposit_10pct'] = round(price * 0.10)
     if a.cash is not None:
         left = a.cash - need - a.reserve - a.renovation
         out['cash_available'] = a.cash
         out['left_after_reserve_and_renovation'] = round(left)
+    report_warnings(a, out)
     if a.json:
         print(json.dumps(out, indent=1))
         return
-    print('Preset: %s' % a.preset)
+    print('Preset: %s%s' % (a.preset, ', property %s' % a.property if a.preset == 'nyc' else ''))
     print('Price            $%12s' % f'{price:,.0f}')
     print('Loan             $%12s   LTV %.1f%%%s' % (f'{loan:,.0f}', out['ltv_pct'], '   (over 80%%: PMI assumed at %.2f%%/yr)' % a.pmi_rate if out['ltv_pct'] > 80 else ''))
     print('Down payment     $%12s' % f'{down:,.0f}')
@@ -201,13 +246,14 @@ def cmd_max_price(a):
         p95 = price * 0.95
         roomy_pct = [round((p95 - max(x[0] for x in roomy)) / p95 * 100, 1), round((p95 - min(x[0] for x in roomy)) / p95 * 100, 1)]
     out = {
-        'max_price': round(price, -3), 'binding_limit': binding,
+        'max_price': math.floor(price / 1000) * 1000, 'binding_limit': binding,
         'loan_range': [round(lo_loan, -3), round(hi_loan, -3)],
         'down_payment_pct_range': [round((price - hi_loan) / price * 100, 1), round((price - lo_loan) / price * 100, 1)],
         'rate': a.rate, 'monthly_cap': a.monthly_cap,
         'cash_after_reserve_and_renovation': a.cash - a.reserve - a.renovation,
         'down_payment_pct_range_at_95pct_of_max': roomy_pct,
     }
+    report_warnings(a, out)
     if a.json:
         print(json.dumps(out, indent=1))
         return
@@ -227,6 +273,13 @@ def cmd_max_price(a):
 SUPPLIED = set()
 
 
+def _date(s):
+    try:
+        return datetime.date.fromisoformat(s)
+    except ValueError:
+        raise argparse.ArgumentTypeError('expected YYYY-MM-DD, got %r' % s)
+
+
 class Recorder(argparse.Action):
     """Remember which flags the user actually passed, so output can label assumptions."""
     def __call__(self, parser, ns, values, option_string=None):
@@ -236,6 +289,9 @@ class Recorder(argparse.Action):
 
 def common(p):
     p.add_argument('--preset', choices=['generic', 'nyc'], default='generic')
+    p.add_argument('--property', choices=['house', 'condo', 'coop'], default='house',
+                   help='nyc preset: coop drops the mortgage recording tax (default house)')
+    p.add_argument('--today', type=_date, default=None, help='YYYY-MM-DD for repeatable staleness checks (default: today)')
     p.add_argument('--tax-monthly', type=float, action=Recorder, help='property tax per month, from the real bill')
     p.add_argument('--tax-rate', type=float, default=1.2, action=Recorder, help='annual property tax as %% of price (default 1.2, assumed)')
     p.add_argument('--insurance', type=float, default=200, action=Recorder, help='insurance per month (default 200, assumed)')
@@ -252,7 +308,7 @@ def common(p):
     p.add_argument('--json', action='store_true')
 
 
-def main(argv=None):
+def parse(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='cmd', required=True)
     s = sub.add_parser('scenario', help='cash to close and monthly payment for one price')
@@ -274,6 +330,12 @@ def main(argv=None):
     SUPPLIED.clear()
     a = ap.parse_args(argv)
     a._supplied = SUPPLIED
+    a.today = a.today or datetime.date.today()
+    return a
+
+
+def main(argv=None):
+    a = parse(argv)
     if a.cmd == 'scenario':
         cmd_scenario(a)
     else:

@@ -23,12 +23,14 @@ How to read it:
 import argparse
 import json
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 
 CENSUS = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress'
 NFHL = 'https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28/query'
 UA = {'User-Agent': 'housingwizard-us-flood/1.0'}
+NET_ERRORS = (urllib.error.URLError, TimeoutError, OSError, ValueError)
 
 
 def get(url, params):
@@ -65,7 +67,10 @@ def main():
     a = ap.parse_args()
     label = None
     if a.address:
-        c = geocode(a.address)
+        try:
+            c = geocode(a.address)
+        except NET_ERRORS as e:
+            sys.exit('The Census geocoder failed: %s: %s. Try again, or pass --lat and --lon.' % (type(e).__name__, e))
         if not c:
             sys.exit('The Census geocoder found no match. Try the full address with ZIP, or pass --lat and --lon.')
         if a.pick is None:
@@ -81,10 +86,15 @@ def main():
         lat, lon = a.lat, a.lon
     else:
         ap.error('give an address (then --pick), or --lat and --lon')
-    z = flood_zone(lat, lon)
+    try:
+        z = flood_zone(lat, lon)
+    except NET_ERRORS as e:
+        sys.exit('The FEMA flood map service failed: %s: %s. Try again later.' % (type(e).__name__, e))
     res = {'address': label, 'lat': lat, 'lon': lon, 'nfhl': z}
     if a.json:
         print(json.dumps(res, indent=1))
+        if isinstance(z, dict):
+            sys.exit(1)
         return
     print('Point: %s (%.5f, %.5f)' % (label or 'coordinates given', lat, lon))
     if isinstance(z, dict):

@@ -282,6 +282,128 @@ def _check_optional_fields(plan, errors, warnings):
                 errors.append('finishes[%s][%s].wall_tile_height must be a positive number' % (fid, key))
 
 
+# ---------- tape measurements ----------
+
+# Assumption, not a standard: tape measurements that agree within 3 percent are read as one consistent
+# scale error. Tape readings of a room wall to wall are rarely better than an inch in 10 to 15 ft, and
+# listing plans are drawn to a few percent at best. Above this, a single factor cannot fix the plan.
+MEASURE_SPREAD = 0.03
+# Assumption: a factor further than 2 percent from 1 moves areas by about 4 percent, enough to matter in a quote.
+OFF_SCALE = 0.02
+
+
+def _measured_length(plan, m):
+    """(plan length, label, error) for one source.measurements[] entry. Exactly one of length or error is set."""
+    ref = m.get('ref')
+    if not isinstance(ref, dict):
+        return None, None, 'ref must be an object with floor and room or wall'
+    f = next((x for x in plan.get('floors', []) if x.get('id') == ref.get('floor')), None)
+    if f is None:
+        return None, None, 'unknown floor %r' % ref.get('floor')
+    if 'room' in ref:
+        r = next((x for x in f.get('rooms', []) if x.get('id') == ref['room']), None)
+        if r is None:
+            return None, None, 'no room %r on %s' % (ref['room'], f['id'])
+        if ref.get('axis') not in ('x', 'y'):
+            return None, None, 'a room measurement needs axis "x" or "y"'
+        if len(r.get('poly', [])) < 3:
+            return None, None, 'room %s has no polygon' % r['id']
+        x0, y0, x1, y1 = bbox(r['poly'])
+        return (x1 - x0) if ref['axis'] == 'x' else (y1 - y0), '%s/%s' % (f['id'], r['id']), None
+    if 'wall' in ref:
+        w = next((x for x in f.get('walls', []) if x.get('id') == ref['wall']), None)
+        if w is None:
+            return None, None, 'no wall %r on %s' % (ref['wall'], f['id'])
+        L = wall_len(w)
+        if ref.get('face') == 'outside':
+            # Outside corner to corner runs half a wall thickness past each end of the center line,
+            # assuming the corner walls are as thick as this one.
+            L += w.get('thick', 0)
+        elif ref.get('face') not in (None, 'center'):
+            return None, None, 'wall face must be "center" or "outside"'
+        return L, '%s/%s' % (f['id'], w['id']), None
+    return None, None, 'ref needs a room (with axis) or a wall'
+
+
+def measurement_report(plan):
+    """Compare source.measurements[] (tape readings) with the plan's lengths.
+
+    Returns {status, factor, spread, items, errors, disagree}. status is
+    none (no usable measurement), single (scale set, not cross-checked), consistent (spread at most
+    MEASURE_SPREAD) or distorted (no single factor fits). factor is the median of value / plan length.
+    """
+    items, errors = [], []
+    seen = set()
+    for i, m in enumerate((plan.get('source') or {}).get('measurements') or []):
+        mid = m.get('id') if isinstance(m, dict) else None
+        tag = 'source.measurements[%d]%s' % (i, ' (%s)' % mid if mid else '')
+        if not isinstance(m, dict):
+            errors.append('%s: must be an object' % tag)
+            continue
+        if not mid or mid in seen:
+            errors.append('%s: %s' % (tag, 'duplicate id' if mid else 'needs an id'))
+            continue
+        seen.add(mid)
+        v = m.get('value')
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v <= 0:
+            errors.append('%s: value must be a positive number in the plan units' % tag)
+            continue
+        L, label, err = _measured_length(plan, m)
+        if err:
+            errors.append('%s: %s' % (tag, err))
+            continue
+        if L <= 0:
+            errors.append('%s: %s has no length on the plan' % (tag, label))
+            continue
+        items.append({'id': mid, 'ref': m['ref'], 'target': label, 'value': v, 'plan_len': round(L, 4), 'k': v / L})
+    rep = {'status': 'none', 'factor': None, 'spread': None, 'items': items, 'errors': errors, 'disagree': []}
+    if not items:
+        return rep
+    ks = sorted(x['k'] for x in items)
+    n = len(ks)
+    factor = ks[n // 2] if n % 2 else (ks[n // 2 - 1] + ks[n // 2]) / 2
+    for x in items:
+        x['deviation'] = round(x['k'] / factor - 1, 4)
+        x['k'] = round(x['k'], 4)
+    rep['factor'] = round(factor, 6)
+    rep['spread'] = round(ks[-1] / ks[0] - 1, 4)
+    if n == 1:
+        rep['status'] = 'single'
+    elif rep['spread'] <= MEASURE_SPREAD:
+        rep['status'] = 'consistent'
+    else:
+        rep['status'] = 'distorted'
+        far = sorted(items, key=lambda x: -abs(x['deviation']))
+        rep['disagree'] = [x for x in far if abs(x['deviation']) > MEASURE_SPREAD / 2] or far[:1]
+    return rep
+
+
+def measure_next(plan, n=3):
+    """Rooms whose tape measurement would check the most floor area: the largest rooms not yet measured,
+    each with its longer axis. Floor area, not cost, so it works without a price book."""
+    rep = measurement_report(plan)
+    done = {(x['ref'].get('floor'), x['ref'].get('room')) for x in rep['items'] if 'room' in x['ref']}
+    cands, total = [], 0.0
+    for f in plan.get('floors', []):
+        for r in f.get('rooms', []):
+            if len(r.get('poly', [])) < 3 or r.get('use') in ('outdoor', 'porch'):
+                continue
+            a = poly_area(r['poly'])
+            total += a
+            if (f.get('id'), r.get('id')) in done:
+                continue
+            x0, y0, x1, y1 = bbox(r['poly'])
+            axis = 'x' if (x1 - x0) >= (y1 - y0) else 'y'
+            cands.append({'floor': f.get('id'), 'room': r.get('id'), 'name': r.get('name', ''), 'axis': axis,
+                          'plan_len': round(max(x1 - x0, y1 - y0), 2), 'area': a})
+    cands.sort(key=lambda c: -c['area'])
+    out = []
+    for c in cands[:n]:
+        c['share'] = round(c.pop('area') / total, 3) if total else 0.0
+        out.append(c)
+    return out
+
+
 def validate(plan, changes=None):
     errors, warnings, human = [], [], []
     if plan.get('schema') != PLAN_SCHEMA:
@@ -289,6 +411,17 @@ def validate(plan, changes=None):
     if plan.get('units') not in ('ft', 'm'):
         errors.append('units must be "ft" or "m"')
     src = plan.get('source', {})
+    rep = measurement_report(plan)
+    errors.extend(rep['errors'])
+    if rep['status'] == 'distorted':
+        warnings.append('Tape measurements disagree by %.1f%%, more than %.0f%%, so no single scale fixes this plan. Furthest from the median: %s. Re-transcribe those rooms or walls from the measurements (that needs a new overlay check), or measure again.' % (
+            100 * rep['spread'], 100 * MEASURE_SPREAD,
+            ', '.join('%s %s (%+.1f%%)' % (x['id'], x['target'], 100 * x['deviation']) for x in rep['disagree'])))
+    elif rep['factor'] is not None and abs(rep['factor'] - 1) > OFF_SCALE:
+        warnings.append('Tape measurements say the plan is drawn %+.1f%% off scale (factor %.4f from %s). Run rescale_plan.py instead of editing rooms one by one.' % (
+            100 * (rep['factor'] - 1), rep['factor'], ', '.join(x['id'] for x in rep['items'])))
+    if rep['status'] == 'single':
+        human.append('Only one tape measurement (%s), so the scale is set but not cross-checked. Measure a second large room, ideally along the other axis.' % rep['items'][0]['id'])
     if not src.get('scale_from'):
         warnings.append('source.scale_from is empty: say which labeled dimension set the scale.')
     if not src.get('scale_check'):

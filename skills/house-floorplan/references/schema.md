@@ -26,6 +26,10 @@ A complete working example is in the repository at `examples/sample-house/`.
     "scale_from": "Living room width label 14'7\" = 175 px",
     "scale_check": "Kitchen length label 13'7\" = 163 px, within 1%",
     "overlay_confirmed": {"by": "Buyer name", "on": "2026-09-14", "note": "Checked every wall and door against the listing image"},
+    "measurements": [
+      {"id": "m1", "ref": {"floor": "1F", "room": "L", "axis": "x"}, "value": 14.17, "by": "Buyer", "on": "2026-09-20", "note": "wall to wall at waist height"},
+      {"id": "m2", "ref": {"floor": "1F", "wall": "w1", "face": "outside"}, "value": 28.1, "by": "Buyer", "on": "2026-09-20", "note": "outside, corner to corner"}
+    ],
     "notes": ""
   },
   "floors": [
@@ -48,6 +52,12 @@ A complete working example is in the repository at `examples/sample-house/`.
 ### Fields
 
 - `source.overlay_confirmed`: `{by, on, note}`. Set only after a person has laid the overlay over the original plan and checked it. `by` names the person, `on` is a date as YYYY-MM-DD, `note` is free text. If it is missing or malformed the plan is UNCONFIRMED: `validate_plan.py` says so, and cost outputs must be marked UNCONFIRMED or refused. Do not fill it in on the buyer's behalf and do not copy it from an earlier version of the plan; a changed transcription needs a new check.
+- `source.measurements[]` (optional): tape measurements taken on site, in the plan's units. They set the scale when the plan's own labels are wrong.
+  - A room `ref` (`floor`, `room`, `axis` `x` or `y`) is compared with the room polygon's extent along that axis. Polygons are interior, so measure wall to wall inside the room.
+  - A wall `ref` (`floor`, `wall`) is compared with the wall's center-line length. Add `"face": "outside"` for an outside corner-to-corner reading; that adds one wall thickness.
+  - Heights are not measurements here; they go in `floors[].height` with `height_source: "measured"`.
+  - `validate_plan.py` errors on an unknown floor, room or wall and on a value that is not positive. It warns when the median factor (measured / plan) is more than 2 percent from 1, and when two or more measurements disagree by more than 3 percent (`distorted`: no single factor fixes the plan).
+- `source.rescaled`: written by `scripts/rescale_plan.py` as `{factor, from, on}`. That script multiplies every plan coordinate and plan-read length by the factor and divides `scale_px_per_unit` by it, so the overlay does not move and `overlay_confirmed` stays valid. Wall thickness, heights, sills, heads, elevations, `image_origin_px` and `declared_area` are not changed. Any other geometry edit still needs a new overlay check.
 - `elevation`: height of this floor's surface relative to the main floor. Basements are negative.
 - `height`: floor-to-ceiling. `height_source` is required; only `measured` means a tape or laser on site.
 - `image_origin_px`: where this floor's (0, 0) sits in the source image, used by the overlay.

@@ -16,6 +16,8 @@ Every rule must have:
 2. The date you checked it.
 3. What it changes for a buyer, in plain words.
 
+Add an entry for each dated or time-sensitive rule to `tools/facts.json`: the file, a short `match` string copied verbatim from the text, the source URL (or `null` plus a `source` naming where to look), the date checked and a `kind` (`rate`, `tax`, `fee`, `code`, `dataset` or `process`). `tools/check_skills.py` fails if the match text is gone, and a weekly job runs `python3 tools/check_freshness.py` to list facts past their `max_age_days`. When you re-check a fact, update the text and its `checked` date in the same commit.
+
 Then mention the file in that skill's `SKILL.md` where the jurisdiction is chosen. Do not edit the shared rules block inside a SKILL.md directly; edit `tools/shared_rules.md` and run `python3 tools/sync_shared.py`.
 
 ## Writing style
@@ -30,6 +32,7 @@ Then mention the file in that skill's `SKILL.md` where the jurisdiction is chose
 ```bash
 python3 -m unittest discover tests
 python3 tools/check_skills.py
+python3 tools/check_freshness.py --structure-only
 ```
 
-If you changed behavior, add or update a case in `evals/evals.json`.
+If you changed behavior, add or update a case in `evals/evals.json`. If you changed a skill, run `python3 tools/run_evals.py --changed` (it uses your Claude Code or Codex subscription, not an API key) and commit the updated `evals/results/`.

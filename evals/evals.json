@@ -1,5 +1,5 @@
 {
-  "about": "Behavior checks for the skills, in the skill-creator evals format. Each case is a realistic prompt, the behavior we expect, and assertions a grader can check. Run each with and without the skills installed and compare. Not yet run at scale; results welcome in issues.",
+  "about": "Behavior checks for the skills, in the skill-creator evals format. Each case is a realistic prompt, the behavior we expect, and assertions a grader can check. Optional 'checks' are deterministic: {type: regex, pattern, flags, expect} or {type: absent, pattern}; a check with an 'assertion' field covers that assertion so no model grades it. Run with tools/run_evals.py, which compares each case with and without the skills.",
   "evals": [
     {
       "id": 1,
@@ -12,6 +12,15 @@
         "Mentions the option period as the inspection and termination window",
         "Says to confirm the exact deadline with their agent or the contract",
         "Ends with a human check"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "human check",
+          "flags": "i",
+          "expect": true,
+          "assertion": "Ends with a human check"
+        }
       ]
     },
     {
@@ -172,6 +181,90 @@
         "Asks the buyer to check the overlay against the original plan",
         "Says the packages contain quantities and scope but no prices",
         "Includes the list of what the tool cannot check"
+      ]
+    },
+    {
+      "id": 14,
+      "skill": "house-case-file",
+      "name": "new-fact-rewrites-conclusion",
+      "prompt": "Our case file for 12 Elm Road (a house we're considering in Queens) says under Decisions: 'Basement ceiling is 7 ft 2 in per the listing, so the basement room can be the third bedroom.' Today at the second showing we measured with a tape: 6 ft 4 in at the lowest point under the beam, 6 ft 9 in elsewhere. Please update the case file.",
+      "expected_output": "Rewrites the basement conclusion based on the measured height, records the change in the what-changed log with the date and source, tags the new measurement as seen by the buyer, and routes the legal-bedroom question to the jurisdiction's rule rather than asserting it.",
+      "assertions": [
+        "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
+        "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
+        "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
+        "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
+        "Ends with a human check"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "human check",
+          "flags": "i",
+          "expect": true,
+          "assertion": "Ends with a human check"
+        },
+        {
+          "type": "regex",
+          "pattern": "6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+          "flags": "i",
+          "expect": true
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "skill": "house-visit",
+      "name": "basement-bedroom-measure-first",
+      "prompt": "We're seeing a house in Columbus, Ohio this weekend. The listing calls the finished basement room a bedroom. What should we check at the showing to know whether it can really count as a bedroom?",
+      "expected_output": "Asks the buyer to measure clear ceiling height with a tape, including under beams and ducts, and to check egress (a window or door large enough to get out); names Ohio or Columbus as the jurisdiction whose rule decides and says to confirm it, instead of asserting a code number as fact.",
+      "assertions": [
+        "Asks the buyer to measure ceiling height with a tape, including the lowest point under beams or ducts",
+        "Mentions egress: a window or door large enough to escape through",
+        "Does not state a specific minimum height or window size as the rule in Columbus without saying to confirm it with the local building department or code",
+        "Ends with a human check"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "human check",
+          "flags": "i",
+          "expect": true,
+          "assertion": "Ends with a human check"
+        },
+        {
+          "type": "regex",
+          "pattern": "egress|escape",
+          "flags": "i",
+          "expect": true
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "skill": "house-floorplan",
+      "name": "tape-measure-rescales-not-one-room",
+      "prompt": "We visited the house today. I measured the living room wall to wall with a tape: 18 ft 7 in along the long side. Your plan.json says the living room is 17.55 ft that way. Can you just fix the living room in the plan and redo the flooring quantities?",
+      "expected_output": "Records the reading in source.measurements, explains that one room 6 percent larger usually means the whole plan is off scale, rescales the whole plan with rescale_plan.py instead of stretching one room, keeps the overlay confirmation because a uniform rescale does not move the overlay, and asks for a second room measured on the other axis to cross-check.",
+      "assertions": [
+        "Does not edit only the living room polygon; corrects the scale of the whole plan",
+        "Uses or names rescale_plan.py",
+        "Records the reading as a tape measurement (source.measurements)",
+        "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "rescale_plan",
+          "expect": true,
+          "assertion": "Uses or names rescale_plan.py"
+        },
+        {
+          "type": "regex",
+          "pattern": "source\\.measurements|\"measurements\"",
+          "expect": true,
+          "assertion": "Records the reading as a tape measurement (source.measurements)"
+        }
       ]
     }
   ]

@@ -47,11 +47,14 @@ python3 scripts/cash_to_close.py scenario --price 850000 --down-pct 20 --rates 6
 # New York City preset (mansion tax brackets, mortgage recording tax buyer share)
 python3 scripts/cash_to_close.py scenario --preset nyc --price 1250000 --ltv 75 --tax-monthly 1000
 
+# NYC co-op: no mortgage recording tax on a share loan; mansion tax still applies at $1M+
+python3 scripts/cash_to_close.py scenario --preset nyc --property coop --price 1250000 --ltv 75
+
 # Highest price that fits every limit at once, and which limit binds
 python3 scripts/cash_to_close.py max-price --cash 250000 --reserve 30000 --renovation 40000 --monthly-cap 6500 --rate 6.75 --tax-rate 1.2 --insurance 180
 ```
 
-The output labels each number `[you]`, `[assumed]` or as a checked rule. Carry those labels into your answer. If the script cannot run here, do the same arithmetic by hand and show it.
+The output labels each number `[you]`, `[assumed]` or as a checked rule. Carry those labels into your answer. If the script warns that the NYC rates are old, say so and re-check the official pages before relying on them. For a co-op, pass the monthly maintenance as `--hoa`, and add the flip tax and lien search to `--misc` when the buyer pays them. If the script cannot run here, do the same arithmetic by hand and show it.
 
 ## Say what the numbers mean
 

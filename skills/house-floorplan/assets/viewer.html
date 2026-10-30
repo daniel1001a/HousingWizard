@@ -87,6 +87,7 @@ pre.file{white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,
       <button class="btn" id="ovFit">Fit to width</button>
       <button class="btn" id="ovActual">100%</button>
     </div>
+    <div id="measureBox"></div>
     <div id="overlayWrap" class="card"></div>
     <div class="legend"><span><i style="background:#e53935"></i>walls as transcribed</span><span><i style="background:#1e88e5"></i>windows</span><span><i style="background:#43a047"></i>doors and openings</span></div>
     <p class="note">Nothing downstream is better than this step. Slide the overlay on and off. Drag to pan; Ctrl or Cmd with the scroll wheel, or a trackpad pinch, zooms around the pointer. Every red line should sit on a drawn wall, every blue or green mark on a drawn window or door, and no room should be missing. If something is off, fix plan.json and rebuild before you look at the other tabs.</p>
@@ -179,7 +180,24 @@ document.querySelectorAll('nav button').forEach(b => b.addEventListener('click',
 // ov.z is screen pixels per source-image pixel. ov.fit keeps the image at the box width until the user zooms.
 const ov = {z:1, fit:true};
 const OV_LABEL_PX = 15, OV_LABEL_MIN_PX = 11;
+// Tape measurements against the plan: status from plan_tools.measurement_report, rooms from measure_next.
+function renderMeasure(){
+  const M = D.measure || {report:{status:'none', items:[]}, next:[]}, R = M.report, pct = v => (v*100).toFixed(1) + '%';
+  const text = {
+    none: 'No tape measurements yet. The scale comes from the plan\'s own labels, which listing plans often get wrong by a few percent.',
+    single: 'One tape measurement (' + esc((R.items[0]||{}).id) + '): the scale is set but not cross-checked. Measure a second room, ideally along the other axis.',
+    consistent: 'Tape measurements agree within ' + pct(R.spread || 0) + '. The scale is set by measurement.',
+    distorted: 'Tape measurements disagree by ' + pct(R.spread || 0) + ', so no single scale fixes this plan. Re-transcribe: ' + esc((R.disagree||[]).map(x => x.id + ' ' + x.target).join(', ')) + '.'
+  }[R.status];
+  let h = '<div class="' + (R.status === 'distorted' ? 'banner bad' : (R.status === 'consistent' ? 'card' : 'banner')) + '" style="margin:0 0 12px"><b>Scale check:</b> ' + text;
+  if (R.factor != null && R.status !== 'distorted' && Math.abs(R.factor - 1) > 0.02) h += ' The plan is ' + pct(R.factor - 1) + ' off scale: run <code>rescale_plan.py</code>.';
+  if (R.status !== 'consistent' && (M.next||[]).length){
+    h += '<br>Measure next, wall to wall: ' + M.next.map(n => esc(n.floor + ' ' + (n.name || n.room)) + ' along ' + esc(n.axis) + ' (plan says ' + fmt(n.plan_len, 2) + ' ' + esc(U) + ')').join('; ') + '.';
+  }
+  $('#measureBox').innerHTML = h + '</div>';
+}
 function renderOverlay(){
+  renderMeasure();
   const wrap = $('#overlayWrap');
   if (!D.image){ wrap.innerHTML = '<p class="note">No source image was given to the build, so there is nothing to overlay. Rebuild with the listing floor plan image next to plan.json (source.image).</p>'; return; }
   if (!wrap.dataset.ready){

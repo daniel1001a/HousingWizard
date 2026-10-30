@@ -1,0 +1,4 @@
+{"features": [
+ {"properties": {"label": "100 EXAMPLE AVENUE, Queens, NY, USA", "addendum": {"pad": {"bbl": "4000010001", "bin": "4000001"}}}, "geometry": {"coordinates": [-73.80000, 40.70000]}},
+ {"properties": {"label": "100 EXAMPLE PLACE, Queens, NY, USA", "addendum": {"pad": {"bbl": "4000020002", "bin": "4000002"}}}, "geometry": {"coordinates": [-73.81000, 40.71000]}}
+]}

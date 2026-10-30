@@ -59,6 +59,8 @@ Give it a listing or agent floor plan. It transcribes the plan, lays the transcr
 |---|---|
 | ![3D before](docs/images/3d-before.png) | ![3D after](docs/images/3d-after.png) |
 
+If the listing plan is off scale, measure two rooms on a visit and `rescale_plan.py` corrects the whole plan from the tape readings without moving the overlay. It refuses when the readings disagree, because a plan drawn out of proportion cannot be fixed by one number.
+
 It also produces floor, paint and baseboard quantities per room and a "to verify" list (unmeasured heights, areas the plan did not show, wall removals that need a structural check, a bedroom below grade that needs a legal-height check). Open `examples/sample-house/floorplan.html` to try it with a fictional house.
 
 ### Cost and quote packages
@@ -75,7 +77,19 @@ Once a person has confirmed the overlay, the same plan can go one step further. 
 
 `build_viewer.py plan.json --costs costs.json --trades-file trades.json` adds tab 6, "Cost & packages", to the page.
 
-What keeps this honest: the default price book is empty, so nothing is priced until you record a quote or a looked-up price; a line with no price stays unpriced; if nobody confirmed the overlay every output says UNCONFIRMED; and every output ends with a fixed "This tool cannot check" list (load-bearing walls, hidden conditions, licensed work, waste and delivery, whether a rule is current, and what a contractor will actually quote). The scripts write files and send nothing. See [release notes](docs/release-notes.md).
+How these stay honest is below in [Why this isn't a black box](#why-this-isnt-a-black-box). See also the [release notes](docs/release-notes.md).
+
+## Why this isn't a black box
+
+Every number you see from HousingWizard was either typed in by a person, read from a cited public source, or computed by plain Python with no hidden assumptions. The model's job is to read, route, draft and explain, never to produce a price, a quantity or a rule answer on its own.
+
+- **The cost book starts empty.** `costs.py` prices a renovation only from entries you added yourself, each with a source, a date, a kind and a license. A quantity with no matching entry stays unpriced instead of getting a guessed number.
+- **Overlay confirmation gates everything downstream.** The floor-plan transcription is laid over your original image so you can check it. If nobody has confirmed it, every output after that point, quantities, costs, packages, is stamped `UNCONFIRMED`, and `--require-confirmed` refuses to write files at all.
+- **Permit and rule answers are `required`, `exempt` or `unknown_confirm`.** There is no fourth option where the tool guesses. A missing fact or a missing rule always returns `unknown_confirm`, with a citation and the date the source page was read.
+- **Every output ends with a fixed "this tool cannot check" list**, load-bearing walls, hidden conditions behind finishes, licensed work, waste and delivery, whether a cited rule is still current, and what a contractor will actually quote. This list does not shrink as the tool gets better; it names the limits of automation itself.
+- **Nothing is sent anywhere.** The scripts read local files and write local files. The only network calls are to public government APIs (NYC Open Data, NYC Geosearch, the US Census geocoder, FEMA) for records lookups you asked for.
+
+The tradeoff is explicit: HousingWizard will tell you "unpriced", "this tool cannot check" or "unknown, confirm" far more often than a tool trying to look finished. That is the point: a wrong number that looks confident is worse than a blank one.
 
 ## Install
 
@@ -85,17 +99,20 @@ What keeps this honest: the default price book is empty, so nothing is priced un
 npx skills add daniel1001a/HousingWizard
 ```
 
-This uses the open [skills CLI](https://github.com/vercel-labs/skills), which installs to Claude Code, Codex, Cursor, Gemini CLI and many others. Add `-g` to install for your user instead of the current project, or `-a claude-code codex cursor` to pick agents.
+This uses the open [skills CLI](https://github.com/vercel-labs/skills), which installs to Claude Code, Codex, Cursor, Gemini CLI and many others. Add `-g` to install for your user instead of the current project, or `-a claude-code codex cursor gemini-cli` to pick agents (IDs from the skills CLI [agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md), checked 2026-10-30).
 
 ### By hand
 
 Copy the folders inside `skills/` to your agent's skills folder:
 
-| Agent | User-level folder |
-|---|---|
-| Claude Code | `~/.claude/skills/` |
-| Codex | `~/.agents/skills/` (current OpenAI docs; older Codex versions used `~/.codex/skills/`) |
-| Cursor | `~/.cursor/skills/` or `~/.agents/skills/` (Cursor also reads `~/.claude/skills/`) |
+| Agent | User-level folder | Project folder |
+|---|---|---|
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` |
+| Codex | `~/.agents/skills/` (current OpenAI docs; older Codex versions used `~/.codex/skills/`) | `.agents/skills/` |
+| Cursor | `~/.cursor/skills/` or `~/.agents/skills/` (Cursor also reads `~/.claude/skills/` and `~/.codex/skills/`) | `.cursor/skills/` or `.agents/skills/` |
+| Gemini CLI | `~/.gemini/skills/` or `~/.agents/skills/` | `.gemini/skills/` or `.agents/skills/` |
+
+`~/.agents/skills/` is read by Codex, Cursor and Gemini CLI, so one copy there covers all three. Folders checked on 2026-10-30 against the [Cursor skills docs](https://cursor.com/docs/context/skills) and the [Gemini CLI skills docs](https://geminicli.com/docs/cli/skills/); agents change these paths, so check their docs if a skill does not show up.
 
 ```bash
 git clone https://github.com/daniel1001a/HousingWizard.git
@@ -173,7 +190,7 @@ python3 tools/sync_shared.py           # copy tools/shared_rules.md into every S
 python3 tools/package_skills.py        # zips for app upload
 ```
 
-Behavior checks for each skill are in `evals/evals.json`.
+Behavior checks for each skill are in `evals/evals.json`. `python3 tools/run_evals.py --agent claude --dry-run` shows what a run would cost in agent and grader calls; drop `--dry-run` to run them on your own subscription (never in CI). Results go to `evals/results/`.
 
 ## License
 

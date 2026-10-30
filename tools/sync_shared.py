@@ -16,12 +16,17 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLOCK = re.compile(r'(<!-- shared:rules -->\n).*?(<!-- /shared:rules -->)', re.S)
 
 
+def read(path, **kw):
+    with open(path, encoding='utf-8', **kw) as fh:
+        return fh.read()
+
+
 def main():
-    rules = open(os.path.join(ROOT, 'tools', 'shared_rules.md')).read().strip() + '\n'
+    rules = read(os.path.join(ROOT, 'tools', 'shared_rules.md')).strip() + '\n'
     check = '--check' in sys.argv
     stale = []
     for path in sorted(glob.glob(os.path.join(ROOT, 'skills', '*', 'SKILL.md'))):
-        text = open(path).read()
+        text = read(path)
         if not BLOCK.search(text):
             stale.append(path + ' (no markers)')
             continue
@@ -29,7 +34,8 @@ def main():
         if new != text:
             stale.append(path)
             if not check:
-                open(path, 'w').write(new)
+                with open(path, 'w', encoding='utf-8') as fh:
+                    fh.write(new)
     if check and stale:
         print('Out of date:\n  ' + '\n  '.join(stale))
         sys.exit(1)

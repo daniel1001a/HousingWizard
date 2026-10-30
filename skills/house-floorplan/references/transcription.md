@@ -34,6 +34,20 @@ Pick the back-left outside corner of each floor as (0, 0) and record its pixel p
 - Scan ceiling heights can be off by a factor of two. Never use scan heights for legal or paint decisions.
 - Existing finishes matter for before-and-after: a render with the wrong floor type undermines trust in the whole proposal. Read the listing photos.
 
-## 6. Hand it to the human
+## 6. Correct the scale with a tape measure
+
+Listing plans are often drawn a few percent off scale, and sometimes out of proportion. A buyer cannot get a survey before an offer, but can measure two rooms on a visit. That is enough to fix a uniform scale error and to detect a plan that no single scale can fix.
+
+1. Run `takeoff.py` (or open tab 1 of the page). `measure_next` names up to three large rooms and the axis to measure, chosen by share of floor area.
+2. On the visit, measure two of them wall to wall, ideally one along x and one along y. Add each reading to `source.measurements` with the date and who measured.
+3. Run `validate_plan.py`. Read the measurement status:
+   - `single`: the scale is set, not checked. Ask for a second room.
+   - `consistent`: the readings agree within 3 percent.
+   - `distorted`: they disagree by more. Do not rescale; re-transcribe the rooms the warning names from the tape readings, then ask the buyer to check the overlay again.
+4. If the factor is more than 2 percent from 1, run `python3 scripts/rescale_plan.py plan.json --out plan.rescaled.json` (add `--changes changes.json --changes-out changes.rescaled.json` when a proposal exists), check the result with `validate_plan.py`, and continue the pipeline from the rescaled files.
+
+Do not stretch one room to match a tape reading. If one room is off and the others are not checked yet, the likely cause is the scale, and editing one polygon hides that from every other quantity.
+
+## 7. Hand it to the human
 
 Build the page and ask the buyer to check the overlay tab before any design work. Their "yes, it matches" is the gate.
