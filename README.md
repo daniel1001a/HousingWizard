@@ -57,6 +57,8 @@ Give it a listing or agent floor plan. It transcribes the plan, lays the transcr
 |---|---|
 | ![3D before](docs/images/3d-before.png) | ![3D after](docs/images/3d-after.png) |
 
+If the listing plan is off scale, measure two rooms on a visit and `rescale_plan.py` corrects the whole plan from the tape readings without moving the overlay. It refuses when the readings disagree, because a plan drawn out of proportion cannot be fixed by one number.
+
 It also produces floor, paint and baseboard quantities per room and a "to verify" list (unmeasured heights, areas the plan did not show, wall removals that need a structural check, a bedroom below grade that needs a legal-height check). Open `examples/sample-house/floorplan.html` to try it with a fictional house.
 
 ### Cost and quote packages

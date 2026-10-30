@@ -140,6 +140,7 @@ def main():
         'plan': plan, 'changes': changes, 'proposed': proposed, 'image': image, 'quantities': qty,
         'validation': {'errors': errors, 'warnings': warnings, 'human': human, 'flags': flags, 'problems': problems},
         'cost': cost_block(plan, changes, proposed, problems, costs_doc, trades_doc),
+        'measure': {'report': pt.measurement_report(plan), 'next': pt.measure_next(plan)},
         'built': datetime.date.today().isoformat(),
     }
     tpl = open(os.path.join(ASSETS, 'viewer.html')).read()

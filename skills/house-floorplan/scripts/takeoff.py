@@ -60,13 +60,30 @@ def _ptr(base, *parts):
 
 
 def _soft_scale(plan):
+    """Reasons every plan-read length is soft. Tape measurements (source.measurements) can replace the
+    label-based scale: a consistent set covers both scale_from and scale_check, a single one only scale_from."""
     src = plan.get('source') or {}
+    rep = pt.measurement_report(plan)
     reasons = []
-    if not src.get('scale_from'):
+    if not src.get('scale_from') and rep['status'] not in ('single', 'consistent'):
         reasons.append('scale source is not recorded (source.scale_from)')
-    if not src.get('scale_check'):
+    if not src.get('scale_check') and rep['status'] != 'consistent':
         reasons.append('scale was not cross-checked against a second dimension (source.scale_check)')
+    if rep['status'] == 'distorted':
+        reasons.append('measurements disagree by %.1f%%; quantities in rooms %s are unreliable'
+                       % (100 * rep['spread'], ', '.join(x['target'] for x in rep['disagree'])))
+    elif rep['factor'] is not None and abs(rep['factor'] - 1) > pt.OFF_SCALE:
+        reasons.append('tape measurements say the plan is %+.1f%% off scale; run rescale_plan.py'
+                       % (100 * (rep['factor'] - 1)))
     return reasons
+
+
+def _scale_source(plan):
+    src = plan.get('source') or {}
+    ids = (src.get('rescaled') or {}).get('from')
+    if ids:
+        return 'measured (%s)' % ', '.join(ids)
+    return src.get('scale_from') or 'not recorded'
 
 
 def _finish_pointers(finishes_file, fid, rid, finishes):
@@ -142,7 +159,7 @@ def compute(plan, finishes=None, plan_file='plan.json', finishes_file='plan.json
     """Return the takeoff dict for one state of the house. `finishes` as in plan_tools.quantities."""
     units = plan.get('units', 'ft')
     area_u = 'sq ' + units
-    scale_source = (plan.get('source') or {}).get('scale_from') or 'not recorded'
+    scale_source = _scale_source(plan)
     scale_soft = _soft_scale(plan)
     eff = finishes if finishes is not None else (plan.get('finishes') or {})
     rows, _ = pt.quantities(plan, finishes)
@@ -221,7 +238,8 @@ def compute(plan, finishes=None, plan_file='plan.json', finishes_file='plan.json
         if ln['softness'] == 'soft':
             t['soft_lines'] += 1
     status, detail = pt.overlay_status(plan)
-    return {
+    rep = pt.measurement_report(plan)
+    out = {
         'schema': TAKEOFF_SCHEMA,
         'plan_name': plan.get('name'),
         'units': units,
@@ -233,7 +251,12 @@ def compute(plan, finishes=None, plan_file='plan.json', finishes_file='plan.json
         'assumptions': ['Riser height of %.1f in is an assumption used only to estimate riser counts.' % ASSUMED_RISER_IN,
                         'No waste factor is included in any quantity.'],
         'cannot_check': CANNOT_CHECK,
+        'measurements': {k: rep[k] for k in ('status', 'factor', 'spread')},
     }
+    if rep['status'] != 'consistent':
+        # The rooms whose tape measurement checks the most floor area. Measure these on the visit.
+        out['measure_next'] = pt.measure_next(plan)
+    return out
 
 
 def main():

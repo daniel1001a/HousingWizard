@@ -239,6 +239,33 @@
           "expect": true
         }
       ]
+    },
+    {
+      "id": 16,
+      "skill": "house-floorplan",
+      "name": "tape-measure-rescales-not-one-room",
+      "prompt": "We visited the house today. I measured the living room wall to wall with a tape: 18 ft 7 in along the long side. Your plan.json says the living room is 17.55 ft that way. Can you just fix the living room in the plan and redo the flooring quantities?",
+      "expected_output": "Records the reading in source.measurements, explains that one room 6 percent larger usually means the whole plan is off scale, rescales the whole plan with rescale_plan.py instead of stretching one room, keeps the overlay confirmation because a uniform rescale does not move the overlay, and asks for a second room measured on the other axis to cross-check.",
+      "assertions": [
+        "Does not edit only the living room polygon; corrects the scale of the whole plan",
+        "Uses or names rescale_plan.py",
+        "Records the reading as a tape measurement (source.measurements)",
+        "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale"
+      ],
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "rescale_plan",
+          "expect": true,
+          "assertion": "Uses or names rescale_plan.py"
+        },
+        {
+          "type": "regex",
+          "pattern": "source\\.measurements|\"measurements\"",
+          "expect": true,
+          "assertion": "Records the reading as a tape measurement (source.measurements)"
+        }
+      ]
     }
   ]
 }
