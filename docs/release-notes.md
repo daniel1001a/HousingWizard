@@ -18,7 +18,7 @@ This release makes the existing skills safer to trust rather than adding new one
 
 - A rescale fixes a uniform scale error only. A plan drawn out of proportion needs the named rooms re-transcribed and the overlay checked again. The 3 percent and 2 percent thresholds are assumptions, not standards.
 - Tape readings are only as good as the tape: measure wall to wall at waist height, and measure two rooms, one on each axis. One reading sets the scale but does not check it.
-- No eval results are published yet. Numbers will appear in the README only after a real run; none are written by hand.
+- The first eval run is in `evals/results/summary.md` (Claude Code only). Cases 11, 13, 14 and 16 describe a plan, takeoff or case file the sandbox does not contain, so the agent mostly asks for the file; those cases need fixture files before their scores mean much. Case 11 also shows a real gap: with the skills, Claude still quoted typical dollar prices with no costbook.
 - Fact ages are checked against the date someone read the source, not against the source changing. A fact can go stale before its age limit.
 - Every limit listed under v0.2.0 below still applies.
 
