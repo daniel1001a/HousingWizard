@@ -32,6 +32,7 @@ Then mention the file in that skill's `SKILL.md` where the jurisdiction is chose
 ```bash
 python3 -m unittest discover tests
 python3 tools/check_skills.py
+python3 tools/check_freshness.py --structure-only
 ```
 
-If you changed behavior, add or update a case in `evals/evals.json`.
+If you changed behavior, add or update a case in `evals/evals.json`. If you changed a skill, run `python3 tools/run_evals.py --changed` (it uses your Claude Code or Codex subscription, not an API key) and commit the updated `evals/results/`.

@@ -1,10 +1,32 @@
-# Release notes: cost and quote packages
+# Release notes
+
+## v0.3.0
+
+This release makes the existing skills safer to trust rather than adding new ones. The plan and its tradeoffs are in `docs/plan/v0.3-improvements.md`.
+
+### What is new
+
+- **Tape measurements correct the floor-plan scale.** Add tape readings to `source.measurements` in `plan.json`, and `scripts/rescale_plan.py` rescales the whole plan by the median factor without moving the overlay, so `overlay_confirmed` still holds. It refuses when readings disagree by more than 3 percent, and names the rooms that disagree. `takeoff.py` lists `measure_next`, the largest unmeasured rooms and the axis to measure. Viewer tab 1 shows the scale check.
+- **Every dated fact is listed.** `tools/facts.json` names each dated rule, rate, fee and path, with its file, verbatim text, source and checked date. CI fails when the text moves or changes without updating the entry; a weekly job lists facts past their age limit.
+- **Eval runner.** `tools/run_evals.py` runs `evals/evals.json` with and without the skills on Claude Code or Codex, through your subscription CLI. It caches answers, uses deterministic checks before any grader call, and refuses to start when the skills are installed globally (which would leak into the baseline) or an API key is set. Gemini and Cursor adapters are stubs.
+- **Records scripts.** `nyc_records.py` fetches complaints newest first, fetches ACRIS details for every document, reports any list cut at its limit, validates `--bbl` and `--bin`, and exits with a message on network failures. `us_flood.py` does the same. Offline tests, and a weekly live check of the APIs.
+- **`cash_to_close.py`.** One NYC rule date with a warning after 180 days, a maximum price that rounds down so it is always feasible, and `--property coop`, which drops the mortgage recording tax.
+- **Releases** attach one reproducible zip per skill.
+- **Install docs** cover Gemini CLI, and the Cursor folders were re-checked.
+
+### Limits you should know about
+
+- A rescale fixes a uniform scale error only. A plan drawn out of proportion needs the named rooms re-transcribed and the overlay checked again. The 3 percent and 2 percent thresholds are assumptions, not standards.
+- Tape readings are only as good as the tape: measure wall to wall at waist height, and measure two rooms, one on each axis. One reading sets the scale but does not check it.
+- No eval results are published yet. Numbers will appear in the README only after a real run; none are written by hand.
+- Fact ages are checked against the date someone read the source, not against the source changing. A fact can go stale before its age limit.
+- Every limit listed under v0.2.0 below still applies.
 
 ## v0.2.0
 
 This release extends `house-floorplan` and `house-renovation` from "transcribe and check a plan" to "transcribe, take off, price from your own sources, answer permit questions with citations, and prepare quote packages". The skills are installed the same way as before: `npx skills add daniel1001a/HousingWizard`.
 
-## What is new
+### What is new
 
 - `takeoff.py`: traceable quantities. Each line has a rule ID, a formula, the JSON pointers it read, a hard or soft flag with reasons, and the scale source.
 - `costbook_check.py` and `costs.py`: a price book you fill, and a cost range computed from it. Three budget layers, contingency, an E0 to E3 grade with the reasons it is not higher, and a separate `wage_floor` for BLS wages.
@@ -17,7 +39,7 @@ This release extends `house-floorplan` and `house-renovation` from "transcribe a
 - Overlay zoom and pan: "Fit to width" is the default and refits on resize, a new "100%" button, Ctrl/Cmd plus wheel or trackpad pinch zooms around the pointer, mouse drag pans, and the overlay no longer drifts from the image at non-default zoom.
 - Each trade's `assumptions.md` and viewer tab 6 now list a "Fill in before sending" checklist of blanks the inputs left (UNCONFIRMED overlay, a missing plan name, state or unit count, a line with no floor, an "unknown" quantity and its room, a missing finish, an unassessed or undecided permit topic). Nothing on the list is filled in for you.
 
-## How it stays transparent
+### How it stays transparent
 
 - No AI in the numbers. A model may transcribe a plan and explain a result; quantities, prices and rule answers come from deterministic Python with no dependencies.
 - The default costbook is empty. Example entries are labeled "example, not a price" and are never used. A takeoff line with no matching entry stays unpriced.
@@ -27,7 +49,7 @@ This release extends `house-floorplan` and `house-renovation` from "transcribe a
 - Every output ends with a fixed "This tool cannot check" block.
 - Scripts write files only. Nothing is sent, and the buyer reviews and sends any package.
 
-## Limits you should know about
+### Limits you should know about
 
 - The cost range is quantity times prices you recorded. It is not a quote, has no waste, delivery, disposal or small-job minimums, does not estimate licensed work, and cannot see whether two entries count the same work twice.
 - A BLS wage is what a worker earns, not what a contractor charges. It is shown as a floor and never added to the total.
@@ -36,7 +58,7 @@ This release extends `house-floorplan` and `house-renovation` from "transcribe a
 - Which walls are load-bearing, what is inside walls, and what a contractor will actually quote are never decided by a script.
 - The tools have been tested on fixtures. They have not been validated on a real plan; compare their quantities with a tape measure before relying on them.
 
-## Open questions this release does not answer
+### Open questions this release does not answer
 
 - Whether the packages produce itemized quotes. The project targets at least two itemized quotes within 10 days from two or three contractors, with at most two follow-up questions about missing information. That has not been run.
 - Whether the dimension error on real plans stays within the project's threshold (median at most 3 percent).

@@ -16,6 +16,11 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def read(path, **kw):
+    with open(path, encoding='utf-8', **kw) as fh:
+        return fh.read()
 NAME = re.compile(r'^[a-z0-9]+(-[a-z0-9]+)*$')
 CJK = re.compile('[%s]' % ''.join('%s-%s' % (chr(a), chr(b)) for a, b in ((0x3000, 0x303f), (0x3040, 0x30ff), (0x3400, 0x4dbf), (0x4e00, 0x9fff), (0xac00, 0xd7af), (0xff00, 0xffef))))
 EMOJI = re.compile('[%s-%s%s-%s]' % (chr(0x1F300), chr(0x1FAFF), chr(0x2600), chr(0x27BF)))
@@ -41,7 +46,7 @@ def main():
     problems = []
     for path in sorted(glob.glob(os.path.join(ROOT, 'skills', '*', 'SKILL.md'))):
         folder = os.path.basename(os.path.dirname(path))
-        text = open(path).read()
+        text = read(path)
         fm = frontmatter(text)
         if fm is None:
             problems.append('%s: missing frontmatter' % folder)
@@ -63,7 +68,7 @@ def main():
         rel = path[len(ROOT):]
         if not path.endswith(TEXT_EXT) or any(s in rel + '/' for s in SKIP_DIRS) or os.path.isdir(path):
             continue
-        text = open(path, encoding='utf-8', errors='replace').read()
+        text = read(path, errors='replace')
         for label, pat in (('CJK text', CJK), ('emoji', EMOJI), ('em dash', re.compile(chr(0x2014)))):
             m = pat.search(text)
             if m:
