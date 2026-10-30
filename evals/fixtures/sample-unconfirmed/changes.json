@@ -1,0 +1,27 @@
+{
+  "schema": "housingwizard.changes/1",
+  "version": "v1",
+  "title": "Open kitchen, French doors to the yard, office upstairs, guest room downstairs",
+  "changes": [
+    {"floor": "1F", "op": "remove-wall", "wall": "w6", "why": "Open the kitchen to the dining room"},
+    {"floor": "1F", "op": "remove-opening", "opening": "o7", "why": "Dining window becomes French doors"},
+    {"floor": "1F", "op": "add-opening", "id": "n1", "wall": "w1", "kind": "exterior-door", "offset": 21, "width": 5, "hinge": "a", "swing": "left", "name": "French doors, out-swing", "why": "Dining window becomes French doors"},
+    {"floor": "1F", "op": "add-fixture", "id": "n2", "kind": "island", "at": [8, 7.5], "size": [5, 2.6], "why": "Kitchen island with prep sink"},
+    {"floor": "2F", "op": "room", "room": "R3", "name": "Office (nursery later)", "use": "office"},
+    {"floor": "B", "op": "add-wall", "id": "n3", "a": [0, 15], "b": [12, 15], "thick": 0.4, "why": "Guest room in the basement"},
+    {"floor": "B", "op": "add-wall", "id": "n4", "a": [12, 0], "b": [12, 15], "thick": 0.4, "why": "Guest room in the basement"},
+    {"floor": "B", "op": "add-opening", "id": "n5", "wall": "n3", "kind": "door", "offset": 8.5, "width": 2.6, "hinge": "b", "swing": "left", "why": "Guest room in the basement"},
+    {"floor": "B", "op": "room", "room": "B1", "name": "Media room", "poly": [[0.4, 15.2], [11.8, 15.2], [11.8, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]]},
+    {"floor": "B", "op": "add-room", "id": "n6", "name": "Guest room", "use": "bedroom", "poly": [[0.4, 0.4], [11.8, 0.4], [11.8, 14.8], [0.4, 14.8]], "why": "Guest room in the basement"},
+    {"floor": "1F", "op": "furniture", "id": "sofa", "kind": "sofa", "at": [7.5, 27.5], "size": [8, 3.2], "h": 2.8, "rot": 0},
+    {"floor": "1F", "op": "furniture", "id": "table", "kind": "table", "at": [20, 7], "size": [6.5, 3.5], "h": 2.5},
+    {"floor": "2F", "op": "furniture", "id": "bed1", "kind": "bed", "at": [7.5, 25.5], "size": [5.3, 6.8], "h": 2.0},
+    {"floor": "2F", "op": "furniture", "id": "desk", "kind": "desk", "at": [23, 2.2], "size": [5, 2.2], "h": 2.5, "note": "Faces the back window"},
+    {"floor": "B", "op": "furniture", "id": "bed2", "kind": "bed", "at": [6, 7], "size": [5, 6.7], "h": 2.0}
+  ],
+  "finishes": {
+    "B": {"default": {"floor": "new LVP", "paint": true}, "B2": {"floor": "keep", "paint": false}},
+    "1F": {"default": {"floor": "refinish oak", "paint": true}, "K": {"floor": "new oak", "paint": true}, "P": {"floor": "tile", "paint": true}},
+    "2F": {"default": {"floor": "refinish oak", "paint": true}, "R2": {"floor": "tile", "paint": true}}
+  }
+}

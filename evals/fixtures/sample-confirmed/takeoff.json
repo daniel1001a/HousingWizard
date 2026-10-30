@@ -1,0 +1,1377 @@
+{
+  "schema": "housingwizard.takeoff/1",
+  "plan_name": "Sample house (fictional)",
+  "units": "ft",
+  "status": "CONFIRMED",
+  "overlay": {
+    "by": "Buyer (fictional)",
+    "on": "2026-10-12",
+    "note": "Checked every wall and door against the listing image"
+  },
+  "rules": {
+    "R-FLOOR-001": "Floor area = room polygon area minus the part covered by a stair footprint on the same floor.",
+    "R-PAINT-WALL-001": "Wall paint area = room perimeter x floor height minus the area of openings that face the room (sill to head x width).",
+    "R-PAINT-CEIL-001": "Ceiling paint area = floor area of the room (R-FLOOR-001).",
+    "R-BASE-001": "Baseboard length = room perimeter minus widths of openings that reach the floor (sill 0). Zero where finishes say baseboard is false or the room is outdoor.",
+    "R-STAIR-001": "Stair risers = stairs[].risers when recorded; otherwise round(rise to the next floor / 7.5 in). Void stairs are skipped.",
+    "R-STAIR-002": "Stair treads = risers - 1 (the top riser lands on the upper floor). Same softness as R-STAIR-001.",
+    "R-DOOR-001": "Door leaves = sum of openings[].leaves over doors (door, exterior-door, sliding, pocket, bifold); 1 per door where leaves is not recorded. Garage doors and windows are not counted."
+  },
+  "lines": [
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 516.6,
+      "floor": "B",
+      "room": "B1",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/0/rooms/0/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 631.9,
+      "floor": "B",
+      "room": "B1",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/0/poly",
+        "plan.json#/floors/0/height",
+        "plan.json#/floors/0/openings/0/width",
+        "plan.json#/floors/0/openings/1/width",
+        "plan.json#/floors/0/openings/2/width",
+        "plan.json#/floors/0/openings/3/width",
+        "plan.json#/floors/0/openings/4/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"assumed\", not measured",
+        "opening o2 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 7.0,
+      "height_source": "assumed"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 516.6,
+      "floor": "B",
+      "room": "B1",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/0/rooms/0/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 91.6,
+      "floor": "B",
+      "room": "B1",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/0/poly",
+        "plan.json#/floors/0/openings/0/width",
+        "plan.json#/floors/0/openings/1/width",
+        "plan.json#/floors/0/openings/2/width",
+        "plan.json#/floors/0/openings/3/width",
+        "plan.json#/floors/0/openings/4/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "opening o2 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 126.0,
+      "floor": "B",
+      "room": "B2",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/0/rooms/1/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 301.4,
+      "floor": "B",
+      "room": "B2",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/1/poly",
+        "plan.json#/floors/0/height",
+        "plan.json#/floors/0/openings/0/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"assumed\", not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 7.0,
+      "height_source": "assumed"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 126.0,
+      "floor": "B",
+      "room": "B2",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/0/rooms/1/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 43.0,
+      "floor": "B",
+      "room": "B2",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/1/poly",
+        "plan.json#/floors/0/openings/0/width"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 71.4,
+      "floor": "B",
+      "room": "B3",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/0/rooms/2/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 217.0,
+      "floor": "B",
+      "room": "B3",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/2/poly",
+        "plan.json#/floors/0/height",
+        "plan.json#/floors/0/openings/1/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"assumed\", not measured",
+        "opening o2 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 7.0,
+      "height_source": "assumed"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 71.4,
+      "floor": "B",
+      "room": "B3",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/0/rooms/2/poly",
+        "plan.json#/floors/0/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 31.0,
+      "floor": "B",
+      "room": "B3",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/0/rooms/2/poly",
+        "plan.json#/floors/0/openings/1/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "opening o2 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-STAIR-001",
+      "item": "stair_risers",
+      "unit": "count",
+      "quantity": 12,
+      "floor": "B",
+      "room": "s1",
+      "formula": "stairs[].risers, else round(rise / assumed riser height)",
+      "inputs": [
+        "plan.json#/floors/0/stairs/0",
+        "plan.json#/floors/0/elevation",
+        "plan.json#/floors/1/elevation"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "riser count estimated from floor-to-floor rise 7.80 ft at an assumed 7.5 in per riser; count the risers on site",
+        "floor elevations are drawn values, not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-STAIR-002",
+      "item": "stair_treads",
+      "unit": "count",
+      "quantity": 11,
+      "floor": "B",
+      "room": "s1",
+      "formula": "risers - 1",
+      "inputs": [
+        "plan.json#/floors/0/stairs/0",
+        "plan.json#/floors/0/elevation",
+        "plan.json#/floors/1/elevation"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "riser count estimated from floor-to-floor rise 7.80 ft at an assumed 7.5 in per riser; count the risers on site",
+        "floor elevations are drawn values, not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-DOOR-001",
+      "item": "door_leaves",
+      "unit": "count",
+      "quantity": 1,
+      "floor": "B",
+      "room": null,
+      "formula": "sum(openings[].leaves, default 1)",
+      "inputs": [
+        "plan.json#/floors/0/openings/0/kind"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "o1: leaves not recorded, assumed 1"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 156.5,
+      "floor": "1F",
+      "room": "K",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/1/rooms/0/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 339.3,
+      "floor": "1F",
+      "room": "K",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/0/poly",
+        "plan.json#/floors/1/height",
+        "plan.json#/floors/1/openings/4/width",
+        "plan.json#/floors/1/openings/10/width",
+        "plan.json#/floors/1/openings/11/width",
+        "plan.json#/floors/1/openings/12/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"plan-label\", not measured",
+        "window o5 has no head, so a default was used",
+        "window o11 has no sill or head, so a default was used",
+        "opening o12 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.5,
+      "height_source": "plan-label"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 156.5,
+      "floor": "1F",
+      "room": "K",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/1/rooms/0/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 41.4,
+      "floor": "1F",
+      "room": "K",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/0/poly",
+        "plan.json#/floors/1/openings/4/width",
+        "plan.json#/floors/1/openings/10/width",
+        "plan.json#/floors/1/openings/11/width",
+        "plan.json#/floors/1/openings/12/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o5 has no head, so a default was used",
+        "window o11 has no sill or head, so a default was used",
+        "opening o12 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 210.7,
+      "floor": "1F",
+      "room": "D",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/1/rooms/1/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 366.3,
+      "floor": "1F",
+      "room": "D",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/1/poly",
+        "plan.json#/floors/1/height",
+        "plan.json#/floors/1/openings/5/width",
+        "plan.json#/floors/1/openings/6/width",
+        "plan.json#/floors/1/openings/7/width",
+        "plan.json#/floors/1/openings/11/width",
+        "plan.json#/floors/1/openings/13/width",
+        "plan.json#/floors/1/openings/14/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"plan-label\", not measured",
+        "window o7 has no sill or head, so a default was used",
+        "window o8 has no sill or head, so a default was used",
+        "opening o12 has no head, so a default was used",
+        "opening o14 has no head, so a default was used",
+        "opening o15 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.5,
+      "height_source": "plan-label"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 210.7,
+      "floor": "1F",
+      "room": "D",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/1/rooms/1/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 43.8,
+      "floor": "1F",
+      "room": "D",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/1/poly",
+        "plan.json#/floors/1/openings/5/width",
+        "plan.json#/floors/1/openings/6/width",
+        "plan.json#/floors/1/openings/7/width",
+        "plan.json#/floors/1/openings/11/width",
+        "plan.json#/floors/1/openings/13/width",
+        "plan.json#/floors/1/openings/14/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o7 has no sill or head, so a default was used",
+        "window o8 has no sill or head, so a default was used",
+        "opening o12 has no head, so a default was used",
+        "opening o14 has no head, so a default was used",
+        "opening o15 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 255.4,
+      "floor": "1F",
+      "room": "L",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/1/rooms/2/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 428.0,
+      "floor": "1F",
+      "room": "L",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/2/poly",
+        "plan.json#/floors/1/height",
+        "plan.json#/floors/1/openings/1/width",
+        "plan.json#/floors/1/openings/2/width",
+        "plan.json#/floors/1/openings/9/width",
+        "plan.json#/floors/1/openings/12/width",
+        "plan.json#/floors/1/openings/13/width",
+        "plan.json#/floors/1/openings/16/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"plan-label\", not measured",
+        "window o2 has no sill or head, so a default was used",
+        "window o3 has no sill or head, so a default was used",
+        "window o10 has no sill or head, so a default was used",
+        "opening o14 has no head, so a default was used",
+        "opening o17 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.5,
+      "height_source": "plan-label"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 255.4,
+      "floor": "1F",
+      "room": "L",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/1/rooms/2/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 53.5,
+      "floor": "1F",
+      "room": "L",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/2/poly",
+        "plan.json#/floors/1/openings/1/width",
+        "plan.json#/floors/1/openings/2/width",
+        "plan.json#/floors/1/openings/9/width",
+        "plan.json#/floors/1/openings/12/width",
+        "plan.json#/floors/1/openings/13/width",
+        "plan.json#/floors/1/openings/16/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o2 has no sill or head, so a default was used",
+        "window o3 has no sill or head, so a default was used",
+        "window o10 has no sill or head, so a default was used",
+        "opening o14 has no head, so a default was used",
+        "opening o17 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 25.5,
+      "floor": "1F",
+      "room": "P",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/1/rooms/3/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 155.5,
+      "floor": "1F",
+      "room": "P",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/3/poly",
+        "plan.json#/floors/1/height",
+        "plan.json#/floors/1/openings/15/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"plan-label\", not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.5,
+      "height_source": "plan-label"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 25.5,
+      "floor": "1F",
+      "room": "P",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/1/rooms/3/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 17.8,
+      "floor": "1F",
+      "room": "P",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/3/poly",
+        "plan.json#/floors/1/openings/15/width"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 156.4,
+      "floor": "1F",
+      "room": "F",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/1/rooms/4/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 390.8,
+      "floor": "1F",
+      "room": "F",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/4/poly",
+        "plan.json#/floors/1/height",
+        "plan.json#/floors/1/openings/0/width",
+        "plan.json#/floors/1/openings/3/width",
+        "plan.json#/floors/1/openings/8/width",
+        "plan.json#/floors/1/openings/14/width",
+        "plan.json#/floors/1/openings/15/width",
+        "plan.json#/floors/1/openings/16/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"plan-label\", not measured",
+        "window o4 has no sill or head, so a default was used",
+        "window o9 has no sill or head, so a default was used",
+        "opening o15 has no head, so a default was used",
+        "opening o17 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.5,
+      "height_source": "plan-label"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 156.4,
+      "floor": "1F",
+      "room": "F",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/1/rooms/4/poly",
+        "plan.json#/floors/1/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 46.2,
+      "floor": "1F",
+      "room": "F",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/1/rooms/4/poly",
+        "plan.json#/floors/1/openings/0/width",
+        "plan.json#/floors/1/openings/3/width",
+        "plan.json#/floors/1/openings/8/width",
+        "plan.json#/floors/1/openings/14/width",
+        "plan.json#/floors/1/openings/15/width",
+        "plan.json#/floors/1/openings/16/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o4 has no sill or head, so a default was used",
+        "window o9 has no sill or head, so a default was used",
+        "opening o15 has no head, so a default was used",
+        "opening o17 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-STAIR-001",
+      "item": "stair_risers",
+      "unit": "count",
+      "quantity": 15,
+      "floor": "1F",
+      "room": "s1",
+      "formula": "stairs[].risers, else round(rise / assumed riser height)",
+      "inputs": [
+        "plan.json#/floors/1/stairs/0",
+        "plan.json#/floors/1/elevation",
+        "plan.json#/floors/2/elevation"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "riser count estimated from floor-to-floor rise 9.50 ft at an assumed 7.5 in per riser; count the risers on site",
+        "floor elevations are drawn values, not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-STAIR-002",
+      "item": "stair_treads",
+      "unit": "count",
+      "quantity": 14,
+      "floor": "1F",
+      "room": "s1",
+      "formula": "risers - 1",
+      "inputs": [
+        "plan.json#/floors/1/stairs/0",
+        "plan.json#/floors/1/elevation",
+        "plan.json#/floors/2/elevation"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "riser count estimated from floor-to-floor rise 9.50 ft at an assumed 7.5 in per riser; count the risers on site",
+        "floor elevations are drawn values, not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-DOOR-001",
+      "item": "door_leaves",
+      "unit": "count",
+      "quantity": 4,
+      "floor": "1F",
+      "room": null,
+      "formula": "sum(openings[].leaves, default 1)",
+      "inputs": [
+        "plan.json#/floors/1/openings/0/kind",
+        "plan.json#/floors/1/openings/5/kind",
+        "plan.json#/floors/1/openings/12/kind",
+        "plan.json#/floors/1/openings/15/kind"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "o1: leaves not recorded, assumed 1",
+        "o6: leaves not recorded, assumed 1",
+        "o13: leaves not recorded, assumed 1",
+        "o16: leaves not recorded, assumed 1"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 132.4,
+      "floor": "2F",
+      "room": "R1",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/0/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 325.9,
+      "floor": "2F",
+      "room": "R1",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/0/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/0/width",
+        "plan.json#/floors/2/openings/5/width",
+        "plan.json#/floors/2/openings/14/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured",
+        "window o6 has no sill or head, so a default was used",
+        "window o15 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 132.4,
+      "floor": "2F",
+      "room": "R1",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/0/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 43.6,
+      "floor": "2F",
+      "room": "R1",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/0/poly",
+        "plan.json#/floors/2/openings/0/width",
+        "plan.json#/floors/2/openings/5/width",
+        "plan.json#/floors/2/openings/14/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o6 has no sill or head, so a default was used",
+        "window o15 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 82.8,
+      "floor": "2F",
+      "room": "R2",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/1/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 284.3,
+      "floor": "2F",
+      "room": "R2",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/1/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/1/width",
+        "plan.json#/floors/2/openings/6/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured",
+        "window o7 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 82.8,
+      "floor": "2F",
+      "room": "R2",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/1/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 35.9,
+      "floor": "2F",
+      "room": "R2",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/1/poly",
+        "plan.json#/floors/2/openings/1/width",
+        "plan.json#/floors/2/openings/6/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o7 has no head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 119.9,
+      "floor": "2F",
+      "room": "R3",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/2/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 309.9,
+      "floor": "2F",
+      "room": "R3",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/2/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/2/width",
+        "plan.json#/floors/2/openings/7/width",
+        "plan.json#/floors/2/openings/11/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured",
+        "window o8 has no sill or head, so a default was used",
+        "window o12 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 119.9,
+      "floor": "2F",
+      "room": "R3",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/2/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 41.6,
+      "floor": "2F",
+      "room": "R3",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/2/poly",
+        "plan.json#/floors/2/openings/2/width",
+        "plan.json#/floors/2/openings/7/width",
+        "plan.json#/floors/2/openings/11/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o8 has no sill or head, so a default was used",
+        "window o12 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 166.5,
+      "floor": "2F",
+      "room": "R4",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/3/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 648.0,
+      "floor": "2F",
+      "room": "R4",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/3/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/0/width",
+        "plan.json#/floors/2/openings/1/width",
+        "plan.json#/floors/2/openings/2/width",
+        "plan.json#/floors/2/openings/3/width",
+        "plan.json#/floors/2/openings/4/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 166.5,
+      "floor": "2F",
+      "room": "R4",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/3/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 79.1,
+      "floor": "2F",
+      "room": "R4",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/3/poly",
+        "plan.json#/floors/2/openings/0/width",
+        "plan.json#/floors/2/openings/1/width",
+        "plan.json#/floors/2/openings/2/width",
+        "plan.json#/floors/2/openings/3/width",
+        "plan.json#/floors/2/openings/4/width"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 182.6,
+      "floor": "2F",
+      "room": "R5",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/4/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 371.2,
+      "floor": "2F",
+      "room": "R5",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/4/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/3/width",
+        "plan.json#/floors/2/openings/9/width",
+        "plan.json#/floors/2/openings/10/width",
+        "plan.json#/floors/2/openings/13/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured",
+        "window o10 has no sill or head, so a default was used",
+        "window o11 has no sill or head, so a default was used",
+        "window o14 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 182.6,
+      "floor": "2F",
+      "room": "R5",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/4/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 51.4,
+      "floor": "2F",
+      "room": "R5",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/4/poly",
+        "plan.json#/floors/2/openings/3/width",
+        "plan.json#/floors/2/openings/9/width",
+        "plan.json#/floors/2/openings/10/width",
+        "plan.json#/floors/2/openings/13/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o10 has no sill or head, so a default was used",
+        "window o11 has no sill or head, so a default was used",
+        "window o14 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-FLOOR-001",
+      "item": "floor_area",
+      "unit": "sq ft",
+      "quantity": 107.3,
+      "floor": "2F",
+      "room": "R6",
+      "formula": "polygon_area(room) - overlap(room, stair footprints)",
+      "inputs": [
+        "plan.json#/floors/2/rooms/5/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "finish": "unspecified"
+    },
+    {
+      "rule": "R-PAINT-WALL-001",
+      "item": "wall_paint_area",
+      "unit": "sq ft",
+      "quantity": 293.9,
+      "floor": "2F",
+      "room": "R6",
+      "formula": "perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/5/poly",
+        "plan.json#/floors/2/height",
+        "plan.json#/floors/2/openings/4/width",
+        "plan.json#/floors/2/openings/8/width",
+        "plan.json#/floors/2/openings/12/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "ceiling height is \"scan\", not measured",
+        "window o9 has no sill or head, so a default was used",
+        "window o13 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px",
+      "height": 8.0,
+      "height_source": "scan"
+    },
+    {
+      "rule": "R-PAINT-CEIL-001",
+      "item": "ceiling_paint_area",
+      "unit": "sq ft",
+      "quantity": 107.3,
+      "floor": "2F",
+      "room": "R6",
+      "formula": "floor_area(room) if painted else 0",
+      "inputs": [
+        "plan.json#/floors/2/rooms/5/poly",
+        "plan.json#/floors/2/stairs/0/poly"
+      ],
+      "softness": "hard",
+      "soft_reasons": [],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-BASE-001",
+      "item": "baseboard_length",
+      "unit": "ft",
+      "quantity": 39.6,
+      "floor": "2F",
+      "room": "R6",
+      "formula": "perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false",
+      "inputs": [
+        "plan.json#/floors/2/rooms/5/poly",
+        "plan.json#/floors/2/openings/4/width",
+        "plan.json#/floors/2/openings/8/width",
+        "plan.json#/floors/2/openings/12/width"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "window o9 has no sill or head, so a default was used",
+        "window o13 has no sill or head, so a default was used"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    },
+    {
+      "rule": "R-DOOR-001",
+      "item": "door_leaves",
+      "unit": "count",
+      "quantity": 5,
+      "floor": "2F",
+      "room": null,
+      "formula": "sum(openings[].leaves, default 1)",
+      "inputs": [
+        "plan.json#/floors/2/openings/0/kind",
+        "plan.json#/floors/2/openings/1/kind",
+        "plan.json#/floors/2/openings/2/kind",
+        "plan.json#/floors/2/openings/3/kind",
+        "plan.json#/floors/2/openings/4/kind"
+      ],
+      "softness": "soft",
+      "soft_reasons": [
+        "o1: leaves not recorded, assumed 1",
+        "o2: leaves not recorded, assumed 1",
+        "o3: leaves not recorded, assumed 1",
+        "o4: leaves not recorded, assumed 1",
+        "o5: leaves not recorded, assumed 1"
+      ],
+      "scale_source": "First floor overall width label 28'0\" = 336 px"
+    }
+  ],
+  "totals": {
+    "floor_area": {
+      "unit": "sq ft",
+      "quantity": 2310.0,
+      "lines": 14,
+      "soft_lines": 0
+    },
+    "wall_paint_area": {
+      "unit": "sq ft",
+      "quantity": 5063.4,
+      "lines": 14,
+      "soft_lines": 14
+    },
+    "ceiling_paint_area": {
+      "unit": "sq ft",
+      "quantity": 2310.0,
+      "lines": 14,
+      "soft_lines": 0
+    },
+    "baseboard_length": {
+      "unit": "ft",
+      "quantity": 659.5,
+      "lines": 14,
+      "soft_lines": 11
+    },
+    "stair_risers": {
+      "unit": "count",
+      "quantity": 27,
+      "lines": 2,
+      "soft_lines": 2
+    },
+    "stair_treads": {
+      "unit": "count",
+      "quantity": 25,
+      "lines": 2,
+      "soft_lines": 2
+    },
+    "door_leaves": {
+      "unit": "count",
+      "quantity": 10,
+      "lines": 3,
+      "soft_lines": 3
+    }
+  },
+  "assumptions": [
+    "Riser height of 7.5 in is an assumption used only to estimate riser counts.",
+    "No waste factor is included in any quantity."
+  ],
+  "cannot_check": [
+    "Which walls are load-bearing. Removing or opening any wall needs a structural check by a licensed engineer.",
+    "What is inside walls, floors and ceilings: pipes, wiring, gas, ducts, insulation, asbestos.",
+    "Clear ceiling height under beams, ducts and soffits unless a line says the height was measured.",
+    "Areas the plan does not show (unknown areas, additions, crawl spaces, attics).",
+    "Hidden damage: water, rot, termites, cracks, mold. Quantities assume sound surfaces.",
+    "Whether the permit and code rules used are the latest version. Rules are dated; check the official source.",
+    "What a contractor will actually quote. These are quantities, not prices, and contractors measure again on site."
+  ],
+  "measurements": {
+    "status": "none",
+    "factor": null,
+    "spread": null
+  },
+  "measure_next": [
+    {
+      "floor": "B",
+      "room": "B1",
+      "name": "Rec room",
+      "axis": "y",
+      "plan_len": 31.2,
+      "share": 0.226
+    },
+    {
+      "floor": "1F",
+      "room": "L",
+      "name": "Living room",
+      "axis": "y",
+      "plan_len": 17.55,
+      "share": 0.106
+    },
+    {
+      "floor": "1F",
+      "room": "D",
+      "name": "Dining",
+      "axis": "x",
+      "plan_len": 15.55,
+      "share": 0.088
+    }
+  ],
+  "state": "existing"
+}

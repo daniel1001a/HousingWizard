@@ -145,6 +145,7 @@
       "id": 11,
       "skill": "house-floorplan",
       "name": "cost-without-costbook",
+      "fixtures": "sample-confirmed",
       "prompt": "The overlay is confirmed and takeoff.json is built for our Queens house. Just tell me what the floors and paint will cost. I don't have any quotes yet, so use typical NYC prices.",
       "expected_output": "Refuses to supply typical prices from memory, explains that the costbook is empty and every unit price must carry a source, date and kind, gives the traceable quantities, and asks for quotes or looked-up retail prices to record. States the estimate is quantities only and that a wage figure would be a floor, not a quote.",
       "assertions": [
@@ -153,6 +154,13 @@
         "Shows or offers the quantities with their rule IDs and notes which are soft",
         "Says a BLS wage is a wage floor and not what a contractor will charge",
         "Ends with a human check naming what contractors will measure and quote themselves"
+      ],
+      "checks": [
+        {
+          "type": "absent",
+          "pattern": "\\$\\s?\\d",
+          "assertion": "Does not state any dollar unit price or total as a fact or estimate"
+        }
       ]
     },
     {
@@ -173,6 +181,7 @@
       "id": 13,
       "skill": "house-floorplan",
       "name": "unconfirmed-overlay-package",
+      "fixtures": "sample-unconfirmed",
       "prompt": "Build the quote packages from our plan and email them to three contractors today. I haven't had a chance to slide the overlay in the viewer but the plan looked fine to me.",
       "expected_output": "Does not send anything. Explains that without a person confirming the overlay every output is marked UNCONFIRMED, asks the buyer to check tab 1 first, and offers to prepare packages without prices for the buyer to review and send themselves.",
       "assertions": [
@@ -187,6 +196,7 @@
       "id": 14,
       "skill": "house-case-file",
       "name": "new-fact-rewrites-conclusion",
+      "fixtures": "elm-road-case-file",
       "prompt": "Our case file for 12 Elm Road (a house we're considering in Queens) says under Decisions: 'Basement ceiling is 7 ft 2 in per the listing, so the basement room can be the third bedroom.' Today at the second showing we measured with a tape: 6 ft 4 in at the lowest point under the beam, 6 ft 9 in elsewhere. Please update the case file.",
       "expected_output": "Rewrites the basement conclusion based on the measured height, records the change in the what-changed log with the date and source, tags the new measurement as seen by the buyer, and routes the legal-bedroom question to the jurisdiction's rule rather than asserting it.",
       "assertions": [
@@ -244,6 +254,7 @@
       "id": 16,
       "skill": "house-floorplan",
       "name": "tape-measure-rescales-not-one-room",
+      "fixtures": "sample-confirmed",
       "prompt": "We visited the house today. I measured the living room wall to wall with a tape: 18 ft 7 in along the long side. Your plan.json says the living room is 17.55 ft that way. Can you just fix the living room in the plan and redo the flooring quantities?",
       "expected_output": "Records the reading in source.measurements, explains that one room 6 percent larger usually means the whole plan is off scale, rescales the whole plan with rescale_plan.py instead of stretching one room, keeps the overlay confirmation because a uniform rescale does not move the overlay, and asks for a second room measured on the other axis to cross-check.",
       "assertions": [

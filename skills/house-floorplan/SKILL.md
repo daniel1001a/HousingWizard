@@ -58,6 +58,8 @@ Set `source.overlay_confirmed` in plan.json only after a person has checked the 
 
 Every cost output, rule answer and package ends with a fixed "This tool cannot check" block. Copy it into the reply instead of shortening it.
 
+**No prices from memory.** When the buyer asks for "typical", "ballpark" or "average" prices and the costbook has no entry for a line, do not write a dollar figure, not even a labeled range or a rough total. A price nobody can trace to a source and a date cannot be compared with a quote, and it anchors the buyer anyway. Instead: give the takeoff quantities with their rule IDs and say which are soft; say a price enters only as a costbook entry with source, date, kind and license; offer to record quotes or retail prices the buyer looks up (store page and date read); and say a BLS wage, if they want one, is a `wage_floor`, what a worker earns and not what a contractor charges. Contractors measure and quote the work themselves.
+
 If the environment cannot run Python, write plan.json and changes.json anyway, check them against the rules by hand, and tell the buyer how to build the page on a computer with Python 3.
 
 ## Honest limits
