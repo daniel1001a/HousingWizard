@@ -128,7 +128,8 @@ class PlanTests(unittest.TestCase):
             r = subprocess.run([sys.executable, os.path.join(FP, 'build_viewer.py'), os.path.join(SAMPLE, 'plan.json'),
                                 '--changes', os.path.join(SAMPLE, 'changes.json'), '--out', out], capture_output=True, text=True)
             self.assertEqual(r.returncode, 0, r.stderr)
-            html = open(out).read()
+            with open(out) as fh:
+                html = fh.read()
             self.assertIn('data:image/svg+xml;base64,', html)
             self.assertNotIn('/*__DATA__*/', html)
             self.assertNotIn('/*__VENDOR__*/', html)
@@ -139,6 +140,29 @@ class RepoTests(unittest.TestCase):
     def test_skill_checker_passes(self):
         r = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'check_skills.py')], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+    def test_package_skills_is_complete_and_reproducible(self):
+        import glob
+        import hashlib
+        import zipfile
+        skills = sorted(os.path.basename(os.path.dirname(p)) for p in glob.glob(os.path.join(ROOT, 'skills', '*', 'SKILL.md')))
+        digests = []
+        for _ in range(2):
+            r = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'package_skills.py')], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            zips = sorted(glob.glob(os.path.join(ROOT, 'dist', '*.zip')))
+            self.assertEqual([os.path.basename(z)[:-4] for z in zips], skills)
+            run = {}
+            for z in zips:
+                name = os.path.basename(z)[:-4]
+                with zipfile.ZipFile(z) as zf:
+                    names = zf.namelist()
+                self.assertEqual({n.split('/')[0] for n in names}, {name})
+                self.assertIn(name + '/SKILL.md', names)
+                with open(z, 'rb') as fh:
+                    run[name] = hashlib.sha256(fh.read()).hexdigest()
+            digests.append(run)
+        self.assertEqual(digests[0], digests[1])
 
 
 if __name__ == '__main__':

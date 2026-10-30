@@ -1,0 +1,29 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Skill format and writing rules
+        run: python tools/check_skills.py
+      - name: Unit tests
+        run: python -m unittest discover tests
+      - name: Build skill zips
+        run: python tools/package_skills.py
+      - name: Attach zips to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file docs/release-notes.md
+          gh release upload "$GITHUB_REF_NAME" dist/*.zip --clobber
