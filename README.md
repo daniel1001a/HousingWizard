@@ -183,7 +183,7 @@ python3 tools/sync_shared.py           # copy tools/shared_rules.md into every S
 python3 tools/package_skills.py        # zips for app upload
 ```
 
-Behavior checks for each skill are in `evals/evals.json`.
+Behavior checks for each skill are in `evals/evals.json`. `python3 tools/run_evals.py --agent claude --dry-run` shows what a run would cost in agent and grader calls; drop `--dry-run` to run them on your own subscription (never in CI). Results go to `evals/results/`.
 
 ## License
 
