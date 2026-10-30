@@ -97,17 +97,20 @@ The tradeoff is explicit: HousingWizard will tell you "unpriced", "this tool can
 npx skills add daniel1001a/HousingWizard
 ```
 
-This uses the open [skills CLI](https://github.com/vercel-labs/skills), which installs to Claude Code, Codex, Cursor, Gemini CLI and many others. Add `-g` to install for your user instead of the current project, or `-a claude-code codex cursor` to pick agents.
+This uses the open [skills CLI](https://github.com/vercel-labs/skills), which installs to Claude Code, Codex, Cursor, Gemini CLI and many others. Add `-g` to install for your user instead of the current project, or `-a claude-code codex cursor gemini-cli` to pick agents (IDs from the skills CLI [agent list](https://github.com/vercel-labs/skills/blob/main/docs/agents.md), checked 2026-10-30).
 
 ### By hand
 
 Copy the folders inside `skills/` to your agent's skills folder:
 
-| Agent | User-level folder |
-|---|---|
-| Claude Code | `~/.claude/skills/` |
-| Codex | `~/.agents/skills/` (current OpenAI docs; older Codex versions used `~/.codex/skills/`) |
-| Cursor | `~/.cursor/skills/` or `~/.agents/skills/` (Cursor also reads `~/.claude/skills/`) |
+| Agent | User-level folder | Project folder |
+|---|---|---|
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` |
+| Codex | `~/.agents/skills/` (current OpenAI docs; older Codex versions used `~/.codex/skills/`) | `.agents/skills/` |
+| Cursor | `~/.cursor/skills/` or `~/.agents/skills/` (Cursor also reads `~/.claude/skills/` and `~/.codex/skills/`) | `.cursor/skills/` or `.agents/skills/` |
+| Gemini CLI | `~/.gemini/skills/` or `~/.agents/skills/` | `.gemini/skills/` or `.agents/skills/` |
+
+`~/.agents/skills/` is read by Codex, Cursor and Gemini CLI, so one copy there covers all three. Folders checked on 2026-10-30 against the [Cursor skills docs](https://cursor.com/docs/context/skills) and the [Gemini CLI skills docs](https://geminicli.com/docs/cli/skills/); agents change these paths, so check their docs if a skill does not show up.
 
 ```bash
 git clone https://github.com/daniel1001a/HousingWizard.git

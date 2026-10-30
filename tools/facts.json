@@ -280,6 +280,39 @@
       "date_basis": "checked",
       "max_age_days": 180,
       "kind": "process"
+    },
+    {
+      "file": "README.md",
+      "checked": "2026-10-30",
+      "date_basis": "checked",
+      "max_age_days": 180,
+      "kind": "process",
+      "id": "cursor-skill-folders",
+      "match": "`~/.cursor/skills/` or `~/.agents/skills/` (Cursor also reads `~/.claude/skills/` and `~/.codex/skills/`)",
+      "what": "Folders Cursor loads Agent Skills from",
+      "source_url": "https://cursor.com/docs/context/skills"
+    },
+    {
+      "file": "README.md",
+      "checked": "2026-10-30",
+      "date_basis": "checked",
+      "max_age_days": 180,
+      "kind": "process",
+      "id": "gemini-skill-folders",
+      "match": "| Gemini CLI | `~/.gemini/skills/` or `~/.agents/skills/` | `.gemini/skills/` or `.agents/skills/` |",
+      "what": "Folders Gemini CLI loads Agent Skills from",
+      "source_url": "https://geminicli.com/docs/cli/skills/"
+    },
+    {
+      "file": "README.md",
+      "checked": "2026-10-30",
+      "date_basis": "checked",
+      "max_age_days": 180,
+      "kind": "process",
+      "id": "skills-cli-agent-ids",
+      "match": "`-a claude-code codex cursor gemini-cli`",
+      "what": "Agent IDs accepted by npx skills add -a",
+      "source_url": "https://github.com/vercel-labs/skills/blob/main/docs/agents.md"
     }
   ]
 }
