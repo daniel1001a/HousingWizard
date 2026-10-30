@@ -6,7 +6,8 @@
 Format: SKILL.md starts with YAML frontmatter; name matches the folder, uses lowercase
 letters, digits and hyphens, and is at most 64 characters; description is 1 to 1024
 characters. Repo rules: English only (no CJK characters), no em dashes, no emoji,
-shared rules in sync, and every relative file a SKILL.md mentions exists.
+shared rules in sync, every relative file a SKILL.md mentions exists, and every
+entry in tools/facts.json still points at text that exists.
 """
 import glob
 import os
@@ -71,6 +72,10 @@ def main():
     r = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'sync_shared.py'), '--check'], capture_output=True, text=True)
     if r.returncode:
         problems.append('shared rules out of sync: run python3 tools/sync_shared.py')
+    r = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'check_freshness.py'), '--structure-only'],
+                       capture_output=True, text=True)
+    if r.returncode:
+        problems.append('tools/facts.json: ' + (r.stdout.strip() or r.stderr.strip()))
     if problems:
         print('\n'.join(problems))
         sys.exit(1)
