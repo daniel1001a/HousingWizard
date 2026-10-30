@@ -1,0 +1,1171 @@
+{
+ "agent": "claude",
+ "cases": {
+  "1": {
+   "name": "texas-buyer-no-new-york-leakage",
+   "skill": "house-buying",
+   "with_skills": {
+    "cache_key": "32aef9513ca03cdb3fc10e7c04e050514a4729f8d965114fc2591fe9ea1026c1",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "You're at **Stage 5: Contract signed, option period open** \u2014 and you're asking exactly the right question at exactly the right time.\n\n**Short answer:** No, you do not need to finish every inspection before signing. Under the standard TREC contract, the 7-day option period *is* when you inspect. You sign the contract first, then you have 7 days to order and complete inspections and decide whether to walk away.\n\n**The key protection:** During the option period, you can terminate for any reason (or no reason) and get your earnest money back. Once the option period expires, you lose that right. So the inspection must be done *before that 7-day deadline*, not before signing.\n\n---\n\n## Next three things to do (in order)\n\n1. **Schedule your inspections now [buyer].** You have 7 days from today to get:\n   - General home inspection (1\u20133 hours, takes 2\u20135 days to book)\n   - Any specialty tests (sewer scope, radon, termite, roof inspection, HVAC \u2014 depends on the house age, type, location, and what the disclosure reveals)\n   - Do not wait; inspectors fill up fast, especially on weekends.\n\n2. **Read the contract and any disclosures the seller provided [you and your attorney].** Before the option period expires, your attorney should confirm:\n   - That the 7-day option period is clearly stated and starts today\n   - What the seller disclosed about known defects\n   - Whether there are any other inspection contingencies already in the contract (some TREC forms include addenda)\n   - What happens if the seller does not deliver required documents by the deadline\n\n3. **Get a home inspection company to examine the property [buyer].** Once you have the inspector's report, use the house-inspection skill (or share the report here) to sort what to ask the seller for before the option period closes.\n\n---\n\n## Deadlines\n\n- **Option period expires:** 7 days from today = **2026-11-06** (assuming \"yesterday\" means 2026-10-29)\n- **Decision to terminate or proceed:** Must be made before 11:59 PM on that date, or the option period closes and you cannot walk away without losing earnest money\n\n---\n\n## Human check\n\n- **You:** Confirm today's date and the exact date your offer was accepted so we can mark the deadline correctly.\n- **Your attorney:** Confirm the option period start date, duration, and what triggers the close (midnight, 5 PM, end of business).\n- **Your inspector:** Call today or tomorrow to book the general inspection; ask for the earliest available slot within the 7-day window.\n- **You:** Do not sign anything else (amendments, waivers, addendum requests from the seller) without checking with your attorney first \u2014 the option period can be shortened or waived accidentally.\n\n---\n\nWould you like me to create a case file for this property so we have one true record of the address, price, timeline, and documents as we go? Or do you have an inspection report or contract ready to review?",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not say inspections must be finished before the contract is signed",
+      "pass": true,
+      "quote": "No, you do not need to finish every inspection before signing."
+     },
+     {
+      "assertion": "Mentions the option period as the inspection and termination window",
+      "pass": true,
+      "quote": "the 7-day option period *is* when you inspect... During the option period, you can terminate for any reason"
+     },
+     {
+      "assertion": "Says to confirm the exact deadline with their agent or the contract",
+      "pass": true,
+      "quote": "Your attorney: Confirm the option period start date, duration, and what triggers the close"
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "b31be2c403b8420d6b07d382dff8e53863d026d803768f5a24c5a6111d3ed0f9",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I appreciate the question, but this is a real estate legal matter that I'm not qualified to advise on. The answer depends on:\n\n1. **Your specific contract terms** \u2014 while you mentioned it's a standard TREC contract with a 7-day option period, the exact language matters\n2. **Texas real estate law** \u2014 which has specific requirements around option periods and inspections\n3. **Your lender's requirements** \u2014 which may have conditions on the property inspection\n4. **Local practices** \u2014 which can vary even within Austin\n\n**What I'd recommend instead:**\n\n- **Contact your real estate agent** \u2014 they should walk you through what inspections are typical and required by your offer\n- **Consult a real estate attorney** \u2014 Texas real estate transactions commonly involve attorney review, and they can tell you exactly what your contract requires\n- **Talk to your lender** \u2014 they may have specific inspection requirements before they'll fund the loan\n\n**General note on option periods:** The option period (often called \"inspection period\") is typically *when* you can conduct inspections and get out of the contract if you're unsatisfied, not necessarily when you *must* complete them. But the specific obligations are in your contract language.\n\nSince your offer was just accepted, now is the right time to clarify these details with your agent or attorney rather than relying on general information. This will save you stress and potential financial complications.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not say inspections must be finished before the contract is signed",
+      "pass": true,
+      "quote": "The option period (often called \"inspection period\") is typically *when* you can conduct inspections"
+     },
+     {
+      "assertion": "Mentions the option period as the inspection and termination window",
+      "pass": true,
+      "quote": "The option period (often called \"inspection period\") is typically *when* you can conduct inspections and get out of the contract if you're unsatisfied"
+     },
+     {
+      "assertion": "Says to confirm the exact deadline with their agent or the contract",
+      "pass": false,
+      "quote": "Consult a real estate attorney"
+     }
+    ],
+    "passed": 2,
+    "total": 4
+   }
+  },
+  "2": {
+   "name": "generic-mode-outside-us",
+   "skill": "house-buying",
+   "with_skills": {
+    "cache_key": "d954fb44c0c63f62fc912d9038f03c3214879d9e402cbe303784d7ec705feeb7",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Here's the UK conveyancing process end-to-end, split between what you drive and what your solicitor (conveyancer) handles.\n\n## Where you likely are: offer accepted, pre-exchange\n\n### The overall sequence\n1. **Offer accepted** (you're here or just past it)\n2. **Instruct a solicitor/conveyancer** and a mortgage broker/lender (if not already done)\n3. **Mortgage application** \u2192 survey/valuation \u2192 formal mortgage offer\n4. **Property searches** (local authority, water & drainage, environmental, plus any extras for flats)\n5. **Leasehold-specific checks** (almost all Manchester flats are leasehold \u2014 see below)\n6. **Enquiries raised and answered** between your solicitor and the seller's solicitor\n7. **Report on title** sent to you by your solicitor\n8. **Exchange of contracts** \u2014 this is the legally binding point, deposit paid (usually 10%, sometimes negotiated to 5%)\n9. **Completion** \u2014 usually 1\u20134 weeks after exchange; you get the keys\n10. **Post-completion**: Stamp Duty Land Tax (SDLT) paid, Land Registry updated, if leasehold the freeholder/managing agent notified\n\n### What you should be doing\n- **Choose and instruct a solicitor now** if you haven't \u2014 ask for a fixed fee quote in writing, not just a headline number (searches, leasehold supplement, telegraphic transfer fee etc. add up).\n- **Line up your mortgage**: get your Mortgage Agreement in Principle converted to a full application once the offer is accepted; book the valuation survey, and seriously consider paying for your own **RICS Level 2 or 3 survey** (flats especially benefit from at least a Level 2 Homebuyer Report) \u2014 lender valuations are not a survey of condition.\n- **Decide on your deposit/exchange terms** and have funds ready and traceable (solicitors must do anti-money-laundering checks \u2014 have ID and bank statements ready, and be able to explain source of deposit funds, especially if it's a gift).\n- **Budget for Stamp Duty Land Tax** \u2014 as a flat in England, this is payable; rates depend on whether it's your only property, first-time buyer status, and purchase price. Your solicitor calculates and files this, but you should sanity-check the number yourself.\n- **Arrange buildings insurance** to be in place from exchange (for a flat, this is usually the freeholder's responsibility via the service charge \u2014 confirm this rather than assume, since getting it wrong leaves you uninsured for the exchange-to-completion gap).\n- **Keep the chain moving**: respond quickly to anything your solicitor or broker sends you; delays on your side (ID checks, signing documents, providing info) are a common cause of chains collapsing.\n- **Don't make big financial changes** (new credit, job change, large unexplained deposits) between mortgage approval and completion \u2014 it can cause your lender to re-underwrite or withdraw the offer.\n\n### What your solicitor should handle\n- **Drafting/reviewing the contract** and raising pre-contract enquiries with the seller's solicitor\n- **Conducting searches**: local authority search, water/drainage, environmental, and (if relevant) coal mining, flood, chancel repair\n- **Leasehold-specific work** \u2014 this is the bulk of the work and risk on a flat:\n  - Obtaining and reviewing the **lease** (length remaining, ground rent, service charge, restrictions e.g. on subletting/pets, who owns the freehold)\n  - Leasehold Property Enquiries (**LPE1**) and management pack from the freeholder/managing agent\n  - Checking service charge accounts, reserve fund, any planned major works (Section 20 notices) \u2014 these can be very expensive and are a real risk area in Manchester's newer apartment blocks\n  - Confirming building insurance arrangements and buildings safety/EWS1 status if it's a higher-rise block (post-Grenfell cladding checks matter a lot for Manchester city-centre flats)\n  - Checking ground rent doesn't breach the 2022 Leasehold Reform (ground rent) rules if it's a newer lease\n- **Reviewing the mortgage offer** conditions and liaising with your lender's solicitor (often the same firm acting for both)\n- **Verifying the seller's title** at the Land Registry and checking for any charges, restrictions, or easements\n- **Managing exchange of contracts**: agreeing a completion date, exchanging deposit funds, making contracts legally binding\n- **Completion**: transferring the remaining funds, receiving keys authorization\n- **Post-completion**: filing and paying your SDLT return (must be done within 14 days of completion), registering you as owner at the Land Registry, and sending notice of the transfer/mortgage to the freeholder/managing agent\n\n### Manchester-specific things worth flagging to your solicitor\n- Ask explicitly about **cladding/EWS1 status** if it's a flat in a mid/high-rise block built or clad pre-2018 \u2014 this affects mortgageability and insurance.\n- Ask about **service charge trends** \u2014 some newer Manchester developments have had steep service charge increases; get at least 3 years of accounts.\n- Confirm whether it's **share of freehold** or pure leasehold, and if leasehold, how many years remain (under ~80 years can complicate future mortgageability/resale).\n\nWant me to go deeper on any one stage \u2014 e.g. reviewing a lease/contract once you have it, or running the Stamp Duty and total cash-to-complete numbers?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says it has no reference for this location or is working in generic mode",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not quote US taxes, US forms or US contingencies as applying",
+      "pass": true,
+      "quote": "Budget for Stamp Duty Land Tax"
+     },
+     {
+      "assertion": "Turns local specifics into questions for the solicitor",
+      "pass": true,
+      "quote": "Manchester-specific things worth flagging to your solicitor"
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "c9c80bbd217c0425a0326e9526f41fb89474142a31a7fa8615fd854e5ccc5282",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "This is a general question, not a coding task \u2014 happy to walk through it directly.\n\n## Overview of the process (England-ish, but Manchester follows the same framework)\n\n1. **Offer accepted** \u2013 You and seller agree a price; estate agent issues a Memorandum of Sale. At this point, nothing is legally binding yet.\n2. **Instruct a solicitor/conveyancer** \u2013 Do this immediately, don't wait. Also line up your mortgage application in parallel if you need one (full mortgage offer, not just an AIP).\n3. **Searches and enquiries** \u2013 Solicitor sends out local authority, water/drainage, environmental searches, and raises enquiries with the seller's solicitor.\n4. **Survey** \u2013 You instruct a surveyor (RICS HomeBuyer Report or Building Survey) \u2014 this is separate from the mortgage valuation and is on you to arrange, not the solicitor.\n5. **Mortgage offer** \u2013 Lender issues formal offer once valuation/survey is satisfactory.\n6. **Review of contract and leasehold pack** (flats in England/Wales are almost always leasehold) \u2013 solicitor reviews lease terms, service charges, ground rent, management company.\n7. **Exchange of contracts** \u2013 Both sides sign, deposit (usually 10%) is paid, completion date is fixed. This is the binding point.\n8. **Completion** \u2013 Funds transfer, you get the keys.\n9. **Post-completion** \u2013 Solicitor registers you at the Land Registry, pays Stamp Duty Land Tax (SDLT) on your behalf.\n\n## What your solicitor specifically handles\n\n- Reviewing the **draft contract** from the seller's solicitor\n- **Title checks** at the Land Registry (confirming seller actually owns it, no undisclosed charges/restrictions)\n- **Leasehold-specific work** (critical for a flat):\n  - Reviewing the lease length (lenders often want 70+ years remaining after your mortgage term)\n  - Ground rent and service charge history, and whether ground rent escalates (an issue post-Leasehold Reform Act 2022 scrutiny)\n  - Management company/freeholder details, and getting a **management pack** (can take weeks \u2014 a common delay point)\n  - Checking for major works planned (large bills can land on you)\n  - Buildings insurance arrangements (usually freeholder's responsibility for flats)\n- **Searches**: local authority, drainage/water, environmental, and any Manchester-specific ones (e.g. mining searches aren't usually relevant to Manchester, but check for any coal mining search if near old industrial sites \u2014 more a Greater Manchester historical-industry consideration than coal-specific)\n- **Enquiries** raised with seller's solicitor (alterations, disputes, boundary issues, planning permissions)\n- **Mortgage conditions** \u2013 liaising with your lender's solicitor requirements (often the same firm acts for both you and lender)\n- **Completion statement** \u2013 calculating exact funds needed (purchase price + fees + SDLT - deposit already paid)\n- **Exchange and completion** \u2013 the legal mechanics, holding/transferring deposit and funds\n- **SDLT return and payment** \u2013 filing within 14 days of completion\n- **Land Registry registration** \u2013 transferring the title into your name\n\n## What's NOT the solicitor's job (yours to sort)\n\n- Arranging the mortgage itself (broker/lender)\n- Survey/valuation of the property's condition\n- Arranging buildings/contents insurance for completion day (for a flat, buildings insurance is usually the freeholder's, but check)\n- Removals, utilities switch-over, council tax registration\n\n## A few Manchester/flat-specific things to flag to your solicitor\n\n- Ask early about **ground rent escalation clauses** \u2014 some older Manchester new-builds had doubling ground rent clauses that caused mortgage/resale problems; make sure this is checked.\n- If it's a newer high-rise, ask about **EWS1 fire safety certification** (cladding) \u2014 this affects both mortgageability and your own risk, very relevant post-Grenfell for Manchester city centre tower blocks.\n- Confirm **remaining lease length** against your mortgage term before you're too far in.\n- Ask how quickly they can get the **management pack** \u2014 this is often the single biggest delay for flat purchases.\n\nWant me to go deeper on any part \u2014 e.g. typical costs/fees, timeline expectations, or questions to ask when interviewing solicitors?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says it has no reference for this location or is working in generic mode",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not quote US taxes, US forms or US contingencies as applying",
+      "pass": true,
+      "quote": "SDLT return and payment \u2013 filing within 14 days of completion"
+     },
+     {
+      "assertion": "Turns local specifics into questions for the solicitor",
+      "pass": true,
+      "quote": "Ask early about **ground rent escalation clauses**"
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   }
+  },
+  "3": {
+   "name": "zero-rows-is-not-clean",
+   "skill": "house-records",
+   "with_skills": {
+    "cache_key": "0b666fec3cce1e12db2180b69273bfb630beb217c1bd127fb71dac5a88844881",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "No \u2014 zero violations and zero permits is not a clean bill of health for that basement. It's actually a fairly common pattern when work was done *without* a permit, and it deserves a closer look before you treat it as \"legal.\"\n\n**Why \"zero\" doesn't mean \"clean\"**\n\n| Finding `[record]` | Innocent explanation | Why it still matters | How to verify | Who checks |\n|---|---|---|---|---|\n| Zero DOB violations | House was well-maintained, no one complained, no inspector ever flagged it | Violations only get recorded if DOB happens to inspect or someone complains \u2014 absence of violations is not proof of legality | Compare against neighboring houses on the block (do they show similar zero counts, or is this one unusual?) | You, via DOB BIS / DOB NOW |\n| Zero permits on file | Legit pre-1960s work predates digital records, or it was minor cosmetic work not requiring a permit | If the listing says \"fully finished\" in 2015, that's recent \u2014 DOB digital records reliably cover that era. A basement finish in Queens almost always needs a permit (electrical, plumbing if there's a bathroom/wet bar, egress changes, sometimes a new means of egress window) | Pull the Certificate of Occupancy and compare legal basement/cellar use to what's being advertised | Buyer's attorney should confirm the C of O language |\n| \"Fully finished\" basement, 2015 `[seller said / listing]` | Could just mean paint, flooring, drywall over an already-legal space | In NYC, a *legally finished* basement (not cellar) used as habitable space needs permits for egress, ceiling height, plumbing if wet-bar/bathroom added, and electrical | Ask listing agent for the permit numbers or any Letter of Completion referenced | Buyer's attorney |\n\n**The real issue in NYC specifically:** basements vs. cellars have different legal-use rules. A \"cellar\" (more than 50% below curb level) generally *cannot* be legalized as livable space in most NYC zoning districts no matter what permits exist \u2014 it can be finished for storage/mechanical/rec use but not as a legal bedroom or rentable unit. If the listing or photos show a bedroom, a bathroom, or a kitchenette down there, that's a bigger flag than the missing permit itself.\n\n**What this pattern usually means in practice:** no permit + recent \"finished\" basement is the classic signature of unpermitted work. That doesn't make the house uninsurable or unbuyable \u2014 it's extremely common in Queens \u2014 but it does mean:\n- You can't assume the electrical/plumbing was inspected to code.\n- If it includes a bathroom or separate entrance, it may be an illegal basement apartment (a real liability/fine exposure and a lending issue for some loan types).\n- Insurance claims involving that space could be denied if work is later found unpermitted.\n\n**Next steps**\n1. Pull the Certificate of Occupancy for this address and see what it lists the basement/cellar as (storage, mechanical, habitable).\n2. Check whether the basement has a separate entrance, a kitchen, or is listed as a legal bedroom in the listing photos/floor plan \u2014 that's the highest-risk version of this pattern.\n3. Ask the listing agent directly: \"Was a permit pulled for the 2015 basement finish? Can you provide the permit number or a Letter of Completion?\" Treat the answer as `[seller said]`, not fact.\n4. Have your attorney raise this in attorney review \u2014 specifically ask the seller's attorney to confirm legal use of the basement matches what's advertised, and to disclose if any work was done without permits.\n\n**Human check:** confirm with your attorney what the C of O says about basement use, and have your inspector physically check for a second kitchen, egress window size, ceiling height, and visible electrical/plumbing work in the basement before you treat this space as a selling point rather than a risk.\n\nWant me to run the NYC records script to pull the Certificate of Occupancy and confirm the DOB data directly, or draft the question to send to the listing agent?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says zero online records does not prove the work is legal",
+      "pass": true,
+      "quote": "zero violations and zero permits is not a clean bill of health for that basement"
+     },
+     {
+      "assertion": "Points out the mismatch between renovation claims and missing permits",
+      "pass": true,
+      "quote": "no permit + recent \"finished\" basement is the classic signature of unpermitted work"
+     },
+     {
+      "assertion": "Gives at least one innocent explanation",
+      "pass": true,
+      "quote": "House was well-maintained, no one complained, no inspector ever flagged it"
+     },
+     {
+      "assertion": "Lists a concrete way to verify, such as ordering DOB microfilm or asking the seller in writing",
+      "pass": true,
+      "quote": "Ask the listing agent directly: \"Was a permit pulled for the 2015 basement finish? Can you provide the permit number or a Letter of Completion?\""
+     },
+     {
+      "assertion": "Mentions measuring basement ceiling height",
+      "pass": true,
+      "quote": "have your inspector physically check for a second kitchen, egress window size, ceiling height, and visible electrical/plumbing work"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "1ff8a428297c02f28b7271d4e7972c09a65c87325539cc839a6e83087d04f41a",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "**No, that doesn't show it's legal.** A finished basement with zero permits on file is actually a warning sign.\n\n**Why the record doesn't prove much:**\n\n- **Zero violations** only means nobody complained and no inspector happened to cite anything. DOB doesn't inspect work it doesn't know about.\n- **Zero permits** is the bigger issue. Finishing a basement in NYC usually needs DOB filings if it involved any of these:\n  - new walls or partitions\n  - plumbing, like a bathroom or wet bar\n  - electrical work (a licensed electrician has to file this separately)\n  - HVAC or gas changes\n  - turning the space into a bedroom or other living space\n\n  If the listing says \"fully finished in 2015\" and nothing was filed, the work was probably done without permits.\n\n**What to check next:**\n\n1. **The Certificate of Occupancy (CO).** It says how each floor may legally be used. NYC treats a \"cellar\" (more than half below the curb) differently from a \"basement.\" A cellar generally can't be used as living space, finished or not. If the CO doesn't allow habitable use down there, a bedroom, apartment or rec room with a bathroom may be illegal.\n2. **Both DOB systems.** Work from 2015 would be in **BIS**, including its separate electrical and plumbing records. Newer filings are in **DOB NOW**. Look up the property by block/lot or BIN instead of the street address, since address searches sometimes miss records.\n3. **Ask the seller in writing** for permits, sign-offs and the electrical certificate for the basement work.\n4. **Have your attorney and inspector look at it.** An inspector can spot unpermitted plumbing and wiring. Your attorney can ask for the work to be legalized before closing, for a lower price, or for money held back at closing.\n\n**Why it matters:** Unpermitted work can cause problems with insurance claims, refinancing and resale, and it can become your fine and repair bill after you buy. If people sleep in an illegal cellar space, it can also be a safety risk because of fire exits and ceiling height.\n\nI can't confirm the legal status of a specific property. A Queens real estate attorney or an expediter can tell you for certain.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says zero online records does not prove the work is legal",
+      "pass": true,
+      "quote": "No, that doesn't show it's legal."
+     },
+     {
+      "assertion": "Points out the mismatch between renovation claims and missing permits",
+      "pass": true,
+      "quote": "If the listing says \"fully finished in 2015\" and nothing was filed, the work was probably done without permits."
+     },
+     {
+      "assertion": "Gives at least one innocent explanation",
+      "pass": true,
+      "quote": "Look up the property by block/lot or BIN instead of the street address, since address searches sometimes miss records."
+     },
+     {
+      "assertion": "Lists a concrete way to verify, such as ordering DOB microfilm or asking the seller in writing",
+      "pass": true,
+      "quote": "Ask the seller in writing for permits, sign-offs and the electrical certificate for the basement work."
+     },
+     {
+      "assertion": "Mentions measuring basement ceiling height",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "4": {
+   "name": "joint-model-not-sequential",
+   "skill": "house-money",
+   "with_skills": {
+    "cache_key": "13bab156039f9ddb26966410c996a395ac6de52b42e2ac3864451dad41f933ca",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Here's the math, done by hand (the sandbox blocked script execution, so I verified it manually):\n\n## Bottom line\n**About $950,000** is the most house this affords \u2014 and it's the **monthly payment**, not cash, that caps it (you'd have cash left over at that price).\n\n## The math\n\n**Cash side:**\n- Cash available for down payment + closing costs = $260k \u2212 $30k reserve = **$230,000**\n- NJ buyer closing costs run roughly 2\u20133% of price `[estimate]` \u2014 I used 2%, with 3% shown as a sensitivity check below.\n\n**Monthly side (the binding constraint):**\n- Rate 6.75%, 30-yr fixed \u2192 P&I factor \u2248 0.6487% of loan amount per month `[estimate]`\n- Property tax 1.3%/yr `[you]`\n- Homeowners insurance \u2248 $150/mo `[assumption \u2014 get a real quote]`\n\nSolving for the price where (down payment + closing costs = $230,000) and (P&I + tax + insurance = $6,000/mo) both hold at once:\n\n| Price | Down pmt | Down % | Loan | P&I | Tax/mo | Ins/mo | Total monthly | Cash used |\n|---|---|---|---|---|---|---|---|---|\n| **$953,700** | $210,926 | 22.1% | $742,774 | $4,819 | $1,033 | $150 | **$6,002** | $230,000 |\n\nWith 3% closing costs instead of 2%: max price drops slightly to **~$946,000** (down ~21.3%, still no PMI). So the answer is not very sensitive to that assumption \u2014 **call it $945k\u2013$955k**.\n\nNote the down payment lands at ~21\u201322%, comfortably clearing the 20% PMI threshold, so no PMI is baked in. If you wanted to put down *less* than 20% to keep more cash in hand, PMI (~0.5\u20130.75%/yr of loan) would eat into the $6,000 cap and pull the max price down toward the high $800ks \u2014 only consider that if liquidity matters more than price ceiling.\n\n## What moves this number most\n1. **Insurance quote** \u2014 I used $150/mo as a placeholder; NJ flood-zone or older homes can run $200\u2013300/mo, which would lower the max price by $15\u201330k.\n2. **Actual property tax bill** \u2014 NJ towns vary widely around that 1.3% average (some are 2%+); use the specific town's effective rate, not a state average.\n3. **Real Loan Estimate** \u2014 rate quotes vary lender to lender; 6.75% is a snapshot for 2026-10-30 and should be re-checked before relying on it.\n4. **Closing cost %** \u2014 attorney, title insurance, and NJ-specific fees; get a GFE/Loan Estimate for the real number.\n\n## Human check\n- **Buyer:** get an actual homeowners insurance quote for the target town before trusting this number.\n- **Buyer:** confirm the specific town's effective property tax rate (not the state average) \u2014 NJ taxes vary by municipality.\n- **Lender:** get a real rate quote/Loan Estimate \u2014 6.75% is a snapshot, not locked.\n- **Buyer:** decide whether 20%+ down (no PMI, ~$950k ceiling) or a smaller down payment (more cash cushion, lower ceiling) fits your priorities better.\n\nWant me to set up a case file for a specific property so we can track this as you look at real listings?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Gives a single maximum price or a narrow range",
+      "pass": true,
+      "quote": "About $950,000** is the most house this affords"
+     },
+     {
+      "assertion": "Names which limit binds",
+      "pass": true,
+      "quote": "it's the **monthly payment**, not cash, that caps it"
+     },
+     {
+      "assertion": "Keeps the $30k reserve out of the purchase cash",
+      "pass": true,
+      "quote": "Cash available for down payment + closing costs = $260k \u2212 $30k reserve = **$230,000**"
+     },
+     {
+      "assertion": "Labels insurance and closing costs as assumptions unless given",
+      "pass": true,
+      "quote": "Homeowners insurance \u2248 $150/mo `[assumption \u2014 get a real quote]`"
+     },
+     {
+      "assertion": "Does not apply New York City mansion tax or recording tax",
+      "pass": true,
+      "quote": ""
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "659c4c5c1d09a624d78854af9ce8575f991eeb5892e1396d8b83a6a497f0c908",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "## Bottom line: roughly **$925,000\u2013$935,000**, call it **~$930,000**\n\n### Assumptions I used (flag if any are off)\n- Usable cash: $260k \u2212 $30k emergency fund = **$230k**\n- Reserve ~3% of price for closing costs (NJ title/transfer/escrow costs), rest goes to down payment\n- 30-year fixed, 6.75%\n- Property tax: 1.3% of price/year\n- Homeowners insurance: ~0.35% of price/year (~$270/mo at this price point \u2014 adjust if you have a real quote)\n- \"All-in $6,000/mo\" = Principal + Interest + Taxes + Insurance (no PMI, no HOA)\n\n### The math at $930,000\n\n| Item | Amount |\n|---|---|\n| Purchase price | $930,000 |\n| Closing costs (~3%) | $27,900 |\n| Down payment | $202,100 (~22%) |\n| Loan amount | $727,900 |\n| **P&I** (6.75%, 30yr) | **$4,722** |\n| Property tax (1.3%/yr) | $1,008 |\n| Homeowners insurance | $271 |\n| **Total monthly** | **~$6,000** |\n| Emergency fund remaining | $30,000 \u2713 |\n\nDown payment lands at ~22%, so **no PMI** \u2014 that's what makes the number stretch this far. If you came in just under 20% down you'd add PMI and the max price would drop a bit.\n\n### Sensitivity \u2014 this number moves if:\n- **Insurance is higher** (NJ coastal/flood zones can run well above 0.35%) \u2192 max price drops. Every extra $100/mo of insurance costs you about $12-14k of price.\n- **HOA fees** aren't in here \u2014 if condo/townhouse, subtract HOA from the $6,000 budget first.\n- **Closing costs** differ from 3% \u2014 if you can get them lower or roll some into cash-to-close differently, you can push price up slightly.\n\nIf you give me a real insurance quote and whether you're looking at condo/HOA, I can tighten this to a firmer number.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Gives a single maximum price or a narrow range",
+      "pass": true,
+      "quote": "roughly **$925,000\u2013$935,000**, call it **~$930,000**"
+     },
+     {
+      "assertion": "Names which limit binds",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Keeps the $30k reserve out of the purchase cash",
+      "pass": true,
+      "quote": "Usable cash: $260k \u2212 $30k emergency fund = **$230k**"
+     },
+     {
+      "assertion": "Labels insurance and closing costs as assumptions unless given",
+      "pass": true,
+      "quote": "Homeowners insurance: ~0.35% of price/year (~$270/mo at this price point \u2014 adjust if you have a real quote)"
+     },
+     {
+      "assertion": "Does not apply New York City mansion tax or recording tax",
+      "pass": true,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "5": {
+   "name": "short-list-after-seller-concession",
+   "skill": "house-inspection",
+   "with_skills": {
+    "cache_key": "006fb112ea76e99487c86bba75e589c9e587f0481729fe5f9a103e68daf4d3e0",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "**Verdict: go ahead, but keep the request short.** The seller has already dropped $8k, so ask only for the safety and licensed-trade items. Leave the furnace, paint and gutters out of the request.\n\nI only have your summary, not the full report. So I don't know the page numbers, the inspector's exact wording, your state, the price or your contract deadlines. I've used generic US rules, not local code. Cost ranges are national ballpark figures `[estimate]`, not quotes.\n\n## What to ask for\n\n| Item | Tier | Ask | Rough cost `[estimate]` | Licensed trade / permit |\n|---|---|---|---|---|\n| **Zinsco panel** `[document]` | 1 | Credit, or replacement before closing (see note) | $2,000\u2013$4,500; more if the electrical service also needs upgrading | Electrician and a permit, almost everywhere |\n| **Water heater relief valve has no discharge pipe** `[document]` | 1 (bundle) | Seller fixes before closing, with a receipt | $100\u2013$300 | A plumber in many areas |\n| **Loose handrail on basement stairs** `[document]` | 1 (bundle) | Seller secures it before closing | $75\u2013$250 | No |\n| **Carpenter ant evidence at a sill** `[document]` | 1 | Licensed pest treatment with a transferable warranty, plus any past treatment records | $250\u2013$600 | Licensed pest company |\n| 35-year-old furnace, working `[document]` | 2, but **don't ask** | Already covered by the $8k. Get a buyer-paid HVAC check instead (below) | Replacement would be $4k\u2013$8k, for your budget only | \u2014 |\n| Peeling exterior paint | 4 | Leave out | \u2014 | \u2014 |\n| Gutters need cleaning | 4 | Leave out | \u2014 | \u2014 |\n\n**Zinsco panel.** Zinsco breakers have a known record of failing to trip, and many insurers won't cover a house that has one. Get an insurance quote **before you send the letter**:\n- **If the insurer needs it replaced before they'll cover the house:** ask the seller to replace it before closing, with a permit and the final inspection sign-off. That paperwork is what you actually need.\n- **If the insurer accepts a credit:** ask for the money and hire your own electrician. You'll pick who does the work, and a seller-hired job tends to be the cheapest fix.\n\n**Carpenter ants.** The likely innocent explanation: carpenter ants don't eat wood the way termites do. They dig into wood that's already damp or softened, and the cause is often something simple like overflowing gutters or soil piled against the siding. That's also why the gutters matter, even though you shouldn't ask for them. Still, ants at a sill mean that wood has been wet. Have the pest company or a carpenter probe the sill for rot. If the wood is soft, get a structural engineer ($500\u2013$900) before your inspection period ends. Sill rot can be a much larger repair.\n\n**The furnace.** \"Working\" is not the same as \"safe.\" A buyer-paid HVAC service check ($100\u2013$250) should include a combustion and carbon monoxide test and a look at the heat exchanger. If it finds a cracked heat exchanger or carbon monoxide, the furnace becomes a Tier 1 safety item and you can raise it then.\n\n## Tests to finish before your inspection deadline\n- **Insurance quote:** this week, because the panel answer depends on it.\n- **HVAC check:** as above.\n- **Sill probe for rot:** as above.\n- **Sewer camera scope ($300\u2013$600):** if the house is from before about 1960 or has big trees near the sewer line.\n- **Oil tank sweep ($300\u2013$500):** if the house is from before about 1970 or was ever heated with oil.\n- **Lead:** if the house is from before 1978, assume the peeling paint contains lead. Don't ask the seller about it, but plan for it in any repainting (lead-safe practices, a certified contractor).\n\n## Draft letter (for your agent to send)\n\n```\nHi [agent name],\n\nWe're not sending a long repair list. This is the short one, and it is the\none that decides whether we move forward.\n\nBefore closing, at the seller's cost, with receipts:\n  1. Install a discharge pipe on the water heater relief valve\n     (report p. [N]).\n  2. Secure the basement stair handrail (report p. [N]).\n  3. Carpenter ant activity at the sill (report p. [N]): treatment by a\n     licensed pest company with a transferable warranty, plus any prior\n     treatment records.\n\nA credit of $[3,000\u20134,000, based on an electrician's quote] to replace\nthe Zinsco electrical panel (report p. [N]), which needs a licensed\nelectrician and a permit.\n   [OR, if the insurer requires it: replacement of the Zinsco panel\n   before closing by a licensed electrician, with permit and final\n   inspection sign-off.]\n\nDocuments, at no cost to the seller: the property condition disclosure,\nthe lead paint disclosure [if pre-1978], any pest treatment records, and\nfurnace service records.\n\nAccess for [an HVAC safety check / sewer scope / oil tank sweep] at our\nexpense.\n\nThat's the whole list. We left out the furnace's age, paint, and gutters\non purpose, given the seller's earlier price adjustment. We can move\nquickly if the seller is comfortable with this.\n\nBest,\n[names]\n```\n\nKeep the \"we left out\" line. It shows you're being reasonable after the $8k cut. Only add a \"we'll step aside\" line if you mean it.\n\n## Human check\n- **You:** get the insurance quote before sending. It decides whether you ask for a credit or a replacement on the panel.\n- **You:** get one electrician's quote for the panel so the credit amount is backed up. Fill in the report page numbers.\n- **Pest company or carpenter:** probe the sill for rot. If it's soft, bring in a structural engineer before your inspection period ends.\n- **HVAC tech:** combustion and carbon monoxide test on the furnace.\n- **Your attorney or agent:** confirm the inspection deadline and that every item the seller agrees to is written into the contract or an addendum, since verbal promises usually end at closing. Also confirm whether loan rules cap how big a credit you can take.\n- **Don't** send the full report, and don't let your inspection period lapse before these checks are back.\n\nIf you send the full report (or just the page numbers) plus the price, state and contract deadline, I can fill in the exact citations and check the total ask as a percentage of the price.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Puts the relief valve, handrail, panel and pest items in the must-have tier",
+      "pass": true,
+      "quote": "Tier 1 (bundle)... | Zinsco panel... | Tier 1"
+     },
+     {
+      "assertion": "Does not ask for exterior paint or gutter cleaning",
+      "pass": true,
+      "quote": "Peeling exterior paint | 4 | Leave out"
+     },
+     {
+      "assertion": "Treats the working old furnace as a credit item or leaves it out, not a repair demand",
+      "pass": true,
+      "quote": "Already covered by the $8k. Get a buyer-paid HVAC check instead"
+     },
+     {
+      "assertion": "Acknowledges the earlier price reduction when sizing the request",
+      "pass": true,
+      "quote": "The seller has already dropped $8k, so ask only for the safety and licensed-trade items."
+     },
+     {
+      "assertion": "Drafts a letter addressed to the buyer's own agent",
+      "pass": true,
+      "quote": "Hi [agent name],"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "6979e1a8a664efd6e4b4da4043516c15761f8e025ae54c7dc2d3129867951288",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Here's how I'd think about this, item by item, then a recommended ask.\n\n## Severity triage\n\n**Safety/code issues \u2014 non-negotiable asks:**\n- **Water heater relief valve discharge pipe missing** \u2013 this is a straightforward safety code item, cheap to fix ($50\u2013150), but it's the kind of thing you point to as \"this should never have been missing\" leverage even though the dollar amount is trivial.\n- **Loose handrail, basement stairs** \u2013 trip/fall hazard, cheap ($50\u2013300 to secure or replace), same category: low cost, good leverage because it's a safety defect, not a wear item.\n- **Carpenter ant evidence at a sill** \u2013 this is the one that needs real attention before you price anything else. \"Evidence\" (not active infestation confirmed) still means you want a WDO/termite & wood-destroying-insect inspection and probe of that sill for structural damage *before* closing, not after. If the inspector didn't already determine whether the ants are active and whether the sill wood is compromised, that's your next call, not a credit negotiation. If it's just old evidence with sound wood, a pest treatment ($300\u2013600) is enough. If the sill is punky/damaged, you're into carpentry repair ($1,000\u20135,000+ depending on extent) \u2014 get a wood-destroying-insect report or a contractor estimate before you set a number.\n\n**Big-ticket, no-fix-now items \u2014 these are the real money:**\n- **Zinsco panel** \u2013 this is the headline item. Zinsco panels are a known fire-risk defect; most insurers either refuse to write a policy or require replacement, and most buyers' lenders/agents will flag it. Full panel replacement runs **$2,500\u20134,500+** depending on amperage and whether the whole house needs rewiring tie-ins. This alone often justifies a credit that size on its own \u2014 electricians and insurance underwriters treat Zinsco as \"replace, not repair.\"\n- **35-year-old furnace** \u2013 it's \"working,\" so you can't demand replacement, but it's well past typical 15\u201320 year service life. You're not asking for a new furnace outright; you're asking for a credit reflecting near-term replacement risk, typically **$1,500\u20133,000** as a credit (not full replacement cost) since it's functional now.\n\n**Deferred maintenance \u2014 weaker leverage, lower cost:**\n- **Peeling exterior paint** \u2013 cosmetic/maintenance, unless it's a lead-paint-era house (pre-1978) where peeling paint is also a disclosure/health issue worth flagging. Cost to scrape/prime/paint depends on house size, roughly **$2,000\u20136,000** for a full exterior, but sellers and agents will push back hard on paint as \"cosmetic\" \u2014 it's the softest item on your list.\n- **Gutters need cleaning** \u2013 this isn't a repair, it's routine maintenance. I wouldn't put this in a credit request at all; it signals you're padding the list and weakens the stronger items. Skip it or mention only as a throwaway line.\n\n## What I'd actually ask for\n\nLead with the items that are objectively defects/safety/code issues, not maintenance, and let the seller know you already accounted for the $8k they gave last week as being for condition issues generally, now you have specifics:\n\n| Item | Ask type | Rough range |\n|---|---|---|\n| Zinsco panel replacement | Credit or seller completes | $2,500\u20134,500 |\n| Furnace age/end-of-life risk | Credit | $1,500\u20133,000 |\n| Carpenter ant sill \u2014 pending WDO report | Credit or repair contingent on findings | TBD, hold open |\n| Relief valve discharge pipe | Seller completes before closing | low cost, just get it done |\n| Loose handrail | Seller completes before closing | low cost, just get it done |\n| Exterior paint | Optional/soft ask | $2,000\u20136,000 if pushed |\n\n**My recommendation:** Ask for a credit of roughly **$5,000\u20137,000** covering the panel and furnace, require the seller to **fix the relief valve pipe and handrail** before closing (cheap, no excuse), and make the carpenter ant item a **condition of closing pending a WDO inspection/sill probe** \u2014 don't price that one yet, get the report first since it could swing the number a lot. Treat the paint and gutters as items you mention but don't fight over \u2014 they're your \"give\" if the seller wants to negotiate down from your ask.\n\nOne thing worth doing before you finalize a number: get an actual electrician quote for the Zinsco swap and confirm whether your lender/insurer requires it \u2014 that's your strongest, most defensible line item and having a real number from a licensed electrician (not my estimate) makes it much harder for the seller to argue down.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Puts the relief valve, handrail, panel and pest items in the must-have tier",
+      "pass": true,
+      "quote": "Safety/code issues \u2014 non-negotiable asks"
+     },
+     {
+      "assertion": "Does not ask for exterior paint or gutter cleaning",
+      "pass": false,
+      "quote": "Exterior paint | Optional/soft ask | $2,000\u20136,000 if pushed"
+     },
+     {
+      "assertion": "Treats the working old furnace as a credit item or leaves it out, not a repair demand",
+      "pass": true,
+      "quote": "You're not asking for a new furnace outright; you're asking for a credit reflecting near-term replacement risk"
+     },
+     {
+      "assertion": "Acknowledges the earlier price reduction when sizing the request",
+      "pass": true,
+      "quote": "let the seller know you already accounted for the $8k they gave last week as being for condition issues generally"
+     },
+     {
+      "assertion": "Drafts a letter addressed to the buyer's own agent",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 3,
+    "total": 5
+   }
+  },
+  "6": {
+   "name": "seller-name-mismatch-and-lead-waiver",
+   "skill": "house-contract",
+   "with_skills": {
+    "cache_key": "eccdb1e401c7e881f389ec5ce93fbedf3047747e97bbcbee88e96c8331052b88",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Short answer: yes, both items are real and the title problem is the bigger one. Here's the breakdown.\n\n## 1. Documents involved\n| Document | Between | Seen by seller |\n|---|---|---|\n| Contract of sale | Buyer and seller (named: Jane Roe, Mark Poe) | Yes |\n| Rider \u00b622 (lead paint waiver) | Attached to contract | Yes |\n| 2009 deed (public record) | Alice Roe \u2192 ? | N/A \u2014 recorded instrument |\n\nI don't have the state/city, so this is **generic mode**: I'm not asserting local law, just flagging what needs a local attorney's confirmation.\n\n## 2. Must handle (Tier 2 \u2014 risky)\n\n**1. Seller named on contract does not match the owner of record, and a life estate may still be outstanding.** `[record]` Public records show Alice Roe as owner. `[document]` The contract names Jane Roe and Mark Poe as sellers. `[record]` A 2009 deed reserved Alice Roe a life estate.\n\n- Honest counter-case: Jane Roe could simply be Alice Roe's heir, or Alice Roe could be deceased and Jane/Mark could be the remainder beneficiaries now holding full title \u2014 in which case the life estate already merged and this is fine. \"Jane Roe\" and \"Alice Roe\" sharing a surname suggests a family transfer, which is a common, legitimate setup.\n- Why it still matters: if Alice Roe is alive, she holds a present possessory/use interest that doesn't just vanish because Jane and Mark sign a contract. Selling the property requires either (a) Alice Roe's own signature/release of the life estate, or (b) proof she has died (death certificate) so the life estate has terminated and the remainder owners now hold fee simple. If neither is in the file, Jane and Mark may not be able to convey clear, insurable title \u2014 this can blow up at closing when the title company's search turns up the same thing you just found.\n- How to check: ask the seller's attorney for (1) the full chain of title since the 2009 deed, (2) if Alice Roe is deceased, the death certificate/estate documents; if alive, her signed release/subordination of the life estate, and (3) confirmation from the title company that title insurance will issue without exception for the life estate.\n\n**2. Rider \u00b622 \u2014 lead paint testing waiver, house built 1925.** `[document]` Rider \u00b622 states the buyer had adequate opportunity to test for lead and waives the right.\n\n- Honest counter-case: federal law (42 U.S.C. \u00a74852d / the \"Lead Disclosure Rule\") only *requires* the seller to give the buyer a 10-day opportunity for a lead inspection before being bound \u2014 it doesn't forbid a buyer from waiving that right if fully informed, and many buyers waive it knowingly to make an offer more competitive, planning to abate issues post-closing. The clause itself isn't illegal.\n- Why it still matters: pre-1978 homes (built 1925 here) are presumptively lead-paint homes. If you have kids soon, lead dust/chipping paint is a genuine pediatric hazard (developmental/neurological harm), and once you've waived testing, you likely have no recourse against the seller for lead found after closing, and you'll be paying for any abatement yourself. Also check: did the seller actually give you the federally required Lead-Based Paint Disclosure form and EPA pamphlet *before* you signed? If they didn't, \u00b622's waiver may be unenforceable regardless of what it says, since you can't validly waive a right you were never properly informed of.\n- How to check: confirm with the attorney (a) was the EPA \"Protect Your Family from Lead in Your Home\" pamphlet and a signed lead disclosure form delivered before contract signing, (b) was \u00b622 added specifically to shorten/eliminate the 10-day period, and (c) ask the buyer's own choice question \u2014 do you want to get an independent lead inspection *now*, before closing, even if the contract no longer obligates the seller to let you, since many sellers will still agree informally. Practically: get a certified lead inspector in before closing if at all possible, waiver or not \u2014 this is a safety issue, not just a legal one.\n\n## 3. Confirm only (Tier 1)\n- Price, deposit/escrow holder, closing date \u2014 not mentioned, assume present and unremarkable unless you say otherwise.\n\n## 4. Do not raise (Tier 3)\n- Nothing flagged here is cosmetic; both items above are substantive.\n\n## 5. Deadlines\n- Can't compute without the actual dates in the contract (loan commitment, closing date, inspection window). Send those over if you want the calendar math.\n\n## 6. Questions for the attorney (phrased as confirmations)\n1. \"Can you confirm the chain of title from the 2009 deed to today, and confirm whether Alice Roe's life estate has been terminated or released, before we're obligated to close?\"\n2. \"Can you confirm the title company will insure over the life estate issue, or that it's resolved by closing?\"\n3. \"Can you confirm the seller delivered the lead-paint disclosure form and EPA pamphlet before we signed, as required, and that Rider \u00b622 doesn't override a right we weren't properly informed about?\"\n4. \"Given we may waive formal testing rights, is there anything preventing us from arranging our own lead inspection informally before closing?\"\n\nDraft message to send your attorney:\n> \"We found two things we want you to check before we move forward: (1) public records show Alice Roe as owner with a 2009 deed reserving her a life estate, but the contract names Jane Roe and Mark Poe as sellers \u2014 can you confirm they can convey clear title? (2) Rider \u00b622 waives our lead-paint testing rights, and the house was built in 1925 \u2014 can you confirm the lead disclosure was properly given, and whether we can still arrange our own inspection before closing? If either of these isn't customary or is already resolved, let us know and we'll drop it.\"\n\n## 7. Human check\n- **Attorney** must pull/confirm the chain of title and determine whether Jane Roe/Mark Poe can convey marketable title \u2014 do not sign or let the deposit go to escrow until this is resolved.\n- **Attorney** confirms whether the lead disclosure requirements were actually met before you signed.\n- **Buyer** decides whether to insist on a lead inspection before closing, waiver or not, given the kids-soon plan \u2014 this is a safety/parenting decision, not a legal one.\n- Nothing above is legal advice; this is a sorting of what to ask your real estate attorney.\n\nWant me to open or update a case file for this property so these two flags and the attorney's answers get tracked?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags that the sellers named differ from the owner of record",
+      "pass": true,
+      "quote": "Seller named on contract does not match the owner of record, and a life estate may still be outstanding."
+     },
+     {
+      "assertion": "Asks the attorney to confirm chain of title or the sellers' capacity",
+      "pass": true,
+      "quote": "Can you confirm the chain of title from the 2009 deed to today, and confirm whether Alice Roe's life estate has been terminated or released, before we're obligated to close?"
+     },
+     {
+      "assertion": "Flags the lead paint waiver as a risk for a pre-1978 house",
+      "pass": true,
+      "quote": "pre-1978 homes (built 1925 here) are presumptively lead-paint homes... once you've waived testing, you likely have no recourse against the seller for lead found after closing"
+     },
+     {
+      "assertion": "Offers options: restore the inspection period or test before signing",
+      "pass": true,
+      "quote": "is there anything preventing us from arranging our own lead inspection informally before closing?"
+     },
+     {
+      "assertion": "Does not present its answer as legal advice",
+      "pass": true,
+      "quote": "Nothing above is legal advice; this is a sorting of what to ask your real estate attorney."
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "478e24d613ec71408541bfecae1c58c6fe74ca336c6c5ccef1e514e0a81582a3",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Yes \u2014 several real problems here, not just fine print. I'm not your lawyer and this isn't legal advice, but here's what should stop you before closing:\n\n**1. Title/seller mismatch \u2014 this is the big one.** If public records show Alice Roe as owner, and a 2009 deed reserved her a *life estate*, then Alice Roe (while alive) is likely the only person who can convey full, unencumbered title. \"Jane Roe and Mark Poe\" being listed as sellers on this contract doesn't make them the owners \u2014 contracts don't override deeds. Possibilities:\n- Jane Roe and Mark Poe may hold the *remainder interest* (they get the property outright when Alice dies), but a life estate holder generally must also join the deed/conveyance for the buyer to get clear title now, unless the life estate has been terminated (release, death, or some other instrument).\n- If Alice Roe is still alive and hasn't signed off or released her life estate, and she isn't a signing seller on this contract, you could close and still have a life estate holder with rights to the property \u2014 meaning you might not get full possession or clear title.\n- You need a current title search/title commitment (not just \"public records says\") and a title company opinion on this. Ask directly: is Alice Roe deceased, or has she released/terminated the life estate? Get documentation, not just a seller's say-so.\n\n**Do not close without title insurance confirming clear, insurable title, and get an explanation in writing for why Alice Roe isn't a party to this sale.**\n\n**2. Lead paint waiver (Paragraph 22) \u2014 likely unenforceable as written, and a red flag.** For housing built before 1978 (your 1925 house qualifies), federal law (42 U.S.C. \u00a74852d, the Residential Lead-Based Paint Hazard Reduction Act / \"Title X\") requires:\n- A lead-based paint disclosure with any known lead/lead hazards and available records/reports,\n- The EPA pamphlet \"Protect Your Family from Lead in Your Paint, Dust, and Soil,\"\n- A **10-day opportunity to conduct a lead-based paint inspection or risk assessment** before being bound (unless waived *in writing, knowingly*, by the buyer \u2014 not by generic rider language presuming you had the chance).\n\nA boilerplate rider clause asserting you \"had adequate opportunity\" without you actually having had an inspection period is not a valid waiver \u2014 the right has to be knowingly and voluntarily waived by you, typically via a specific signed waiver form, not asserted on your behalf by the seller's drafting. If no such disclosure/pamphlet was given and no genuine 10-day period was offered, the seller may be in violation of federal law, which also gives you leverage (and potential statutory damages) \u2014 not something to just let slide.\n\nGiven you're planning on kids, don't treat this as boilerplate: insist on an actual lead paint inspection/risk assessment before you're bound, regardless of what Paragraph 22 says. 1925 housing stock has a very high likelihood of lead paint.\n\n**What I'd do right now:**\n1. Get a title commitment from a title company/attorney \u2014 confirm who actually must sign to convey clear title, and get clarity on Alice Roe's status and the life estate.\n2. Have a real estate attorney review the contract, especially the seller signature block vs. the deed chain, and Paragraph 22, before you sign or release any contingency.\n3. Request (or independently schedule) a certified lead paint inspection within a proper contingency period \u2014 don't let the rider waive it.\n4. Don't release your financing/inspection contingencies or go to closing until both the title issue and lead inspection are resolved.\n\nIf you want, I can help you draft specific questions to send to the seller's agent/attorney about the life estate and the lead disclosure, or help you understand a title commitment once you have one.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags that the sellers named differ from the owner of record",
+      "pass": true,
+      "quote": "Jane Roe and Mark Poe\" being listed as sellers on this contract doesn't make them the owners \u2014 contracts don't override deeds"
+     },
+     {
+      "assertion": "Asks the attorney to confirm chain of title or the sellers' capacity",
+      "pass": true,
+      "quote": "Have a real estate attorney review the contract, especially the seller signature block vs. the deed chain"
+     },
+     {
+      "assertion": "Flags the lead paint waiver as a risk for a pre-1978 house",
+      "pass": true,
+      "quote": "A boilerplate rider clause asserting you \"had adequate opportunity\" without you actually having had an inspection period is not a valid waiver"
+     },
+     {
+      "assertion": "Offers options: restore the inspection period or test before signing",
+      "pass": true,
+      "quote": "insist on an actual lead paint inspection/risk assessment before you're bound, regardless of what Paragraph 22 says"
+     },
+     {
+      "assertion": "Does not present its answer as legal advice",
+      "pass": true,
+      "quote": "I'm not your lawyer and this isn't legal advice"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   }
+  },
+  "7": {
+   "name": "leak-check",
+   "skill": "house-offer",
+   "with_skills": {
+    "cache_key": "50383371f0ba4c9ecc73f0c82a6da92eeeb1013f80644ba6a5d839e7bd807f4a",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "That message is going straight to the **listing agent**, who works for the seller \u2014 this is the worst version of this message.\n\n## Leak check\n\n| What's in the message | Problem |\n|---|---|\n| \"we absolutely love it, it's our dream home\" | Signals you have no walk-away discipline. Removes their incentive to negotiate or disclose anything unfavorable. |\n| \"we offered 1.1M but could go up to 1.18M\" | **This is the critical leak.** You just told the seller's agent your ceiling. There is now no reason for the seller to accept anything below $1.18M \u2014 any counter will land at or near that number. |\n| \"Can you tell us if there are other offers?\" | Harmless to ask, but listing agents rarely answer honestly, and asking it right after revealing your ceiling just confirms you're anxious and flexible. |\n| Sent directly to listing agent at all | Even a clean version of this should go through *your own agent*, not the seller's agent. Your agent can ask about other offers more credibly and without exposing your reactions. |\n\n## Rewrite\n\nIf you have your own buyer's agent, send it to them instead, something like:\n\n> \"Can you check with the listing agent whether there are other written offers on this one, and what the seller would likely do if ours doesn't come together? Don't share our number beyond the $1.1M offer already on the table.\"\n\nIf you must speak to the listing agent directly (no buyer's agent), keep it neutral and reveal nothing:\n\n> \"Hi, just following up on our offer of $1.1M. Is there a timeline for the seller's decision, and can you share whether there are other offers on the table?\"\n\nThat's it \u2014 no emotion, no ceiling, no hint of flexibility.\n\n## Human check\n- Confirm with yourselves: is $1.18M actually your walk-away number, based on your cash/monthly limits (house-money), not just excitement? If you haven't run that math, do it before any number gets anywhere near an agent.\n- Decide who should be the one talking to the listing agent \u2014 ideally your buyer's agent, not you directly.\n- Don't send any version of the original message \u2014 the ceiling is already a real leak risk once it's out.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags the stated maximum of 1.18M as a leak",
+      "pass": true,
+      "quote": "This is the critical leak. You just told the seller's agent your ceiling."
+     },
+     {
+      "assertion": "Flags 'dream home' or similar as weakening the position",
+      "pass": true,
+      "quote": "Signals you have no walk-away discipline. Removes their incentive to negotiate or disclose anything unfavorable."
+     },
+     {
+      "assertion": "Suggests the buyer's own agent should ask instead of messaging the listing agent directly",
+      "pass": true,
+      "quote": "If you have your own buyer's agent, send it to them instead"
+     },
+     {
+      "assertion": "Provides a rewritten message without the maximum",
+      "pass": true,
+      "quote": "\"Hi, just following up on our offer of $1.1M. Is there a timeline for the seller's decision, and can you share whether there are other offers on the table?\""
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "ee6d9dc3a6ef2b69624fb2fcb25313b838bdef06102ec4a520592f59b348109d",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "This message would hurt your negotiating position \u2014 don't send it as-is. The key issue:\n\n**You're revealing your maximum budget.** Telling the agent \"we could go up to 1.18M\" removes any incentive for them to accept your $1.1M offer or negotiate in your favor \u2014 the listing agent represents the *seller*, not you, so anything you say here will likely be relayed to get the seller the best price. You've effectively told them not to bother countering below $1.18M.\n\n**Also risky:**\n- \"It's our dream home\" signals high emotional attachment and low willingness to walk away \u2014 another thing that weakens your leverage.\n- Asking directly \"are there other offers?\" is fine to ask, but don't expect (or need) an honest answer \u2014 agents aren't obligated to disclose this, and some won't answer truthfully either way. It doesn't hurt to ask, just don't base your strategy on getting a real answer.\n\n**Suggested rewrite:**\n\n> \"Hi! We really like the house and submitted our offer of $1.1M. We'd appreciate knowing if there's been any other interest or competing offers so we can decide how to proceed. Let us know if there's anything else you need from us.\"\n\nThis keeps interest genuine without tipping your ceiling, and still asks the competing-offer question without sounding desperate.\n\nWant me to adjust the tone (warmer/more formal) or tailor it if this is a multiple-offer/bidding-war situation?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags the stated maximum of 1.18M as a leak",
+      "pass": true,
+      "quote": "You're revealing your maximum budget."
+     },
+     {
+      "assertion": "Flags 'dream home' or similar as weakening the position",
+      "pass": true,
+      "quote": "\"It's our dream home\" signals high emotional attachment and low willingness to walk away"
+     },
+     {
+      "assertion": "Suggests the buyer's own agent should ask instead of messaging the listing agent directly",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Provides a rewritten message without the maximum",
+      "pass": true,
+      "quote": "\"Hi! We really like the house and submitted our offer of $1.1M."
+     }
+    ],
+    "passed": 3,
+    "total": 4
+   }
+  },
+  "8": {
+   "name": "no-scale-no-guessing",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "18f29b073f4c80ce1bf61b55505bfe7aaa789b49e253855d446b699f8cd9fd62",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I can't start yet: the screenshot didn't come through. Nothing is attached to your message, and the only thing in this folder is the `.claude` settings directory.\n\nPlease send two things:\n\n1. **The floor plan image.** Drag it into the chat or put the file in this folder. If the home has more than one floor, send a plan for each.\n2. **One real measurement.** Since the plan has no dimensions, I need at least one length to set the scale. Any of these works:\n   - The listing's total square footage or a room size written in the description (e.g. \"living room 18\u00d714\"). This works, but a seller's number isn't fully reliable.\n   - A long wall you measured with a tape at a showing. This is the best option.\n   - Two measurements are better than one, because the second checks the first.\n\nWithout a known length I'd have to guess the scale. Because area grows with the square of length, a 10% error in scale becomes about a 21% error in every room's square footage. I'd rather not hand you numbers that look exact but aren't.\n\nOnce I have them, here's what you'll get:\n- A copy of the plan that you check against the original with an overlay slider before we trust any numbers.\n- **Square footage for each room**, plus floor, paint and baseboard quantities, each marked with whether it came from the plan or a tape measure.\n- **A simple 3D model of the layout** you can rotate in your browser: walls, doors, windows and fixtures as plain blocks. It's for understanding how the space fits together, not a realistic rendering of finishes. If you have ceiling heights, include them, since a 2D plan doesn't show them. Otherwise I'll use a standard height and label it as an assumption.\n- A short list of the rooms worth measuring at your next visit to tighten the numbers.\n\nIf you're planning changes, like removing a wall or adding an office, tell me and I'll model a \"before and after\" too.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not output room areas as facts",
+      "pass": true,
+      "quote": "I can't start yet: the screenshot didn't come through."
+     },
+     {
+      "assertion": "Asks for at least one real dimension or measurement",
+      "pass": true,
+      "quote": "One real measurement. Since the plan has no dimensions, I need at least one length to set the scale."
+     },
+     {
+      "assertion": "Explains the overlay check step before trusting any numbers",
+      "pass": true,
+      "quote": "A copy of the plan that you check against the original with an overlay slider before we trust any numbers."
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "668b7b91b3a491a2f5b29631ce09494b869562133f6bd111569a48a38becd144",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "The floor plan screenshot didn't come through. There's no image in your message, and the working folder is empty. Could you attach it again, or give me its file path (for example `~/Downloads/floorplan.png`)?\n\nSince the plan has no dimensions, I'll need one known measurement to set the scale. Any of these works, from most to least accurate:\n\n1. **The total square footage from the listing.** I'd scale the whole plan to match it.\n2. **One real dimension**, such as \"the living room is 15 ft wide\" or the garage depth.\n3. **Neither.** I'd use standard sizes as reference: interior doors are usually 30\u201332\u2033 wide, beds are fixed sizes (a queen is 60\u2033\u00d780\u2033) and tubs are usually 60\u2033 long. Expect about \u00b110\u201315% error per room this way.\n\nOnce I have the image and a scale, I'll:\n- Trace the walls and give you a table of each room's dimensions and square footage, with a note on how confident I am in each.\n- Build a 3D model: an interactive HTML file you can open in your browser and rotate, with 8\u20139 ft walls and door and window openings. I can also export a `.glb` or `.obj` if you want to open it in SketchUp, Blender, etc.\n\nAlso, is there a ceiling height you'd like, or should I use the standard 8 ft?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not output room areas as facts",
+      "pass": true,
+      "quote": "Once I have the image and a scale, I'll... give you a table of each room's dimensions and square footage"
+     },
+     {
+      "assertion": "Asks for at least one real dimension or measurement",
+      "pass": true,
+      "quote": "I'll need one known measurement to set the scale"
+     },
+     {
+      "assertion": "Explains the overlay check step before trusting any numbers",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   }
+  },
+  "9": {
+   "name": "family-labor-split",
+   "skill": "house-renovation",
+   "with_skills": {
+    "cache_key": "02e656648aa822dc9fe1498fbdc71e8eb122a32bcd9dc184ba2901fa0ee6a823",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "No \u2014 \"about half\" isn't a safe assumption, even with a licensed contractor in the family. NYC changes the math significantly from what might be true in Taiwan or most of the US.\n\n## Why not just \"half\"\n\nA $300k quote isn't one number that shrinks uniformly if your dad does the labor. It's three layers, and family labor only touches one of them:\n\n| Layer | What's in it | Can your dad save you money here? |\n|---|---|---|\n| **1. Licensed trades** | Electrical, plumbing, gas, structural, permits, lead/asbestos abatement | **No.** `[assumption]` your dad is not a NYC-licensed master electrician/plumber or NY-registered engineer |\n| **2. Materials** | Everything installed \u2014 fixtures, flooring, cabinets, tile | **No.** Everyone pays the same for materials regardless of who installs them |\n| **3. Unlicensed labor** | Carpentry, framing, drywall, paint, tile-setting, cabinet install, insulation | **Yes.** This is the only layer his labor replaces |\n\nThe $300k quote is presumably mostly layer 3 (labor+overhead) plus materials, with layer 1 priced in. Savings only come from eliminating the *contractor's labor markup* on layer 3 \u2014 not from the whole budget.\n\n## The NYC-specific problem `[assumption \u2192 needs confirming]`\n\nNew York City has **no owner/family exemption** for electrical or plumbing, unlike many other jurisdictions (including, likely, how renovation work is handled where your dad is licensed in Taiwan). Specifically:\n\n- All electrical work requires a permit and a **NYC-licensed master electrician** \u2014 no exceptions for owners or family.\n- Even minor plumbing needs a **NYC-licensed master plumber**; gas work needs a licensed plumber plus a utility re-inspection.\n- **License lending is prohibited** \u2014 your dad's Taiwan license doesn't transfer, and he can't \"sign off\" as the licensed party while doing the work himself, nor can a licensed friend lend their name to work he actually performs. That's illegal and risky (voids inspections, can block a future sale, insurance implications).\n- Anything touching structure, plumbing, gas, or electrical, or adding a bathroom, generally needs a registered architect/engineer to file.\n\nSo if the $300k scope includes a kitchen, bathroom(s), or any electrical/plumbing work (likely, for a renovation that size), a real chunk of that quote is locked in regardless of who swings a hammer.\n\n**What your dad *can* legally do** without a NYC license: carpentry, framing, flooring, drywall/taping, paint, tile, cabinet installation, insulation, decks, same-size window replacement. That's real money \u2014 but it's a slice of $300k, not the whole thing.\n\n## What \"half\" would require to be true\n\nHalf would only hold if:\n- The $300k scope is unusually labor-heavy in layer 3 (cosmetic-only reno: paint, floors, cabinets, trim \u2014 no kitchen/bath gut, no structural, no electrical upgrade), AND\n- Your dad is actually available for months in NYC to do the physical work himself (not just \"supervise\"), AND\n- He's not also informally paying/directing unlicensed helpers for licensed-trade work, which is illegal here regardless of savings.\n\nIf the scope includes a kitchen reno, added bathroom, electrical service upgrade, or any structural work \u2014 all common in a $300k Brooklyn job \u2014 I'd expect savings closer to **15\u201330%**, not 50%, because layers 1 and 2 (which don't shrink) likely make up well over half of $300k.\n\n## Human check\n- Get the **scope breakdown** behind that $300k quote (ask the contractor to itemize by trade) \u2014 I can't tell you what fraction is licensed-trade vs. unlicensed labor without it.\n- Confirm with a **NYC-licensed master electrician and plumber** what in the scope legally requires them.\n- Ask your **attorney or the NYC Department of Buildings** to confirm which specific tasks in the scope are permit-exempt and licensed-trade-exempt \u2014 don't assume from this general list.\n- Decide, as a family, realistically how long your dad can be on-site in Brooklyn doing physical labor \u2014 a trip timeline matters as much as the legal rules.\n\nIf you can share the itemized quote (or even just the general scope \u2014 kitchen? bathrooms? layout changes?), I can give you a real layer-by-layer estimate instead of a guess.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that electrical, plumbing and gas need NYC licensed trades regardless of the father's skill",
+      "pass": true,
+      "quote": "All electrical work requires a permit and a **NYC-licensed master electrician** \u2014 no exceptions for owners or family."
+     },
+     {
+      "assertion": "Splits the budget into licensed work, materials and unlicensed labor",
+      "pass": true,
+      "quote": "| **1. Licensed trades** | ... | | **2. Materials** | ... | | **3. Unlicensed labor** |"
+     },
+     {
+      "assertion": "Does not endorse a flat 50 percent discount",
+      "pass": true,
+      "quote": "No \u2014 \"about half\" isn't a safe assumption"
+     },
+     {
+      "assertion": "Notes a foreign license does not transfer",
+      "pass": true,
+      "quote": "your dad's Taiwan license doesn't transfer"
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "965e49b6f4a3499ff4b492ff5781068cd23ce80acb903428fa0bf20ebd285b8c",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "No \u2014 I wouldn't assume that, and here's why it's risky to plan around a flat \"half\" discount.\n\n**What your dad's license and skill actually save you:**\n- His own labor (if he's doing hands-on work) and possibly project management/GC markup\n- Maybe some trade knowledge that helps him negotiate or spot bad quotes\n\n**What they don't change:**\n- **Materials** \u2014 lumber, drywall, fixtures, appliances, electrical/plumbing parts cost the same whether your dad or a stranger buys them. In a NYC renovation, materials are often 40-50%+ of the budget.\n- **NYC/Brooklyn permits and code compliance** \u2014 his Taiwan contractor's license isn't recognized in NYC. Any work requiring permits (electrical, plumbing, structural, gas, often even a kitchen reconfig) legally needs a **NYC-licensed contractor, plumber, and/or electrician** to pull permits and sign off. He can supervise or do unpermitted cosmetic work, but he can't substitute for local licensing on anything inspected.\n- **Labor he's not personally doing** \u2014 if he's not tiling, running conduit, etc. himself, you're still hiring and paying local trades at local rates.\n- **His time** \u2014 if he's flying in and staying for weeks/months, factor flights, lodging, and the opportunity cost of his time away from his own business.\n- **Local price levels** \u2014 Brooklyn labor and compliance costs are just high; his experience doesn't lower NYC trade rates.\n\n**More realistic framing:**\nIf he's doing significant hands-on general labor himself and is around long enough, you might save **15-30%** mainly on labor markup for the work he personally performs \u2014 not 50%. If the project needs licensed NYC electricians/plumbers for most of it regardless, savings could be much smaller, maybe 10-15%.\n\n**What I'd actually do:**\n1. Get the itemized $300k quote broken into materials vs. labor vs. permits/fees vs. GC markup.\n2. Figure out concretely what your dad would do himself vs. what still requires a NYC-licensed trade.\n3. Price materials separately (he may get contractor discounts in Taiwan, but importing isn't usually cheaper than buying from NYC suppliers given shipping/customs/lead time).\n4. Budget his travel/stay cost explicitly.\n\nIf you want, share the quote breakdown and I can help you model a realistic \"with dad\" budget instead of guessing at a percentage.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that electrical, plumbing and gas need NYC licensed trades regardless of the father's skill",
+      "pass": true,
+      "quote": "Any work requiring permits (electrical, plumbing, structural, gas, often even a kitchen reconfig) legally needs a **NYC-licensed contractor, plumber, and/or electrician** to pull permits and sign off."
+     },
+     {
+      "assertion": "Splits the budget into licensed work, materials and unlicensed labor",
+      "pass": true,
+      "quote": "Get the itemized $300k quote broken into materials vs. labor vs. permits/fees vs. GC markup."
+     },
+     {
+      "assertion": "Does not endorse a flat 50 percent discount",
+      "pass": true,
+      "quote": "No \u2014 I wouldn't assume that, and here's why it's risky to plan around a flat \"half\" discount."
+     },
+     {
+      "assertion": "Notes a foreign license does not transfer",
+      "pass": true,
+      "quote": "his Taiwan contractor's license isn't recognized in NYC"
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   }
+  },
+  "10": {
+   "name": "wire-instructions-email",
+   "skill": "house-closing",
+   "with_skills": {
+    "cache_key": "0facea6677626b9d26c3e248c68cfc3c3dae99db698bbdcd365beb80b790da73",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Here's the key guidance that confirms what I said \u2014 straight from the closing checklist:\n\n> **Wire fraud:** Closing funds are a target. Before sending any wire: call the title company or attorney at a phone number the buyer found independently (their website, the engagement letter), not one from an email, and confirm the account details verbally. **Treat any \"updated wiring instructions\" email as suspicious by default.** A wire to the wrong account is usually not recoverable.\n\nSo concretely, right now:\n\n1. **Do not reply to the email, do not call any number in it.**\n2. Pull up the phone number for the title company from the original engagement letter / contract, or their official website \u2014 a number you already had, not one from this new email.\n3. Call and get a live person to **verbally read back** the account number, routing number, and bank name \u2014 confirm it matches (or knowingly differs from, with an explanation you trust) what you had before.\n4. Also loop in your closing attorney/agent via a known number \u2014 ask if they were copied on or aware of any bank change.\n5. Only send the $412k once you've verbally verified it through a channel you control, not the email thread.\n\nIf you can't get a live verbal confirmation before the wire deadline tomorrow, it's worth delaying the wire by a few hours rather than risk sending it to the wrong account \u2014 a short delay is recoverable, a fraudulent wire usually isn't.\n\nWant me to draft the message/script for that verification call, or help you log this in your case file once it's resolved?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Advises not to send the wire until verified",
+      "pass": true,
+      "quote": "Only send the $412k once you've verbally verified it through a channel you control, not the email thread."
+     },
+     {
+      "assertion": "Says to call using a phone number found independently, not from the email",
+      "pass": true,
+      "quote": "Pull up the phone number for the title company from the original engagement letter / contract, or their official website \u2014 a number you already had, not one from this new email."
+     },
+     {
+      "assertion": "Identifies changed wiring instructions as a common fraud pattern",
+      "pass": true,
+      "quote": "Treat any \"updated wiring instructions\" email as suspicious by default."
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "418279352f39a307c1c47d2c746158ba0593150204e0ac832a30fa00ebb5b0ca",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Stop \u2014 don't send it. This has all the hallmarks of wire fraud, and real estate closings are one of the most common targets for exactly this scam.\n\n**Why this is a major red flag:**\n- A last-minute change to wiring instructions, especially the day before closing, is the single most common pattern in business email compromise (BEC) attacks targeting real estate transactions.\n- Scammers monitor title/escrow/realtor email threads (often via compromised accounts) and send \"updated\" instructions right before closing when people are rushed and least likely to double-check.\n- $412k is a huge, irreversible loss if wired to the wrong account \u2014 wire transfers are very hard to claw back once sent.\n\n**What to do instead:**\n1. **Do not reply to the email, and do not call any phone number listed in it.** If the email account or signature was spoofed/compromised, those contact details could be fake too.\n2. **Call the title company using a phone number you already have on file** \u2014 from your original closing paperwork, their official website (typed in manually, not clicked from the email), or a prior verified contact \u2014 and verbally confirm the wiring instructions, including the account number, routing number, and bank name.\n3. Ask them directly: \"Did you send updated wire instructions today? Can you confirm the bank name and last 4 digits of the account on a recorded line or in person?\"\n4. If anything is inconsistent or they didn't actually send it, you've caught a fraud attempt \u2014 notify them, your real estate agent, and your bank immediately, and consider reporting to the FBI's IC3 (ic3.gov).\n5. Even if they confirm it's legitimate, consider sending a small test amount first if your bank supports it, or have them confirm receipt of a trivial transfer before sending the full amount \u2014 though a phone verification through a trusted number is usually sufficient.\n\nAlso check: does the sender's email domain match exactly what you've used throughout this transaction (watch for subtle misspellings like \"titleco.com\" vs \"titleco-closing.com\")? That's another common tell.\n\nDo you want help drafting a verification call script, or checking the email headers/domain for spoofing signs?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Advises not to send the wire until verified",
+      "pass": true,
+      "quote": "Stop \u2014 don't send it."
+     },
+     {
+      "assertion": "Says to call using a phone number found independently, not from the email",
+      "pass": true,
+      "quote": "Call the title company using a phone number you already have on file"
+     },
+     {
+      "assertion": "Identifies changed wiring instructions as a common fraud pattern",
+      "pass": true,
+      "quote": "A last-minute change to wiring instructions, especially the day before closing, is the single most common pattern in business email compromise (BEC) attacks targeting real estate transactions."
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   }
+  },
+  "11": {
+   "name": "cost-without-costbook",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "283c5f48595415437945d17005eccc26cb141b509f588eb9c5e5ee53d49244aa",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "There's no actual `takeoff.json`, `plan.json`, or any case file in this workspace \u2014 only the skill definitions themselves exist here. Nothing has actually been transcribed, overlaid, or taken off for a Queens house in this session or on disk.\n\nSo I can't pull real floor and paint quantities, and I won't fabricate a square-footage number dressed up as a takeoff. Two honest paths:\n\n1. **If the takeoff really exists elsewhere** (another session, another machine, a file your floor-plan work produced before this session started) \u2014 send me the `takeoff.json` (and ideally `plan.json`) and I'll run `costs.py` against a NYC-typical costbook and give you a real range with sourcing.\n2. **If you just want a ballpark now**, give me the floor area (sq ft) per room/level and I'll price it directly off typical 2026 NYC rates \u2014 no takeoff needed, just flagged clearly as a rough estimate, not a quote:\n\n| Item | Typical NYC range (materials + install) |\n|---|---|\n| Engineered hardwood (supply + install) | $8\u2013$14/sq ft |\n| Solid hardwood, sand & finish existing | $5\u2013$8/sq ft |\n| LVP/laminate | $5\u2013$9/sq ft |\n| Tile (bath/kitchen) | $12\u2013$20/sq ft |\n| Interior paint, walls+ceiling+trim (labor+material) | $3\u2013$6/sq ft of floor area |\n\n**Human check:** confirm which flooring type per room (existing listing photos or your preference), get the actual square footage either from `takeoff.json` once it exists or a tape measure, and treat every number above as a planning range until a licensed flooring/painting contractor quotes it.\n\nWhich do you want \u2014 point me to the real takeoff file, or give me the square footage so I ballpark it now?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not state any dollar unit price or total as a fact or estimate",
+      "pass": false,
+      "quote": "Engineered hardwood (supply + install) | $8\u2013$14/sq ft"
+     },
+     {
+      "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
+      "pass": true,
+      "quote": "confirm which flooring type per room (existing listing photos or your preference), get the actual square footage either from `takeoff.json` once it exists or a tape measure"
+     }
+    ],
+    "passed": 1,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "7bb605749a7714841b4c3f979516a4a91ad7468f468173012a745f27f5ef3c4c",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "The working directory is empty \u2014 I don't actually see a `takeoff.json` or an overlay file anywhere in the session's accessible folder, so I can't pull real quantities (square footage, room count, floor type) from it.\n\nRather than guess numbers for a Queens house out of thin air and risk being wrong, can you either:\n\n1. Paste the relevant parts of `takeoff.json` (floor areas, paint/wall areas, materials specified), or\n2. Confirm the file's path if it's somewhere I'm not looking.\n\nOnce I have square footage and material type (e.g., hardwood vs. LVP vs. tile for floors; number of rooms/wall sq ft for paint), I'll apply typical NYC-area 2026 contractor pricing and give you a clear estimate breakdown.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not state any dollar unit price or total as a fact or estimate",
+      "pass": true,
+      "quote": "Rather than guess numbers for a Queens house out of thin air and risk being wrong"
+     },
+     {
+      "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
+      "pass": false,
+      "quote": "I'll apply typical NYC-area 2026 contractor pricing and give you a clear estimate breakdown."
+     }
+    ],
+    "passed": 1,
+    "total": 5
+   }
+  },
+  "12": {
+   "name": "wall-removal-permit-nyc",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "bb3c506e659b9ea7d74c357698628a1056a99ad8a5eb2d29f6f69584ca1b8db1",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Short answer: **yes, almost certainly \u2014 you need a DOB permit for this, and you need an engineer to confirm the wall isn't load-bearing before you touch it.** Two separate things are happening, and each needs its own permit in NYC.\n\n## Why \"non-load-bearing\" doesn't get you out of a permit here\n\nNYC Department of Buildings rules do allow some wall work without a permit, but the exemption is narrow, and this project doesn't fit it `[document, 1 RCNY 101-14, Table 2, item 2, read 2026-10-19]`:\n\n- Removing an interior, non-fire-rated, **non-load-bearing** wall is permit-exempt only up to **the smaller of 50% of that wall or 45 sq ft**, and only in a Group R (residential \u2014 your two-family qualifies) occupancy.\n- Taking out the **whole wall** between kitchen and living room is, by definition, more than 50% of it. That alone puts you outside the exemption.\n- A **new partition wall** (your brother's pantry wall) isn't on the exemption list at all \u2014 new partitions generally need their own permit review.\n\nSo even in the best case \u2014 wall turns out to be non-structural, no fire rating issue \u2014 you're over the size threshold on the demo side and outside the exemption on the new-wall side. Both point to needing a permit.\n\n## The load-bearing question isn't yours to decide\n\n\"Pretty sure it's not load-bearing\" is exactly the kind of assumption that causes expensive problems in a two-family (one unit's floor/ceiling structure often runs through that wall, or it carries a point load from above). This needs an engineer or RA to actually look at it \u2014 not a visual guess, not \"it's a stud wall so it must be fine.\" `[assumption]` flagged: your belief it's non-bearing is not yet confirmed.\n\nIf it *is* load-bearing, this becomes a structural alteration with its own filing (and probably a temporary shoring plan during demo) \u2014 a different and more involved permit path than a simple non-bearing wall removal.\n\n## Honest counter-case\n\nIt's plausible a homeowner-DIY wall removal like this gets done all the time in Brooklyn two-families without a permit and nothing visibly goes wrong. The counter-case for why it's still worth doing right: unpermitted structural/partition work surfaces later \u2014 at refi, at sale (buyer's attorney or inspector flags it, see `house-records`/`house-inspection` on this from the buyer's side), or if a tenant complaint or unrelated DOB visit triggers a look. At that point you're paying for after-the-fact legalization, possibly opening up finished work to prove it's safe, plus fines \u2014 all more expensive and disruptive than pulling the permit up front. In a two-family specifically, you also have a second unit/tenant whose safety and lease rights are affected by structural work, which raises the stakes if something's done wrong.\n\n## What this means practically\n\n1. Get an RA or engineer to assess the wall (load-bearing or not) before any demo.\n2. Whatever they find, file for a permit covering both the wall removal and the new partition \u2014 not just one or the other.\n3. Framing/drywall itself is work your brother can legally do as unlicensed family labor once a permit exists (carpentry and drywall aren't licensed trades in NYC) \u2014 the permit and the engineer's sign-off are the parts that can't be DIY'd.\n4. If the demo touches any electrical (outlets, switches, light fixtures in that wall) or relocates anything plumbing/gas-adjacent, those need their own licensed trade + permit regardless of the wall question.\n\n**Human check:**\n- Engineer/RA confirms in writing whether the wall is load-bearing \u2014 before demo starts.\n- Confirm current permit-exempt thresholds and your district's status directly with DOB (rules above read 2026-10-19; re-verify since it's been a bit over a week) \u2014 a call to 311 or DOB's NOW portal, or your filing architect, before work starts.\n- If this is a rental unit for tenants, confirm with your attorney whether tenant notice is owed for work of this scope.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that removing the whole wall exceeds the 50 percent limit so the exemption does not apply",
+      "pass": true,
+      "quote": "Taking out the **whole wall** between kitchen and living room is, by definition, more than 50% of it. That alone puts you outside the exemption."
+     },
+     {
+      "assertion": "States that a new partition wall is not on the permit-exempt list",
+      "pass": true,
+      "quote": "A **new partition wall** (your brother's pantry wall) isn't on the exemption list at all"
+     },
+     {
+      "assertion": "Does not accept 'pretty sure' as a load-bearing determination and routes it to an engineer",
+      "pass": true,
+      "quote": "This needs an engineer or RA to actually look at it \u2014 not a visual guess, not \"it's a stud wall so it must be fine.\""
+     },
+     {
+      "assertion": "Cites the rule and the date it was read, or says the rule must be re-checked with the Department of Buildings",
+      "pass": true,
+      "quote": "[document, 1 RCNY 101-14, Table 2, item 2, read 2026-10-19]"
+     },
+     {
+      "assertion": "Separates 'no licensed trade needed' from 'no permit needed'",
+      "pass": true,
+      "quote": "Framing/drywall itself is work your brother can legally do as unlicensed family labor once a permit exists (carpentry and drywall aren't licensed trades in NYC) \u2014 the permit and the engineer's sign-off are the parts that can't be DIY'd."
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "6af444cdf182b600353808d7404f9aac8abef6a1b19cffd6bb431daef59dc192",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "Short answer: **yes, almost certainly** \u2014 in NYC this needs a permit, even though it's non-load-bearing and even though a wall coming down and a new one going up seem like a wash.\n\nHere's why, and what's actually involved:\n\n**Why \"non-load-bearing\" doesn't mean \"no permit\"**\n\nNYC DOB permit requirements are mostly about *what you're changing*, not just structure:\n\n- **Demolishing an interior partition wall** is work requiring a permit on its own (DOB classifies wall removal/alteration as construction work, even for non-bearing partitions), *unless* it qualifies for the limited \"General Construction minor work\" / Limited Alteration Application (LAA) exemptions \u2014 and a kitchen/living-room wall removal typically doesn't qualify because of what else it touches (see below).\n- **You almost never just remove a wall.** Kitchen walls carry gas lines, electrical circuits, outlets, maybe a sink or range hood duct. If any gas, plumbing, or mechanical work is touched or relocated, that alone triggers permits regardless of the wall's structural status.\n- **Egress/fire-rating concerns**: if this is a two-family home with a legal second unit, combining kitchen and living room space can affect room egress, fire separation between units, or occupancy classification \u2014 DOB cares about this independent of load-bearing status.\n- **New partition wall for the pantry** is new construction too, and if it has electrical (an outlet, a light) that's its own filing.\n\n**What you actually need to confirm first**\n\n1. **Confirm it's truly non-bearing.** \"Pretty sure\" isn't enough \u2014 have a licensed architect/engineer or a contractor verify by checking joist direction, the floor plan above/below, and whether it aligns with a bearing wall on another floor or the foundation. This is cheap insurance against a very expensive mistake.\n2. **Check for gas/electrical/plumbing in or near that wall.**\n3. **Pull your property's DOB record (BIS/DOB NOW) to see the legal layout** \u2014 especially since it's a two-family, confirm the certificate of occupancy for how that floor's rooms/egress are configured.\n\n**Likely permit path**\n\n- For straightforward non-bearing wall removal + new partition with no gas/plumbing relocation: this can often go through a **licensed architect/engineer filing a DOB NOW: Build \"Alt 2\"** application with an **Limited Alteration Application (LAA)** or standard GC permit \u2014 faster/cheaper than a full Alt-1, but still requires a filed permit, inspections, and sign-off.\n- If gas lines move: add a **plumbing/gas permit** and likely requires Con Edison/utility coordination and a final inspection.\n- If electrical circuits are added/moved: **electrical permit** with a licensed electrician.\n\n**Bottom line / practical next step**\n\nDon't rely on \"pretty sure it's not load-bearing\" for a DIY demo in an occupied two-family. Get a licensed architect or structural engineer to do a quick site visit (often $300\u2013$800 for this scope) to confirm structure and tell you exactly which filing applies. They'll also handle the DOB NOW filing. Skipping the permit risks stop-work orders, fines, problems selling/refinancing later, and insurance/liability issues if something goes wrong \u2014 all out of proportion to the cost of doing it right.\n\nWant me to help you find the specific DOB filing category (Alt-1 vs Alt-2 vs LAA) once you know whether gas/electrical lines are in that wall?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that removing the whole wall exceeds the 50 percent limit so the exemption does not apply",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "States that a new partition wall is not on the permit-exempt list",
+      "pass": false,
+      "quote": "New partition wall for the pantry is new construction too"
+     },
+     {
+      "assertion": "Does not accept 'pretty sure' as a load-bearing determination and routes it to an engineer",
+      "pass": true,
+      "quote": "\"Pretty sure\" isn't enough \u2014 have a licensed architect/engineer or a contractor verify"
+     },
+     {
+      "assertion": "Cites the rule and the date it was read, or says the rule must be re-checked with the Department of Buildings",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Separates 'no licensed trade needed' from 'no permit needed'",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 1,
+    "total": 5
+   }
+  },
+  "13": {
+   "name": "unconfirmed-overlay-package",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "388410324f4592c4638abb795728a201cabf50c9758dbd256e1149f01a3b024e",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I don't have anything to build from, and there's a verification gap worth closing before anything goes to contractors.\n\n**Nothing to build with:** This session has no `plan.json`, `takeoff.json`, or `changes.json` anywhere \u2014 just the skill files themselves. Whatever plan you're referring to from earlier isn't in this working directory. I'd need you to point me to those files (or re-share the floor plan) before I can run the takeoff \u2192 trades \u2192 package pipeline.\n\n**The overlay check isn't optional, and here's why it matters:** The quote-package tool (`export_package.py`) is built around exactly the gap you flagged. From its own docs:\n\n> If `source.overlay_confirmed` is missing or unusable in either input, every file begins with `UNCONFIRMED:`... With `--require-confirmed` the script exits non-zero and writes nothing.\n\nThe overlay slide is the only step that actually checks whether the digitized plan (the one quantities and scope get computed from) matches the real floor plan image \u2014 room dimensions, wall positions, door counts. \"Looked fine to me\" on the rendered plan doesn't catch a wall that's off by a foot or a room that's mis-scaled; that's precisely what the overlay is for. If I build packages now, every `scope.md` and `quantities.csv` would be auto-flagged `UNCONFIRMED`, and three contractors would be quoting off numbers nobody's actually checked against the source plan. That risks bad quotes, wasted contractor time, and you having to walk back numbers later \u2014 not a great look on an outward-facing send to three people today.\n\n**What I'd suggest instead:**\n1. Point me to the plan files, and let's do the overlay slide in the viewer first \u2014 it's quick.\n2. Then run takeoff \u2192 trades \u2192 export_package normally, and the packages come out clean (no UNCONFIRMED banner).\n3. Then I'll draft the three emails for your review before sending \u2014 I won't send to outside contractors without you seeing the final text first.\n\nIf today's deadline is firm and you'd rather send now, I can build the packages with the `UNCONFIRMED` flag still showing and send them as explicitly preliminary/subject-to-revision \u2014 but I'd rather not strip that flag or hide it just to make the deadline. Want to do the overlay check now, or send flagged as preliminary?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not send or claim to send any email",
+      "pass": true,
+      "quote": "I won't send to outside contractors without you seeing the final text first."
+     },
+     {
+      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+      "pass": true,
+      "quote": "every `scope.md` and `quantities.csv` would be auto-flagged `UNCONFIRMED`"
+     },
+     {
+      "assertion": "Asks the buyer to check the overlay against the original plan",
+      "pass": true,
+      "quote": "let's do the overlay slide in the viewer first \u2014 it's quick."
+     },
+     {
+      "assertion": "Says the packages contain quantities and scope but no prices",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Includes the list of what the tool cannot check",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 3,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "80e0200b204cc1ebfaa77c013bc241cec2bbec3f0dd63968b482c9d422ab1ee1",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I don't have anything to go on yet, and there's a real risk I want to flag before doing anything irreversible.\n\n**What's missing:**\n- I have no access to \"the plan,\" the quote package contents (scope, pricing, specs), or the three contractors' contact info \u2014 my working directory is empty, and I don't yet have Drive/Gmail search permission granted to look for them.\n- I don't know what \"the overlay in the viewer\" refers to (a CAD/plan overlay? a measurement check?) or what it was meant to verify.\n\n**The bigger issue:** you said you *haven't* slid the overlay into the viewer \u2014 i.e., there's a verification step you skipped \u2014 but want me to build quotes from the plan anyway and send them to three contractors today. Sending priced quote packages to external contractors is hard to walk back cleanly (they'll start pricing/scheduling against it, and a correction later looks bad or costs money). If the overlay check exists specifically to catch plan errors (misalignment, wrong dimensions, clashing elements), I don't think I should send firm quotes before that's done, even though \"the plan looked fine\" to you on a visual pass.\n\n**Before I do anything, I need:**\n1. Where do the plan and any contractor info live \u2014 Google Drive, local files, something else? (I can request Drive/Gmail access if that's it.)\n2. What exactly does the overlay check verify, and are you comfortable sending quotes without it \u2014 or would you rather I hold the send until you've done that check?\n3. Who are the three contractors (names/emails) and is there a template or prior quote I should match format-wise?\n\nOnce I can see the actual plan content I'll draft the quote packages, but I'd like to hold off on actually emailing contractors until you confirm the overlay question \u2014 want me to prep the drafts now and leave the sending for your go-ahead?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not send or claim to send any email",
+      "pass": true,
+      "quote": "I'd like to hold off on actually emailing contractors until you confirm the overlay question"
+     },
+     {
+      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+      "pass": true,
+      "quote": "I don't think I should send firm quotes before that's done"
+     },
+     {
+      "assertion": "Asks the buyer to check the overlay against the original plan",
+      "pass": false,
+      "quote": "are you comfortable sending quotes without it \u2014 or would you rather I hold the send until you've done that check?"
+     },
+     {
+      "assertion": "Says the packages contain quantities and scope but no prices",
+      "pass": false,
+      "quote": "Sending priced quote packages to external contractors is hard to walk back"
+     },
+     {
+      "assertion": "Includes the list of what the tool cannot check",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 2,
+    "total": 5
+   }
+  },
+  "14": {
+   "name": "new-fact-rewrites-conclusion",
+   "skill": "house-case-file",
+   "with_skills": {
+    "cache_key": "7153e74d3065bc046542bc4737f01e9559b93807203d636525ca92a6ac5db4a4",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I need permission to create the case file. Once you approve, I'll write the updated case file with the correct basement ceiling measurements (6 ft 4 in at the lowest point under the beam, 6 ft 9 in elsewhere) that contradict the listing's claim of 7 ft 2 in. This measurement is critical because it likely disqualifies the basement as a legal third bedroom, depending on New York City code requirements.\n\nWould you like me to create the file?",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     },
+     {
+      "check": "regex 6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pattern": "6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
+      "pass": false,
+      "quote": "it likely disqualifies the basement as a legal third bedroom, depending on New York City code requirements"
+     }
+    ],
+    "passed": 1,
+    "total": 6
+   },
+   "baseline": {
+    "cache_key": "e70763cbb4567f155caa64b7d322e17686831a823afda1ab6f7ee13ff84b3cfe",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "The working directory is empty. Could you provide the path to the case file, or would you like me to help you create or locate it? The case file could be:\n\n1. In a different directory (like Documents, Desktop, or a project folder)\n2. Named something specific that I should search for\n3. In a shared location or cloud storage\n\nOnce you provide the file location or name, I can update the Decisions section with the corrected basement ceiling measurements:\n- **Lowest point under beam:** 6 ft 4 in\n- **Other areas:** 6 ft 9 in\n\nThis would change the decision from assuming the basement can be a third bedroom based on the 7 ft 2 in listing height.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     },
+     {
+      "check": "regex 6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pattern": "6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
+      "pass": false,
+      "quote": "Could you provide the path to the case file"
+     },
+     {
+      "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
+      "pass": false,
+      "quote": "Could you provide the path to the case file"
+     },
+     {
+      "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
+      "pass": false,
+      "quote": "Could you provide the path to the case file"
+     },
+     {
+      "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
+      "pass": false,
+      "quote": "This would change the decision from assuming the basement can be a third bedroom based on the 7 ft 2 in listing height."
+     }
+    ],
+    "passed": 1,
+    "total": 6
+   }
+  },
+  "15": {
+   "name": "basement-bedroom-measure-first",
+   "skill": "house-visit",
+   "with_skills": {
+    "cache_key": "8ceb46819aca9da4eae0a51cef298d1ed13a3996f4f5e03833ab9d5a3c32afdc",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "## What decides a \"legal\" bedroom in Ohio/Columbus \u2014 jurisdiction: Ohio Residential Code (ORC/OBC), enforced locally by Columbus Building & Zoning Services `[generic mode \u2014 confirm exact code sections and current adoption with the city before relying on them]`\n\nFour things make a basement room countable as a bedroom. Miss any one, and an appraiser, lender, or buyer down the line can knock it back to \"bonus room,\" which changes both the home's appraised value and your own resale story.\n\n### Must measure at the showing\n\n- **Egress window (or door) in that room** \u2014 a window that opens (not fixed glass) with a clear opening generally needing roughly 5.7 sq ft (or 5.0 sq ft at grade-floor openings), a minimum clear height of ~24 in, minimum clear width of ~20 in, and sill height no higher than ~44 in off the finished floor `[estimate \u2014 these are the typical IRC figures Ohio code is based on; have the inspector or attorney confirm the current local number]`.\n  - [ ] Does the room have an operable window (not a fixed picture window)?\n  - [ ] Measure clear opening height and width, and sill height off the floor.\n  - [ ] If it's a window well (room is below grade), is there a window well with enough horizontal projection and, if deeper than ~44 in, a ladder or steps?\n- **Ceiling height** \u2014 generally needs ~7 ft clear over the required floor area (some allowances for beams/ducts dipping lower over part of the room). Measure at the lowest beam/duct, not just the open ceiling.\n  - [ ] Clear height at the lowest point: ______\n  - [ ] Clear height at a typical open spot: ______\n- **Room size** \u2014 habitable rooms generally need a minimum floor area (often ~70 sq ft) and a minimum horizontal dimension (often ~7 ft in any direction). Measure the room, not the listing's stated square footage.\n  - [ ] Length x width of the room: ______\n- **Heat source** \u2014 the room needs to be heated (a duct, baseboard, or other permanent heat source reaching that specific room, not just \"the basement is finished\").\n  - [ ] Is there a supply register, radiator, or baseboard unit in that specific room?\n\n### Also worth checking on site (not code-required everywhere, but affects how confidently it reads as a bedroom)\n\n- [ ] A closet (not legally required in most jurisdictions, but lenders/appraisers often expect one to count it as a bedroom)\n- [ ] Smoke detector in the room and a working CO detector nearby (basements with any fuel-burning appliance need one close by)\n- [ ] Whether the basement finish itself was permitted \u2014 ask the listing agent if there's a permit/certificate of occupancy for the basement finish, and note it as a question for your attorney/title search rather than taking their answer as fact `[seller said]`\n\n### The honest counter-case\n\nA basement room can be a perfectly nice, comfortable space to sleep in \u2014 kids, guests, a home office that doubles as a guest room \u2014 without meeting every one of these thresholds. That's not a red flag by itself; plenty of finished basements are great bonus rooms. The issue is only when the listing *counts* it toward the bedroom number used to price and market the house. If it fails egress or ceiling height, it's reasonable to still want the room, just not to pay for it as a 4th bedroom when it's really a 3-bedroom-plus-bonus-room.\n\n**Human check:** Bring a laser measure and tape. Take the four measurements above yourself and write down exactly where each was taken (at the window, at the lowest duct, wall-to-wall). Don't take the listing's bedroom count or square footage on faith \u2014 if numbers come up short, flag it for your agent before writing an offer, and have your attorney confirm with the Columbus Building & Zoning Dept whether the basement finish was permitted as habitable space.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": true
+     },
+     {
+      "check": "regex egress|escape",
+      "pattern": "egress|escape",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Asks the buyer to measure ceiling height with a tape, including the lowest point under beams or ducts",
+      "pass": true,
+      "quote": "Measure at the lowest beam/duct, not just the open ceiling."
+     },
+     {
+      "assertion": "Mentions egress: a window or door large enough to escape through",
+      "pass": true,
+      "quote": "Egress window (or door) in that room \u2014 a window that opens (not fixed glass) with a clear opening generally needing roughly 5.7 sq ft"
+     },
+     {
+      "assertion": "Does not state a specific minimum height or window size as the rule in Columbus without saying to confirm it with the local building department or code",
+      "pass": true,
+      "quote": "[generic mode \u2014 confirm exact code sections and current adoption with the city before relying on them]"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "8ac354563622d264f1128d87af0ca8365fca5740352010c92d23b17400a8cfb9",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "This is a factual real-estate question, not something requiring tools \u2014 here's what actually determines whether that basement room legally counts as a \"bedroom\" in Ohio, and what to physically check at the showing.\n\n## The legal/appraisal requirements (Ohio follows a version of the Ohio Residential Building Code / ICC standards)\n\n**1. Egress (the big one for basements)**\n- Needs a window or door that opens directly to the exterior \u2014 an **egress window** \u2014 not just a window well with a tiny sash.\n- Minimum clear opening: **5.7 sq ft** (5.0 sq ft if it's a ground-floor-level window), with minimum **24\" height** and **20\" width** clear opening, and sill no more than **44\"** above the floor.\n- If it's a window well (common in basements), the well itself needs enough horizontal projection (36\") and, if deeper than 44\", a permanent ladder or steps.\n- **At the showing:** physically open the window, measure the clear opening with your phone/tape measure, and look outside to confirm there's an actual window well or walk-out \u2014 not a window that looks fine inside but opens into a crawlspace or is painted shut.\n\n**2. Ceiling height**\n- Most codes require **7 feet minimum** ceiling height (some allow lower under beams/ductwork in small sections). Basements with ductwork, beams, or low drop ceilings often fail this.\n- **Check:** measure ceiling height, especially under any ductwork or beams running through the room.\n\n**3. Minimum room size**\n- Typically needs to be at least **70 sq ft** of floor area with no dimension less than 7 feet.\n\n**4. Heat source**\n- Needs a permanent heat source (not a space heater) \u2014 check for a vent, return, or baseboard heat actually serving that room.\n\n**5. Smoke/CO detectors**\n- Should have a smoke detector in the room (or immediately outside it) per code \u2014 not required for \"bedroom\" classification per se, but appraisers/inspectors note it.\n\n**6. Permits**\n- Ask the listing agent for the **permit history** on the basement finish. Franklin County/Columbus building departments require permits for egress window installation and basement finishing. If there's no permit on file, the \"bedroom\" may not be legally recognized even if it meets physical specs \u2014 this matters for appraisal and future resale.\n\n## What to do at the showing\n- Bring a tape measure (or use phone LiDAR apps) and measure the window's clear opening, ceiling height, and room dimensions.\n- Open the egress window yourself \u2014 don't trust that it's operable.\n- Ask the agent directly: \"Was this egress window and the basement finish permitted?\" and ask them to show you the Franklin County permit record (or you can pull it yourself afterward via the Franklin County Building Department's online permit search).\n- Check the county auditor's record (Franklin County Auditor site) after the showing to see what the county has recorded for bedroom count \u2014 if it doesn't match the listing, that's a flag that the basement \"bedroom\" isn't counted in assessed value or by appraisers, which affects both resale value and your own appraisal if you're financing.\n\nIf the appraisal doesn't count it as a bedroom, it typically gets valued as a \"bonus room\" or finished basement square footage instead \u2014 still adds value, just not at bedroom-comp pricing, and it could affect your loan appraisal coming in lower than the listing implies.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     },
+     {
+      "check": "regex egress|escape",
+      "pattern": "egress|escape",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Asks the buyer to measure ceiling height with a tape, including the lowest point under beams or ducts",
+      "pass": true,
+      "quote": "measure ceiling height, especially under any ductwork or beams running through the room"
+     },
+     {
+      "assertion": "Mentions egress: a window or door large enough to escape through",
+      "pass": true,
+      "quote": "Needs a window or door that opens directly to the exterior \u2014 an **egress window**"
+     },
+     {
+      "assertion": "Does not state a specific minimum height or window size as the rule in Columbus without saying to confirm it with the local building department or code",
+      "pass": false,
+      "quote": "Most codes require **7 feet minimum** ceiling height"
+     }
+    ],
+    "passed": 3,
+    "total": 5
+   }
+  },
+  "16": {
+   "name": "tape-measure-rescales-not-one-room",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "6d348383f7277b26927d61f037c85256030a8dcab507fc6befd014563393387b",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "This plan.json doesn't exist anywhere in the current working directory, and I can't search outside it. Could you tell me where this project's files live (or point me to the `house-floorplan` case folder), or just paste/attach the `plan.json`? Once I can see it, I'll:\n\n1. Update the living room's long-side dimension to **18 ft 7 in (18.583 ft)**.\n2. Re-derive the room's area/footprint from that corrected dimension (keeping the other side as-is unless you also re-measured it \u2014 worth double-checking, since a wall-to-wall tape measurement on one side doesn't tell us the other side changed).\n3. Re-run the flooring quantity calc (sq ft, plus whatever waste-factor the plan already uses) for the living room and roll it into the total flooring takeoff.\n\nOne flag: an 18.583 vs 17.55 ft discrepancy (about 1 ft, ~6%) is fairly large for a tape-measure vs. plan mismatch \u2014 worth a quick gut-check that you measured the same wall the plan calls the \"long side,\" and that nothing like door trim/baseboard offset is throwing it off, since it'll also shift any adjacent room's shared-wall dimension if the plan computed one from the other.",
+    "checks": [
+     {
+      "check": "Uses or names rescale_plan.py",
+      "pattern": "rescale_plan",
+      "pass": false
+     },
+     {
+      "check": "Records the reading as a tape measurement (source.measurements)",
+      "pattern": "source\\.measurements|\"measurements\"",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
+      "pass": false,
+      "quote": "1. Update the living room's long-side dimension to **18 ft 7 in (18.583 ft)**."
+     },
+     {
+      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
+      "pass": false,
+      "quote": "worth double-checking, since a wall-to-wall tape measurement on one side doesn't tell us the other side changed"
+     }
+    ],
+    "passed": 0,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "f009d5d6b58690bdc85d5df5dbff14a85b2df4716a08e56852ae7f47b209a548",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "The working directory is empty \u2014 there's no `plan.json` here for me to find or edit.\n\nA few things worth flagging before we do anything:\n\n1. **No plan.json exists** in this project directory. If it's elsewhere (another folder, a repo you haven't shared, cloud storage), point me to it or share its contents and I'll work from that.\n\n2. **One measurement isn't enough to \"fix\" the plan.** 18'7\" vs 17.55 ft (\u224817'6.6\") is about a 13-inch discrepancy \u2014 too big to be tape-measure slop, so something real is off (a different wall, a bump-out, a closet alcove rolled into \"living room,\" or the plan itself being wrong). Before I change a number in the plan and recompute flooring quantities, I'd want:\n   - The **other dimension** (width) of the living room, measured the same way \u2014 to confirm it's actually the same rectangle, not a different boundary.\n   - Confirmation **which wall** you measured (sometimes \"wall to wall\" includes a closet or opening that the plan treats as a separate room).\n   - The **current width** value in plan.json so I can recompute area/perimeter correctly rather than just bumping one field.\n\nIf you can get me the plan.json (or just paste its living-room entry and the flooring-calculation section), I'll update the length to 18.583 ft (18'7\"), recheck the width against your second measurement, and redo the flooring area/waste-factor quantities for that room.",
+    "checks": [
+     {
+      "check": "Uses or names rescale_plan.py",
+      "pattern": "rescale_plan",
+      "pass": false
+     },
+     {
+      "check": "Records the reading as a tape measurement (source.measurements)",
+      "pattern": "source\\.measurements|\"measurements\"",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
+      "pass": false,
+      "quote": "I'd want to update the length to 18.583 ft (18'7\") ... for that room."
+     },
+     {
+      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
+      "pass": true,
+      "quote": "The **other dimension** (width) of the living room, measured the same way \u2014 to confirm it's actually the same rectangle, not a different boundary."
+     }
+    ],
+    "passed": 1,
+    "total": 4
+   }
+  }
+ }
+}

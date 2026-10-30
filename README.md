@@ -192,6 +192,10 @@ python3 tools/package_skills.py        # zips for app upload
 
 Behavior checks for each skill are in `evals/evals.json`. `python3 tools/run_evals.py --agent claude --dry-run` shows what a run would cost in agent and grader calls; drop `--dry-run` to run them on your own subscription (never in CI). Results go to `evals/results/`.
 
+### Results
+
+The latest run, with and without the skills, is in [evals/results/summary.md](evals/results/summary.md), and every answer and grade is in [evals/results/claude.json](evals/results/claude.json). Cases 11, 13, 14 and 16 refer to a plan, takeoff or case file that the eval sandbox does not contain yet, so their scores partly measure the missing file.
+
 ## License
 
 MIT for this repository. The bundled three.js files keep their own MIT license; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

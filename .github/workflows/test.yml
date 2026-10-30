@@ -19,3 +19,15 @@ jobs:
         run: python tools/check_skills.py
       - name: Unit tests
         run: python -m unittest discover tests -v
+
+  # macOS ships Python 3.9 as /usr/bin/python3. setup-python has no 3.9 build for the
+  # current runner image, so this job runs in the official Python image instead.
+  test-39:
+    runs-on: ubuntu-latest
+    container: python:3.9-slim
+    steps:
+      - uses: actions/checkout@v4
+      - name: Skill format and writing rules
+        run: python tools/check_skills.py
+      - name: Unit tests
+        run: python -m unittest discover tests -v
