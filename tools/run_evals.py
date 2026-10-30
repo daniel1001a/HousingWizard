@@ -9,10 +9,16 @@
 Each run happens in a fresh temp folder outside the repo. With skills, skills/* is
 copied into that folder's project skills directory (.claude/skills for Claude Code,
 .agents/skills for Codex). The baseline gets no copy, and for Claude Code also
---disable-slash-commands.
+--disable-slash-commands. A case with "fixtures": "<name>" also gets the files in
+evals/fixtures/<name>, on both sides. The agent may edit files in that folder and
+run python3, so it can use the skills' scripts (Claude Code --permission-mode
+acceptEdits with Bash(python3 *) allowed; Codex -s workspace-write). Any other
+command needs an approval nobody gives. Every file it adds or changes is appended
+to the answer as a diff, so the grader sees what it wrote.
 
 Token saving: answers are cached in evals/.cache by a key over the agent, model,
-prompt, the case's skill folder, the house-buying router and tools/shared_rules.md.
+prompt, the case's fixture folder, the case's skill folder, the house-buying router
+and tools/shared_rules.md.
 A cached answer is never rerun. Deterministic 'checks' run first; one grader call
 per case covers only the assertions no check covers, and none is made if all are
 covered. A grader reply that is not valid JSON is retried once, then the case is
@@ -27,6 +33,7 @@ Gemini CLI and Cursor adapters are stubs until their flags are read from their o
 """
 import argparse
 import datetime
+import difflib
 import glob
 import hashlib
 import json
@@ -44,6 +51,7 @@ RESULTS = os.path.join(ROOT, 'evals', 'results')
 LEAK_DIRS = ('~/.claude/skills', '~/.agents/skills', '~/.codex/skills', '/etc/codex/skills')
 KEY_VARS = ('ANTHROPIC_API_KEY', 'OPENAI_API_KEY')
 TIMEOUT = 900
+MAX_FILE_CHARS = 8000
 FAKE_ANSWER = 'Fake answer for tests.\n\nHuman check:\n- Measure the ceiling height yourself.'
 
 
@@ -61,10 +69,19 @@ def _hash_tree(h, folder):
                 h.update(hashlib.sha256(fh.read()).digest())
 
 
+def fixture_dir(case, root=None):
+    name = case.get('fixtures')
+    return os.path.join(root or ROOT, 'evals', 'fixtures', name) if name else None
+
+
 def cache_key(agent, model, case, with_skills, root=None):
     root = root or ROOT
     h = hashlib.sha256()
     h.update(json.dumps([agent, model or '', case['prompt'], bool(with_skills)]).encode())
+    # Only cases with fixtures hash them, so adding fixture support kept every other cached answer.
+    if case.get('fixtures'):
+        h.update(b'fixtures')
+        _hash_tree(h, fixture_dir(case, root))
     if with_skills:
         for name in sorted({case['skill'], 'house-buying'}):
             _hash_tree(h, os.path.join(root, 'skills', name))
@@ -183,6 +200,54 @@ def _copy_skills(dest):
                         ignore=shutil.ignore_patterns('__pycache__'))
 
 
+def _snapshot(folder, skip=()):
+    """Text of every visible file in the sandbox. glob skips dot folders, so .claude and .agents are left out."""
+    out = {}
+    for path in sorted(glob.glob(os.path.join(folder, '**', '*'), recursive=True)):
+        rel = os.path.relpath(path, folder).replace(os.sep, '/')
+        if os.path.isfile(path) and rel not in skip:
+            with open(path, encoding='utf-8', errors='replace') as fh:
+                out[rel] = fh.read()
+    return out
+
+
+def _place_fixtures(case, tmp):
+    src = fixture_dir(case)
+    if src:
+        if not os.path.isdir(src):
+            raise AgentError('fixture folder %s does not exist' % src)
+        for path in glob.glob(os.path.join(src, '*')):
+            dest = os.path.join(tmp, os.path.basename(path))
+            if os.path.isdir(path):
+                shutil.copytree(path, dest)
+            else:
+                shutil.copy2(path, dest)
+    return _snapshot(tmp)
+
+
+def sandbox_changes(before, after):
+    """A note listing files the agent added, changed or deleted, with a diff, or '' if none."""
+    parts = []
+    for rel in sorted(set(before) | set(after)):
+        old, new = before.get(rel), after.get(rel)
+        if old == new:
+            continue
+        if new is None:
+            parts.append('Deleted %s' % rel)
+            continue
+        if old is None:
+            body = new
+            parts.append('New file %s:\n%s' % (rel, body[:MAX_FILE_CHARS]))
+        else:
+            body = ''.join(difflib.unified_diff(old.splitlines(True), new.splitlines(True), 'a/' + rel, 'b/' + rel))
+            parts.append('Changed %s:\n%s' % (rel, body[:MAX_FILE_CHARS]))
+        if len(body) > MAX_FILE_CHARS:
+            parts[-1] += '\n[cut at %d characters]' % MAX_FILE_CHARS
+    if not parts:
+        return ''
+    return '\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\n' + '\n\n'.join(parts)
+
+
 def _run(cmd, cwd):
     try:
         r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=TIMEOUT, stdin=subprocess.DEVNULL)
@@ -210,49 +275,56 @@ def _claude_result(stdout):
     return d['result']
 
 
-def claude_answer(a, prompt, with_skills):
+def claude_answer(a, case, with_skills):
     tmp = tempfile.mkdtemp(prefix='hw-eval-')
     try:
-        cmd = [a.claude_bin, '-p', prompt, '--output-format', 'json', '--no-session-persistence',
-               '--setting-sources', 'project']
+        before = _place_fixtures(case, tmp)
+        # The agent may edit files in the throwaway sandbox and run the skills' Python scripts; any other
+        # command still needs an approval, which -p cannot get.
+        cmd = [a.claude_bin, '-p', case['prompt'], '--output-format', 'json', '--no-session-persistence',
+               '--setting-sources', 'project', '--permission-mode', 'acceptEdits', '--allowedTools', 'Bash(python3 *)']
         if with_skills:
             _copy_skills(os.path.join(tmp, '.claude', 'skills'))
         else:
             cmd.append('--disable-slash-commands')
         if a.model:
             cmd += ['--model', a.model]
-        return _claude_result(_run(cmd, tmp))
+        answer = _claude_result(_run(cmd, tmp))
+        return answer + sandbox_changes(before, _snapshot(tmp))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def codex_answer(a, prompt, with_skills):
+def codex_answer(a, case, with_skills):
     tmp = tempfile.mkdtemp(prefix='hw-eval-')
     try:
+        before = _place_fixtures(case, tmp)
         # Codex reads project skills from .agents/skills in the folder it runs in.
         if with_skills:
             _copy_skills(os.path.join(tmp, '.agents', 'skills'))
         out = os.path.join(tmp, 'answer.txt')
-        cmd = [a.codex_bin, 'exec', '--skip-git-repo-check', '--ephemeral', '-s', 'read-only', '-C', tmp, '-o', out]
+        cmd = [a.codex_bin, 'exec', '--skip-git-repo-check', '--ephemeral', '-s', 'workspace-write', '-C', tmp,
+               '-o', out]
         if a.ignore_user_config:
             cmd.append('--ignore-user-config')
         if a.model:
             cmd += ['-m', a.model]
-        _run(cmd + [prompt], tmp)
+        _run(cmd + [case['prompt']], tmp)
         if not os.path.isfile(out):
             raise AgentError('codex wrote no answer file')
         with open(out, encoding='utf-8') as fh:
-            return fh.read()
+            answer = fh.read()
+        return answer + sandbox_changes(before, _snapshot(tmp, skip=('answer.txt',)))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def fake_answer(a, prompt, with_skills):
+def fake_answer(a, case, with_skills):
     return os.environ.get('HW_FAKE_ANSWER', FAKE_ANSWER)
 
 
 def stub(name):
-    def f(a, prompt, with_skills):
+    def f(a, case, with_skills):
         raise AgentError('%s is not installed or not yet supported. Its flags have not been verified.' % name)
     return f
 
@@ -329,15 +401,17 @@ def select(cases, a, previous):
     return out
 
 
+def refreshed(a, with_skills):
+    return a.refresh or (not with_skills and a.refresh_baseline)
+
+
 def plan_calls(cases, a):
     """Counts the agent and grader calls a run would make, given the cache."""
     agent_calls = grader_calls = 0
     for c in cases:
         for with_skills in ((True, False) if a.baseline else (True,)):
             key = cache_key(a.agent, a.model, c, with_skills)
-            entry = None
-            if not (not with_skills and a.refresh_baseline):
-                entry = load_cache(key)
+            entry = None if refreshed(a, with_skills) else load_cache(key)
             if entry is None:
                 agent_calls += 1
             if uncovered_assertions(c) and (entry is None or grades_key(c) not in entry.get('grades', {})):
@@ -349,9 +423,9 @@ def plan_calls(cases, a):
 
 def run_one(a, case, with_skills, judge, version):
     key = cache_key(a.agent, a.model, case, with_skills)
-    entry = None if (not with_skills and a.refresh_baseline) else load_cache(key)
+    entry = None if refreshed(a, with_skills) else load_cache(key)
     if entry is None:
-        answer = ADAPTERS[a.agent](a, case['prompt'], with_skills)
+        answer = ADAPTERS[a.agent](a, case, with_skills)
         entry = {'answer': answer, 'date': datetime.date.today().isoformat(), 'version': version,
                  'model': a.model}
         save_cache(key, entry)
@@ -421,6 +495,8 @@ def parse(argv):
     ap.add_argument('--changed', action='store_true', help='only cases whose cache key differs from the last results')
     ap.add_argument('--baseline', action='store_true', help='also run without skills')
     ap.add_argument('--refresh-baseline', action='store_true', help='rerun baseline answers even if cached')
+    ap.add_argument('--refresh', action='store_true',
+                    help='rerun the chosen cases even if cached, e.g. after changing how the sandbox is set up')
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--allow-api-key', action='store_true')
     ap.add_argument('--claude-bin', default='claude')

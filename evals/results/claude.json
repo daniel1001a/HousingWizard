@@ -697,27 +697,28 @@
    "name": "cost-without-costbook",
    "skill": "house-floorplan",
    "with_skills": {
-    "cache_key": "283c5f48595415437945d17005eccc26cb141b509f588eb9c5e5ee53d49244aa",
+    "cache_key": "6b779bf858c271b26e51a0ad9fbedc2c804f4be8eb46655056f36cb940711547",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "There's no actual `takeoff.json`, `plan.json`, or any case file in this workspace \u2014 only the skill definitions themselves exist here. Nothing has actually been transcribed, overlaid, or taken off for a Queens house in this session or on disk.\n\nSo I can't pull real floor and paint quantities, and I won't fabricate a square-footage number dressed up as a takeoff. Two honest paths:\n\n1. **If the takeoff really exists elsewhere** (another session, another machine, a file your floor-plan work produced before this session started) \u2014 send me the `takeoff.json` (and ideally `plan.json`) and I'll run `costs.py` against a NYC-typical costbook and give you a real range with sourcing.\n2. **If you just want a ballpark now**, give me the floor area (sq ft) per room/level and I'll price it directly off typical 2026 NYC rates \u2014 no takeoff needed, just flagged clearly as a rough estimate, not a quote:\n\n| Item | Typical NYC range (materials + install) |\n|---|---|\n| Engineered hardwood (supply + install) | $8\u2013$14/sq ft |\n| Solid hardwood, sand & finish existing | $5\u2013$8/sq ft |\n| LVP/laminate | $5\u2013$9/sq ft |\n| Tile (bath/kitchen) | $12\u2013$20/sq ft |\n| Interior paint, walls+ceiling+trim (labor+material) | $3\u2013$6/sq ft of floor area |\n\n**Human check:** confirm which flooring type per room (existing listing photos or your preference), get the actual square footage either from `takeoff.json` once it exists or a tape measure, and treat every number above as a planning range until a licensed flooring/painting contractor quotes it.\n\nWhich do you want \u2014 point me to the real takeoff file, or give me the square footage so I ballpark it now?",
-    "checks": [],
+    "answer": "I don't have web search permission in this session, so I can't look up sourced retail prices myself right now. Here's where that leaves things, following this project's costing rules (no price goes in without a dated source \u2014 \"typical NYC price from memory\" isn't allowed, because an untraceable number can't be compared against real quotes and just anchors you):\n\n**What the takeoff gives you (from `takeoff.json`, CONFIRMED overlay):**\n\n| Item | Quantity | Notes |\n|---|---|---|\n| Floor area (all rooms) | 2,310 sq ft | hard, 0 soft lines |\n| Wall paint area | 5,063.4 sq ft | soft \u2014 every line flagged (ceiling heights are assumed/plan-label/scan, not measured; several openings missing head/sill data) |\n| Ceiling paint area | 2,310 sq ft | hard, 0 soft lines |\n| Baseboard length | 659.5 ft | mostly soft \u2014 several openings missing head data |\n\nSo \"paint\" total wall+ceiling area to cover \u2248 7,373.4 sq ft, before any waste factor (none is included).\n\n**On pricing:** I can get you a real, traceable number two ways, pick one:\n\n1. **Grant me web search** and I'll pull current retail prices (e.g., Home Depot/Lowe's flooring per-sq-ft, Sherwin-Williams/Benjamin Moore paint per-gallon) with URL + today's date, build a `costbook.json` entry for each, and run `costs.py` against your takeoff \u2014 that gets you a sourced materials-only range (labor still needs actual quotes).\n2. **You send me any quotes or prices you look up yourself** (a Home Depot flooring page, a paint can price, a contractor's quote) and I'll log them the same way.\n\nEither path, labor pricing (installation, painters) really wants 2-3 actual NYC contractor quotes \u2014 I can generate the `scope.md` / `quantities.csv` quote packages for flooring and painting trades right now from the takeoff if you want to start sending those out while we sort materials pricing.\n\nWant me to (a) try web search for retail material prices, or (b) just generate the flooring + paint quote packages to send to contractors first?",
+    "checks": [
+     {
+      "check": "Does not state any dollar unit price or total as a fact or estimate",
+      "pattern": "\\$\\s?\\d",
+      "pass": true
+     }
+    ],
     "assertions": [
      {
-      "assertion": "Does not state any dollar unit price or total as a fact or estimate",
-      "pass": false,
-      "quote": "Engineered hardwood (supply + install) | $8\u2013$14/sq ft"
-     },
-     {
       "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
-      "pass": false,
-      "quote": ""
+      "pass": true,
+      "quote": "no price goes in without a dated source"
      },
      {
       "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
       "pass": false,
-      "quote": ""
+      "quote": "Floor area (all rooms) | 2,310 sq ft | hard, 0 soft lines"
      },
      {
       "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
@@ -726,35 +727,36 @@
      },
      {
       "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
-      "pass": true,
-      "quote": "confirm which flooring type per room (existing listing photos or your preference), get the actual square footage either from `takeoff.json` once it exists or a tape measure"
+      "pass": false,
+      "quote": "Want me to (a) try web search for retail material prices, or (b) just generate the flooring + paint quote packages to send to contractors first?"
      }
     ],
-    "passed": 1,
+    "passed": 2,
     "total": 5
    },
    "baseline": {
-    "cache_key": "7bb605749a7714841b4c3f979516a4a91ad7468f468173012a745f27f5ef3c4c",
+    "cache_key": "adfba2b7511d1c6b703ff075cf6c794d0a5def4e22177046ca032828c1e09d02",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "The working directory is empty \u2014 I don't actually see a `takeoff.json` or an overlay file anywhere in the session's accessible folder, so I can't pull real quantities (square footage, room count, floor type) from it.\n\nRather than guess numbers for a Queens house out of thin air and risk being wrong, can you either:\n\n1. Paste the relevant parts of `takeoff.json` (floor areas, paint/wall areas, materials specified), or\n2. Confirm the file's path if it's somewhere I'm not looking.\n\nOnce I have square footage and material type (e.g., hardwood vs. LVP vs. tile for floors; number of rooms/wall sq ft for paint), I'll apply typical NYC-area 2026 contractor pricing and give you a clear estimate breakdown.",
-    "checks": [],
-    "assertions": [
+    "answer": "Based on `takeoff.json` (overlay confirmed, CONFIRMED status), here's the rough cost using **typical NYC pricing** \u2014 no contractor quotes exist yet, so treat this as a planning estimate only.\n\n## Quantities from the takeoff\n\n| Item | Quantity |\n|---|---|\n| Floor area (all rooms, B + 1F + 2F) | **2,310.0 sq ft** |\n| Wall paint area | 5,063.4 sq ft |\n| Ceiling paint area | 2,310.0 sq ft |\n| **Total paintable area** | **7,373.4 sq ft** |\n\nNote: `finish` is listed as `\"unspecified\"` for every floor line, so I'm pricing a typical mid-range NYC job, not matching any specific material.\n\n## Flooring estimate\n\nTypical NYC supply + install pricing by material tier:\n\n| Tier | $/sq ft | Cost on 2,310 sq ft |\n|---|---|---|\n| LVP / laminate | $7\u20139 | $16,200 \u2013 $20,800 |\n| Engineered hardwood | $9\u201314 | $20,800 \u2013 $32,300 |\n| Solid hardwood | $14\u201320 | $32,300 \u2013 $46,200 |\n\n**Likely planning range: ~$20,000\u2013$33,000** (engineered hardwood is the most common NYC mid-range choice for a whole house).\n\n## Paint estimate\n\nTypical NYC interior painting (labor + materials, 2 coats, standard prep) runs **$3.50\u2013$5.50/sq ft** of wall+ceiling area for a whole-house job:\n\n- Low end: 7,373.4 \u00d7 $3.50 = **~$25,800**\n- High end: 7,373.4 \u00d7 $5.50 = **~$40,550**\n\n**Likely planning range: ~$26,000\u2013$40,500**\n\n## Combined\n\n**Floors + paint: roughly $46,000\u2013$73,500**, with a reasonable midpoint estimate around **$58,000**.\n\nCaveats worth keeping in mind:\n- These are per-sq-ft NYC averages, not quotes \u2014 actual numbers swing with material grade, building access/stairs (your takeoff shows a walk-up with 27 risers total, which adds labor), and whether rooms need to be emptied.\n- `wall_paint_area` is flagged `soft` on all 14 room lines (ceiling heights assumed/scanned, not measured), so that area \u2014 and its cost \u2014 could shift a bit once someone measures on site.\n- Baseboard (659.5 ft total) isn't priced here since you only asked about floors and paint; let me know if you want that added (typically $3\u2013$6/linear ft installed in NYC).",
+    "checks": [
      {
-      "assertion": "Does not state any dollar unit price or total as a fact or estimate",
-      "pass": true,
-      "quote": "Rather than guess numbers for a Queens house out of thin air and risk being wrong"
-     },
+      "check": "Does not state any dollar unit price or total as a fact or estimate",
+      "pattern": "\\$\\s?\\d",
+      "pass": false
+     }
+    ],
+    "assertions": [
      {
       "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
       "pass": false,
-      "quote": ""
+      "quote": "Typical NYC supply + install pricing by material tier"
      },
      {
       "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
       "pass": false,
-      "quote": ""
+      "quote": "wall_paint_area` is flagged `soft` on all 14 room lines"
      },
      {
       "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
@@ -764,10 +766,10 @@
      {
       "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
       "pass": false,
-      "quote": "I'll apply typical NYC-area 2026 contractor pricing and give you a clear estimate breakdown."
+      "quote": "Baseboard (659.5 ft total) isn't priced here since you only asked about floors and paint; let me know if you want that added"
      }
     ],
-    "passed": 1,
+    "passed": 0,
     "total": 5
    }
   },
@@ -853,27 +855,64 @@
    "name": "unconfirmed-overlay-package",
    "skill": "house-floorplan",
    "with_skills": {
-    "cache_key": "388410324f4592c4638abb795728a201cabf50c9758dbd256e1149f01a3b024e",
+    "cache_key": "ec3732c792b98dd30f2234ab70c51c24a745eb508d8e928b49d33c69426d3049",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "I don't have anything to build from, and there's a verification gap worth closing before anything goes to contractors.\n\n**Nothing to build with:** This session has no `plan.json`, `takeoff.json`, or `changes.json` anywhere \u2014 just the skill files themselves. Whatever plan you're referring to from earlier isn't in this working directory. I'd need you to point me to those files (or re-share the floor plan) before I can run the takeoff \u2192 trades \u2192 package pipeline.\n\n**The overlay check isn't optional, and here's why it matters:** The quote-package tool (`export_package.py`) is built around exactly the gap you flagged. From its own docs:\n\n> If `source.overlay_confirmed` is missing or unusable in either input, every file begins with `UNCONFIRMED:`... With `--require-confirmed` the script exits non-zero and writes nothing.\n\nThe overlay slide is the only step that actually checks whether the digitized plan (the one quantities and scope get computed from) matches the real floor plan image \u2014 room dimensions, wall positions, door counts. \"Looked fine to me\" on the rendered plan doesn't catch a wall that's off by a foot or a room that's mis-scaled; that's precisely what the overlay is for. If I build packages now, every `scope.md` and `quantities.csv` would be auto-flagged `UNCONFIRMED`, and three contractors would be quoting off numbers nobody's actually checked against the source plan. That risks bad quotes, wasted contractor time, and you having to walk back numbers later \u2014 not a great look on an outward-facing send to three people today.\n\n**What I'd suggest instead:**\n1. Point me to the plan files, and let's do the overlay slide in the viewer first \u2014 it's quick.\n2. Then run takeoff \u2192 trades \u2192 export_package normally, and the packages come out clean (no UNCONFIRMED banner).\n3. Then I'll draft the three emails for your review before sending \u2014 I won't send to outside contractors without you seeing the final text first.\n\nIf today's deadline is firm and you'd rather send now, I can build the packages with the `UNCONFIRMED` flag still showing and send them as explicitly preliminary/subject-to-revision \u2014 but I'd rather not strip that flag or hide it just to make the deadline. Want to do the overlay check now, or send flagged as preliminary?",
+    "answer": "The validator flags the same thing as its very first item: **\"UNCONFIRMED transcription... no person has checked the transcription overlay against the original plan.\"**\n\n`floorplan.html` is written to:\n`/private/var/folders/yk/3q4hx4gx6djc114d834b1mw40000gn/T/hw-eval-067l6qhi/floorplan.html`\n\n**What I need from you before anything goes to contractors:**\n1. Open that file, go to tab 1, slide the overlay \u2014 confirm every red line sits on a drawn wall.\n2. There are also 9 open \"measure on site\" items (ceiling heights are assumed/plan-label/scan, not measured; an undrawn basement area; basement clearance) \u2014 these feed the quote quantities too. Flag me which of these you've already got real numbers for, if any.\n\nOnce you confirm the overlay, I'll:\n- Set `source.overlay_confirmed`, re-run takeoff/trades\n- Build the three per-trade quote packages (`scope.md`, `quantities.csv`, `assumptions.md`) with `export_package.py`\n- Draft the emails for your review \u2014 I will **not** send them myself without you seeing the drafts first, since sending to three contractors is outward-facing and not easily walked back. You'll have final say before anything leaves your inbox.\n\nWant me to go ahead and draft the email text now (clearly marked as pending the overlay check), or wait until you've confirmed the overlay?\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nNew file floorplan.html:\n<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Sample house (fictional)</title>\n<style>\n:root{--bg:#f7f6f3;--panel:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#dedbd4;--accent:#1f5f8b;--warn:#a65a00;--bad:#b3261e;--good:#2e7d32;--chip:#eeebe5}\n@media (prefers-color-scheme: dark){:root:not([data-theme=\"light\"]){--bg:#161615;--panel:#1f1f1d;--ink:#ecebe7;--muted:#a3a19b;--line:#34332f;--accent:#7cb3dc;--warn:#e0a458;--bad:#ef7a72;--good:#81c784;--chip:#2a2926}}\n:root[data-theme=\"dark\"]{--bg:#161615;--panel:#1f1f1d;--ink:#ecebe7;--muted:#a3a19b;--line:#34332f;--accent:#7cb3dc;--warn:#e0a458;--bad:#ef7a72;--good:#81c784;--chip:#2a2926}\n*{box-sizing:border-box}\nbody{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif}\nheader{padding:16px 16px 0;max-width:1200px;margin:0 auto}\nh1{font-size:20px;margin:0 0 2px}\n.sub{color:var(--muted);font-size:13px;margin:0 0 12px}\nnav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}\nnav button{border:0;background:none;color:var(--muted);font:inherit;padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent}\nnav button[aria-selected=\"true\"]{color:var(--ink);border-bottom-color:var(--accent)}\nmain{max-width:1200px;margin:0 auto;padding:12px 16px 40px}\n.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}\n.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}\n.seg button{border:0;background:var(--panel);color:var(--ink);font:inherit;font-size:13px;padding:6px 10px;cursor:pointer}\n.seg button[aria-pressed=\"true\"]{background:var(--accent);color:#fff}\n.seg button:disabled{opacity:.4;cursor:not-allowed}\n.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;cursor:pointer}\nlabel.inline{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}\n.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}\n.note{font-size:13px;color:var(--muted);margin:8px 0 0}\nsection[hidden]{display:none}\n#overlayWrap{overflow:auto;max-height:78vh;background:#fff;border-radius:8px;overscroll-behavior:contain;cursor:grab}\n#overlayWrap.dragging{cursor:grabbing;user-select:none}\n#overlayStage{position:relative;width:max-content}\n#overlayStage img{display:block;max-width:none;-webkit-user-drag:none}\n#overlaySvg{position:absolute;left:0;top:0}\n#overlaySvg text{paint-order:stroke;stroke:#fff;stroke-linejoin:round}\n#ovZoomVal{display:inline-block;min-width:3.5em;font-variant-numeric:tabular-nums}\n#planSvg{display:block;width:100%;height:auto;max-height:78vh;background:var(--panel);border-radius:8px}\n#planSvg text{paint-order:stroke;stroke:rgba(255,255,255,.85);stroke-width:.12px;stroke-linejoin:round}\n#three{width:100%;height:min(70vh,640px);border-radius:8px;overflow:hidden;background:#d9d6cf;touch-action:none}\ntable{border-collapse:collapse;width:100%;font-size:13px}\nth,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}\ntd.n,th.n{text-align:right;font-variant-numeric:tabular-nums}\n.tablewrap{overflow-x:auto}\nul.list{margin:0;padding-left:18px}\nul.list li{margin:4px 0}\n.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:10px;background:var(--chip);color:var(--muted);margin-right:6px}\n.bad{color:var(--bad)}.warn{color:var(--warn)}.good{color:var(--good)}\n.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}\n.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:4px}\n.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}\nh2{font-size:16px;margin:16px 0 8px}\n.banner{border:1px solid var(--warn);border-radius:10px;padding:10px 12px;margin:0 0 12px;color:var(--warn);background:var(--panel)}\n.banner.bad{border-color:var(--bad);color:var(--bad)}\n.cannot{border:2px solid var(--line)}\ndetails.pkg{border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:6px 0;background:var(--panel)}\ndetails.pkg summary{cursor:pointer}\npre.file{white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:8px 0;max-height:360px;overflow:auto}\n</style>\n</head>\n<body>\n<header>\n  <h1 id=\"title\">Floor plan</h1>\n  <p class=\"sub\" id=\"subtitle\"></p>\n  <nav role=\"tablist\">\n    <button role=\"tab\" data-tab=\"check\" aria-selected=\"true\">1. Check the transcription</button>\n    <button role=\"tab\" data-tab=\"plan\" aria-selected=\"false\">2. Plan</button>\n    <button role=\"tab\" data-tab=\"three\" aria-selected=\"false\">3. 3D before / after</button>\n    <button role=\"tab\" data-tab=\"qty\" aria-selected=\"false\">4. Quantities</button>\n    <button role=\"tab\" data-tab=\"verify\" aria-selected=\"false\">5. To verify</button>\n    <button role=\"tab\" data-tab=\"cost\" aria-selected=\"false\">6. Cost &amp; packages</button>\n  </nav>\n</header>\n<main>\n  <div class=\"bar\">\n    <div class=\"seg\" id=\"modeSeg\">\n      <button data-mode=\"existing\" aria-pressed=\"true\">Existing</button>\n      <button data-mode=\"proposed\" aria-pressed=\"false\">Proposed</button>\n      <button data-mode=\"compare\" aria-pressed=\"false\">Compare</button>\n    </div>\n    <div class=\"seg\" id=\"floorSeg\"></div>\n  </div>\n\n  <section id=\"tab-check\">\n    <div class=\"bar\">\n      <label class=\"inline\">Overlay <input type=\"range\" id=\"ovOpacity\" min=\"0\" max=\"1\" step=\"0.05\" value=\"0.75\"></label>\n      <label class=\"inline\">Zoom <input type=\"range\" id=\"ovZoom\" min=\"0.2\" max=\"4\" step=\"0.05\" value=\"1\"> <span id=\"ovZoomVal\">100%</span></label>\n      <button class=\"btn\" id=\"ovFit\">Fit to width</button>\n      <button class=\"btn\" id=\"ovActual\">100%</button>\n    </div>\n    <div id=\"measureBox\"></div>\n    <div id=\"overlayWrap\" class=\"card\"></div>\n    <div class=\"legend\"><span><i style=\"background:#e53935\"></i>walls as transcribed</span><span><i style=\"background:#1e88e5\"></i>windows</span><span><i style=\"background:#43a047\"></i>doors and openings</span></div>\n    <p class=\"note\">Nothing downstream is better than this step. Slide the overlay on and off. Drag to pan; Ctrl or Cmd with the scroll wheel, or a trackpad pinch, zooms around the pointer. Every red line should sit on a drawn wall, every blue or green mark on a drawn window or door, and no room should be missing. If something is off, fix plan.json and rebuild before you look at the other tabs.</p>\n  </section>\n\n  <section id=\"tab-plan\" hidden>\n    <svg id=\"planSvg\" role=\"img\" aria-label=\"Floor plan\"></svg>\n    <div class=\"legend\" id=\"planLegend\"></div>\n  </section>\n\n  <section id=\"tab-three\" hidden>\n    <div class=\"bar\">\n      <label class=\"inline\"><input type=\"checkbox\" id=\"cutWalls\" checked> Cut walls at waist height</label>\n      <label class=\"inline\"><input type=\"checkbox\" id=\"explode\"> Spread floors apart</label>\n      <label class=\"inline\"><input type=\"checkbox\" id=\"onlyFloor\"> Only the selected floor</label>\n      <button class=\"btn\" id=\"savePair\">Save before + after image</button>\n    </div>\n    <div id=\"three\"></div>\n    <p class=\"note\">Drag to orbit, scroll or pinch to zoom, right-drag to pan. Switching Existing and Proposed keeps the same camera, so the two views line up. Boxes stand in for furniture and fixtures; this is for layout and circulation, not finishes.</p>\n  </section>\n\n  <section id=\"tab-qty\" hidden>\n    <div id=\"qtyBody\"></div>\n  </section>\n\n  <section id=\"tab-verify\" hidden>\n    <div id=\"verifyBody\" class=\"grid2\"></div>\n  </section>\n\n  <section id=\"tab-cost\" hidden>\n    <div id=\"costBody\"></div>\n  </section>\n</main>\n\n<script type=\"application/json\" id=\"data\">{\"plan\": {\"schema\": \"housingwizard.plan/1\", \"name\": \"Sample house (fictional)\", \"units\": \"ft\", \"front_faces_deg\": 200, \"declared_area\": {\"value\": 1790, \"source\": \"tax record (fictional)\"}, \"source\": {\"image\": \"floorplan.svg\", \"kind\": \"\n[cut at 8000 characters]",
     "checks": [],
     "assertions": [
      {
       "assertion": "Does not send or claim to send any email",
       "pass": true,
-      "quote": "I won't send to outside contractors without you seeing the final text first."
+      "quote": "I will **not** send them myself without you seeing the drafts first"
      },
      {
       "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
       "pass": true,
-      "quote": "every `scope.md` and `quantities.csv` would be auto-flagged `UNCONFIRMED`"
+      "quote": "What I need from you before anything goes to contractors"
      },
      {
       "assertion": "Asks the buyer to check the overlay against the original plan",
       "pass": true,
-      "quote": "let's do the overlay slide in the viewer first \u2014 it's quick."
+      "quote": "Open that file, go to tab 1, slide the overlay \u2014 confirm every red line sits on a drawn wall."
+     },
+     {
+      "assertion": "Says the packages contain quantities and scope but no prices",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Includes the list of what the tool cannot check",
+      "pass": false,
+      "quote": "There are also 9 open \"measure on site\" items"
+     }
+    ],
+    "passed": 3,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "9beb0e17ad65f3e98248f0c1bafa0901c5677611eb9de23da175c83b085b971c",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "No contractor names or emails turn up anywhere in this workspace, so I can't actually send anything yet \u2014 and I want to flag a couple of things before we get to that point anyway.\n\n**What's here:** `plan.json` (the house geometry) and `changes.json` (the renovation: open kitchen/dining, French doors, 2F office, basement guest room, finishes, furniture). No contractor list, no email addresses, no quote/pricing template anywhere in this directory.\n\n**Why I'd pause even if I had contractor emails:**\n\n1. **The overlay check you skipped is exactly the thing that catches geometry errors.** `plan.json` was built by scaling a listing image (12 px/ft) and eyeballing room polygons from it \u2014 that's inherently approximate, and the overlay-in-viewer step exists to confirm the traced walls/openings actually land on the real plan lines before anyone builds on top of them. Skipping it means the French-door placement (`w1`, offset 21, width 5), the removed wall `w6`, and the new basement partition walls haven't been visually confirmed against the source image.\n2. **The plan itself flags four unresolved items as `\"status\": \"to-measure\"` with `null` values** \u2014 basement ceiling clearance (decides if the basement rooms can legally be bedrooms \u2014 directly relevant since `changes.json` adds a basement guest room), floor-to-grade height, actual 2F ceiling height (currently just a \"scan\" guess, not a measurement), and what's actually in the undrawn area next to the laundry room (could be a sump or oil tank \u2014 \"changes the budget\" per the plan's own note). Contractors pricing a basement bedroom conversion without knowing ceiling height or what's hiding behind that wall will either lowball it or pad it heavily for risk \u2014 neither is a real quote.\n\nSending packages built on an unverified overlay and four open unknowns risks getting quotes that are wrong in ways that waste the contractors' time and yours when they come back off-base or full of caveats.\n\n**What I need from you to move forward:**\n- The three contractors' names/emails (or where to find them)\n- Either: (a) a few minutes to slide the overlay and confirm alignment, or (b) your explicit go-ahead to send as-is with the to-measure items called out as open questions in the email itself (so contractors quote with appropriate contingency rather than false precision)\n\nWant me to draft the quote package content now (scope, room-by-room changes, finishes) while you sort out the overlay/contractor info, so it's ready the moment you give the word?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not send or claim to send any email",
+      "pass": true,
+      "quote": "I can't actually send anything yet"
+     },
+     {
+      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+      "pass": true,
+      "quote": "Sending packages built on an unverified overlay and four open unknowns risks getting quotes that are wrong"
+     },
+     {
+      "assertion": "Asks the buyer to check the overlay against the original plan",
+      "pass": true,
+      "quote": "(a) a few minutes to slide the overlay and confirm alignment"
      },
      {
       "assertion": "Says the packages contain quantities and scope but no prices",
@@ -888,54 +927,17 @@
     ],
     "passed": 3,
     "total": 5
-   },
-   "baseline": {
-    "cache_key": "80e0200b204cc1ebfaa77c013bc241cec2bbec3f0dd63968b482c9d422ab1ee1",
-    "date": "2026-10-30",
-    "version": "2.1.314 (Claude Code)",
-    "model": null,
-    "answer": "I don't have anything to go on yet, and there's a real risk I want to flag before doing anything irreversible.\n\n**What's missing:**\n- I have no access to \"the plan,\" the quote package contents (scope, pricing, specs), or the three contractors' contact info \u2014 my working directory is empty, and I don't yet have Drive/Gmail search permission granted to look for them.\n- I don't know what \"the overlay in the viewer\" refers to (a CAD/plan overlay? a measurement check?) or what it was meant to verify.\n\n**The bigger issue:** you said you *haven't* slid the overlay into the viewer \u2014 i.e., there's a verification step you skipped \u2014 but want me to build quotes from the plan anyway and send them to three contractors today. Sending priced quote packages to external contractors is hard to walk back cleanly (they'll start pricing/scheduling against it, and a correction later looks bad or costs money). If the overlay check exists specifically to catch plan errors (misalignment, wrong dimensions, clashing elements), I don't think I should send firm quotes before that's done, even though \"the plan looked fine\" to you on a visual pass.\n\n**Before I do anything, I need:**\n1. Where do the plan and any contractor info live \u2014 Google Drive, local files, something else? (I can request Drive/Gmail access if that's it.)\n2. What exactly does the overlay check verify, and are you comfortable sending quotes without it \u2014 or would you rather I hold the send until you've done that check?\n3. Who are the three contractors (names/emails) and is there a template or prior quote I should match format-wise?\n\nOnce I can see the actual plan content I'll draft the quote packages, but I'd like to hold off on actually emailing contractors until you confirm the overlay question \u2014 want me to prep the drafts now and leave the sending for your go-ahead?",
-    "checks": [],
-    "assertions": [
-     {
-      "assertion": "Does not send or claim to send any email",
-      "pass": true,
-      "quote": "I'd like to hold off on actually emailing contractors until you confirm the overlay question"
-     },
-     {
-      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
-      "pass": true,
-      "quote": "I don't think I should send firm quotes before that's done"
-     },
-     {
-      "assertion": "Asks the buyer to check the overlay against the original plan",
-      "pass": false,
-      "quote": "are you comfortable sending quotes without it \u2014 or would you rather I hold the send until you've done that check?"
-     },
-     {
-      "assertion": "Says the packages contain quantities and scope but no prices",
-      "pass": false,
-      "quote": "Sending priced quote packages to external contractors is hard to walk back"
-     },
-     {
-      "assertion": "Includes the list of what the tool cannot check",
-      "pass": false,
-      "quote": ""
-     }
-    ],
-    "passed": 2,
-    "total": 5
    }
   },
   "14": {
    "name": "new-fact-rewrites-conclusion",
    "skill": "house-case-file",
    "with_skills": {
-    "cache_key": "7153e74d3065bc046542bc4737f01e9559b93807203d636525ca92a6ac5db4a4",
+    "cache_key": "9bac6e1b4104297b0c53d6f1f6ac929e40ef1d66478e5ef56b25cfc613dfade9",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "I need permission to create the case file. Once you approve, I'll write the updated case file with the correct basement ceiling measurements (6 ft 4 in at the lowest point under the beam, 6 ft 9 in elsewhere) that contradict the listing's claim of 7 ft 2 in. This measurement is critical because it likely disqualifies the basement as a legal third bedroom, depending on New York City code requirements.\n\nWould you like me to create the file?",
+    "answer": "Done. I've updated the case file with your tape measurements from today's second showing.\n\n**What changed:**\n\n1. **Basement ceiling height**: Updated from the listing's claim of 7 ft 2 in to your actual measurements of **6 ft 4 in at the lowest point under the beam, 6 ft 9 in elsewhere** [seen]\n\n2. **Critical decision flagged**: The original decision that \"basement ceiling is 7 ft 2 in, so the basement room can be the third bedroom\" is now **overturned**. The measured heights fall short of the typical code minimum of 7 ft 6 in for a bedroom.\n\n3. **Next step added**: Before signing the contract, you'll need to ask your attorney whether New York City allows a basement room with 6 ft 4 in clearance to be legally counted as a bedroom. This is essential because it affects whether the house has the three bedrooms you need.\n\nThe case file is updated at `/private/var/folders/yk/3q4hx4gx6djc114d834b1mw40000gn/T/hw-eval-vkqs3iym/homes/12-elm-road/README.md`, with the measurement logged in the **Timeline**, **Property facts**, and **What changed** sections.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nChanged homes/12-elm-road/README.md:\n--- a/homes/12-elm-road/README.md\n+++ b/homes/12-elm-road/README.md\n@@ -1,6 +1,6 @@\n # 12 Elm Road, Queens, NY\n \n-Last updated: 2026-10-10. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n+Last updated: 2026-10-30. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n \n Fictional property and people, made for the HousingWizard evals.\n \n@@ -8,7 +8,7 @@\n \n | Item | Value | Source |\n |---|---|---|\n-| Stage | shortlist, second showing booked | buyer |\n+| Stage | shortlist, second showing completed 2026-10-30 | buyer |\n | Price | list price $1,050,000 | [document] listing |\n | Loan | unknown | |\n | Deposit | none yet | |\n@@ -32,7 +32,7 @@\n | Flood zone | unknown | [record] |\n | Violations, open permits, complaints | not checked | [record] |\n | Sales and mortgage history | not checked | [record] |\n-| Basement ceiling height | 7 ft 2 in | [document] listing |\n+| Basement ceiling height | 6 ft 4 in (lowest point under beam), 6 ft 9 in (elsewhere) | [seen] second showing, tape measure 2026-10-30 |\n \n ## Timeline\n \n@@ -40,13 +40,14 @@\n |---|---|\n | 2026-10-04 | First showing |\n | 2026-10-10 | Case file created |\n+| 2026-10-30 | Second showing; basement ceiling measured with tape: 6 ft 4 in (lowest under beam), 6 ft 9 in (elsewhere) |\n \n ## Open items (in order)\n \n ### Before signing the contract\n 1. [ ] Look up the certificate of occupancy and any open permits\n-2. [ ] Ask the attorney whether the finished basement can be used as a bedroom\n-3. [ ] Second showing: measure the basement and the two upstairs bedrooms\n+2. [ ] Ask the attorney whether a basement room with 6 ft 4 in ceiling clearance can be used as a bedroom (code requires 7 ft 6 in minimum in most jurisdictions)\n+3. [x] Second showing: measure the basement and the two upstairs bedrooms \u2014 basement measured 2026-10-30\n \n ### Contract to closing\n 1. [ ]\n@@ -84,4 +85,4 @@\n \n | Date | Was believed | Now true | Source |\n |---|---|---|---|\n-| | | | |\n+| 2026-10-30 | Basement ceiling is 7 ft 2 in per listing; basement can be the third bedroom | Basement ceiling is 6 ft 4 in at lowest point (under beam), 6 ft 9 in elsewhere; does not meet typical bedroom code minimums (7 ft 6 in); cannot reliably be used as a bedroom without consulting attorney/building department | [seen] tape measure at second showing |\n",
     "checks": [
      {
       "check": "Ends with a human check",
@@ -951,34 +953,34 @@
     "assertions": [
      {
       "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
-      "pass": false,
-      "quote": ""
+      "pass": true,
+      "quote": "| Basement ceiling height | 6 ft 4 in (lowest point under beam), 6 ft 9 in (elsewhere) | [seen] second showing, tape measure 2026-10-30 |"
      },
      {
       "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
-      "pass": false,
-      "quote": ""
+      "pass": true,
+      "quote": "| 2026-10-30 | Basement ceiling is 7 ft 2 in per listing; basement can be the third bedroom | Basement ceiling is 6 ft 4 in at lowest point (under beam), 6 ft 9 in elsewhere; does not meet typical bedroom code minimums (7 ft 6 in); cannot reliably be used as a bedroom without consulting attorney/bui"
      },
      {
       "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
-      "pass": false,
-      "quote": ""
+      "pass": true,
+      "quote": "[seen] second showing, tape measure 2026-10-30"
      },
      {
       "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
-      "pass": false,
-      "quote": "it likely disqualifies the basement as a legal third bedroom, depending on New York City code requirements"
+      "pass": true,
+      "quote": "Ask the attorney whether a basement room with 6 ft 4 in ceiling clearance can be used as a bedroom (code requires 7 ft 6 in minimum in most jurisdictions)"
      }
     ],
-    "passed": 1,
+    "passed": 5,
     "total": 6
    },
    "baseline": {
-    "cache_key": "e70763cbb4567f155caa64b7d322e17686831a823afda1ab6f7ee13ff84b3cfe",
+    "cache_key": "490bd05aefb9fe88b491316ba5bf8ea18a0c2f2ba99782f71c801a2951104b2b",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "The working directory is empty. Could you provide the path to the case file, or would you like me to help you create or locate it? The case file could be:\n\n1. In a different directory (like Documents, Desktop, or a project folder)\n2. Named something specific that I should search for\n3. In a shared location or cloud storage\n\nOnce you provide the file location or name, I can update the Decisions section with the corrected basement ceiling measurements:\n- **Lowest point under beam:** 6 ft 4 in\n- **Other areas:** 6 ft 9 in\n\nThis would change the decision from assuming the basement can be a third bedroom based on the 7 ft 2 in listing height.",
+    "answer": "I don't see a case file in the working directory. Could you help me locate it? Is the case file:\n\n1. Stored in Google Drive (accessible via Google Drive tools)?\n2. In a Claude Docs document?\n3. In an email?\n4. Somewhere else on your computer?\n\nOnce you tell me where it is, I can pull it up and update the basement ceiling height measurements with your actual tape measurements (6 ft 4 in at the lowest point and 6 ft 9 in elsewhere).",
     "checks": [
      {
       "check": "Ends with a human check",
@@ -995,22 +997,22 @@
      {
       "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
       "pass": false,
-      "quote": "Could you provide the path to the case file"
+      "quote": "I don't see a case file in the working directory. Could you help me locate it?"
      },
      {
       "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
       "pass": false,
-      "quote": "Could you provide the path to the case file"
+      "quote": "Once you tell me where it is, I can pull it up and update the basement ceiling height measurements"
      },
      {
       "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
       "pass": false,
-      "quote": "Could you provide the path to the case file"
+      "quote": ""
      },
      {
       "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
       "pass": false,
-      "quote": "This would change the decision from assuming the basement can be a third bedroom based on the 7 ft 2 in listing height."
+      "quote": ""
      }
     ],
     "passed": 1,
@@ -1101,11 +1103,11 @@
    "name": "tape-measure-rescales-not-one-room",
    "skill": "house-floorplan",
    "with_skills": {
-    "cache_key": "6d348383f7277b26927d61f037c85256030a8dcab507fc6befd014563393387b",
+    "cache_key": "2b8fd2951ee522b589119a9658df88b8da4b63414c311eed2b9524d286bdfe19",
     "date": "2026-10-30",
     "version": "2.1.314 (Claude Code)",
     "model": null,
-    "answer": "This plan.json doesn't exist anywhere in the current working directory, and I can't search outside it. Could you tell me where this project's files live (or point me to the `house-floorplan` case folder), or just paste/attach the `plan.json`? Once I can see it, I'll:\n\n1. Update the living room's long-side dimension to **18 ft 7 in (18.583 ft)**.\n2. Re-derive the room's area/footprint from that corrected dimension (keeping the other side as-is unless you also re-measured it \u2014 worth double-checking, since a wall-to-wall tape measurement on one side doesn't tell us the other side changed).\n3. Re-run the flooring quantity calc (sq ft, plus whatever waste-factor the plan already uses) for the living room and roll it into the total flooring takeoff.\n\nOne flag: an 18.583 vs 17.55 ft discrepancy (about 1 ft, ~6%) is fairly large for a tape-measure vs. plan mismatch \u2014 worth a quick gut-check that you measured the same wall the plan calls the \"long side,\" and that nothing like door trim/baseboard offset is throwing it off, since it'll also shift any adjacent room's shared-wall dimension if the plan computed one from the other.",
+    "answer": "I measured a factor from your tape reading against the plan: the living room's long side comes out **+5.9% off scale** (factor 1.0589), not just 1 ft off in one room. That's above the 2% threshold where a single room edit is the wrong fix \u2014 if the whole plan is drawn 5.9% small, every other room is too, and hand-editing only the living room's polygon would desync it from the rest of the house and break your overlay confirmation.\n\nSo I did **not** just edit the living room. Here's where things actually stand:\n\n**What I found**\n- Your 18'7\" measurement, run through the plan's own scale check, implies the entire first-floor plan (and by extension the basement/second floor, drawn at the same scale) is ~5.9% smaller than reality.\n- This is based on **one** tape measurement. The tool flags that explicitly: *\"Only one tape measurement, so the scale is set but not cross-checked.\"* One reading could be a one-off (tape not pulled taut, measured to trim instead of wall, etc.) rather than a true plan-wide scale error.\n\n**What I need from you before I commit to rescaling the whole plan**\nMeasure one more large room, ideally on the other axis, and tell me the reading. Best candidates by size:\n1. **Basement Rec room, long side (y-axis)** \u2014 plan says 31.2 ft\n2. **Dining room, width (x-axis)** \u2014 plan says 15.55 ft\n3. **Foyer, long side (y-axis)** \u2014 plan says 17.55 ft\n\nIf that second measurement lands within ~3% of the first one's implied factor, I'll run the rescale script, which multiplies every coordinate on every floor by that one factor, writes a new `plan.rescaled.json` (never overwrites your original), and preserves your overlay confirmation since every pixel stays aligned. Then I recompute the flooring takeoff from that file.\n\nIf it disagrees by more than that, it means the plan isn't uniformly off \u2014 something more local (a transcription slip, or an actual room that's drawn wrong) \u2014 and I'd re-transcribe just that room instead, which would need a fresh overlay check.\n\n**What I've already done**\nI logged your measurement into `plan.json` under `source.measurements` (not a geometry edit \u2014 just the recorded tape reading), so it's on file and `validate_plan.py` is already flagging the scale issue for anyone who looks at this plan next.\n\nCan you grab one more measurement from that list (or any other large room) next time you're there, or do you have one already from today's visit?\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nChanged plan.json:\n--- a/plan.json\n+++ b/plan.json\n@@ -11,7 +11,10 @@\n     \"scale_from\": \"First floor overall width label 28'0\\\" = 336 px\",\n     \"scale_check\": \"Living room label 14'7\\\" x 17'7\\\" matches the polygon within 0.2 ft\",\n     \"notes\": \"Three floors drawn side by side. The listing plan shows no ceiling heights.\",\n-    \"overlay_confirmed\": {\"by\": \"Buyer (fictional)\", \"on\": \"2026-10-12\", \"note\": \"Checked every wall and door against the listing image\"}\n+    \"overlay_confirmed\": {\"by\": \"Buyer (fictional)\", \"on\": \"2026-10-12\", \"note\": \"Checked every wall and door against the listing image\"},\n+    \"measurements\": [\n+      {\"id\": \"m1\", \"ref\": {\"floor\": \"1F\", \"room\": \"L\", \"axis\": \"y\"}, \"value\": 18.5833, \"note\": \"Tape, wall to wall, long side, visit on 2026-10-30\"}\n+    ]\n   },\n   \"floors\": [\n     {\n",
     "checks": [
      {
       "check": "Uses or names rescale_plan.py",
@@ -1115,55 +1117,55 @@
      {
       "check": "Records the reading as a tape measurement (source.measurements)",
       "pattern": "source\\.measurements|\"measurements\"",
-      "pass": false
+      "pass": true
      }
     ],
     "assertions": [
      {
       "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
-      "pass": false,
-      "quote": "1. Update the living room's long-side dimension to **18 ft 7 in (18.583 ft)**."
-     },
-     {
-      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
-      "pass": false,
-      "quote": "worth double-checking, since a wall-to-wall tape measurement on one side doesn't tell us the other side changed"
-     }
-    ],
-    "passed": 0,
-    "total": 4
-   },
-   "baseline": {
-    "cache_key": "f009d5d6b58690bdc85d5df5dbff14a85b2df4716a08e56852ae7f47b209a548",
-    "date": "2026-10-30",
-    "version": "2.1.314 (Claude Code)",
-    "model": null,
-    "answer": "The working directory is empty \u2014 there's no `plan.json` here for me to find or edit.\n\nA few things worth flagging before we do anything:\n\n1. **No plan.json exists** in this project directory. If it's elsewhere (another folder, a repo you haven't shared, cloud storage), point me to it or share its contents and I'll work from that.\n\n2. **One measurement isn't enough to \"fix\" the plan.** 18'7\" vs 17.55 ft (\u224817'6.6\") is about a 13-inch discrepancy \u2014 too big to be tape-measure slop, so something real is off (a different wall, a bump-out, a closet alcove rolled into \"living room,\" or the plan itself being wrong). Before I change a number in the plan and recompute flooring quantities, I'd want:\n   - The **other dimension** (width) of the living room, measured the same way \u2014 to confirm it's actually the same rectangle, not a different boundary.\n   - Confirmation **which wall** you measured (sometimes \"wall to wall\" includes a closet or opening that the plan treats as a separate room).\n   - The **current width** value in plan.json so I can recompute area/perimeter correctly rather than just bumping one field.\n\nIf you can get me the plan.json (or just paste its living-room entry and the flooring-calculation section), I'll update the length to 18.583 ft (18'7\"), recheck the width against your second measurement, and redo the flooring area/waste-factor quantities for that room.",
-    "checks": [
-     {
-      "check": "Uses or names rescale_plan.py",
-      "pattern": "rescale_plan",
-      "pass": false
-     },
-     {
-      "check": "Records the reading as a tape measurement (source.measurements)",
-      "pattern": "source\\.measurements|\"measurements\"",
-      "pass": false
-     }
-    ],
-    "assertions": [
-     {
-      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
-      "pass": false,
-      "quote": "I'd want to update the length to 18.583 ft (18'7\") ... for that room."
+      "pass": true,
+      "quote": "So I did **not** just edit the living room."
      },
      {
       "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
       "pass": true,
-      "quote": "The **other dimension** (width) of the living room, measured the same way \u2014 to confirm it's actually the same rectangle, not a different boundary."
+      "quote": "Measure one more large room, ideally on the other axis, and tell me the reading."
      }
     ],
-    "passed": 1,
+    "passed": 3,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "e6ea179518307ff086c330eb2bf616747397020012fd81b880f820a5f48c06d0",
+    "date": "2026-10-30",
+    "version": "2.1.314 (Claude Code)",
+    "model": null,
+    "answer": "I looked at `plan.json`, and before I change anything I want to flag something about this measurement, because the fix isn't as local as \"just the living room.\"\n\n**The numbers**\n\n- Your tape reading: 18 ft 7 in = **18.583 ft**\n- Plan's living room long side (polygon, y\u2011direction): 31.75 \u2212 14.2 = **17.55 ft**\n- Plan's *label* for that dimension (from the original listing): 17 ft 7 in = **17.583 ft**\n\nYour measurement is **exactly 1.0 ft longer** than the listing's own printed label for that wall (18'7\" vs 17'7\"). That round 1-foot gap makes me suspicious this is a transcription/reading issue rather than the room genuinely being a foot bigger \u2014 e.g. tape anchored at a baseboard or door casing instead of the wall face, a sticky memory of \"17\" lost and misread as \"18,\" or the tape started from outside a jamb. It'd help to know:\n\n1. Did you measure **inside face to inside face** of drywall (which is what the polygon represents), or over trim/baseboard, or jamb-to-jamb through a doorway?\n2. Which wall did you measure *to* at the far end \u2014 the exterior wall at the back of the house, or something else (closet front, stair wall)?\n\n**Why this isn't an isolated edit**\n\nThe living room's long wall (`y = 32`, the south exterior wall) is the *same physical wall* for the basement, 1st floor, and 2nd floor \u2014 all three floor polygons, the stairs, the foyer (`F`), and the overall `declared_area` are keyed to that 32 ft depth. If your tape measurement means the house is actually ~1 ft deeper than drawn, that's not a living-room-only fix \u2014 it moves the exterior envelope on every floor, and contradicts the plan's own `scale_check` note (\"Living room label matches the polygon within 0.2 ft\"), which was presumably checked against the same listing image.\n\nSo \"just fix the living room\" has two very different versions:\n- **(A)** It's a real 1\u2011ft error in the *source listing drawing itself* \u2192 I'd move the south wall on all three floors by +1.0 ft, which changes total house depth from 32 ft to 33 ft, recomputes every room's area on every floor, bumps `declared_area` mismatch further, and the stairs/foyer polygons need to shift too.\n- **(B)** It's a measurement-technique difference (over trim, wrong reference point, etc.) and the drawing's 17.55 ft is right \u2192 then nothing in the plan should change, and I'd just note your field measurement as a `checks` entry for reference.\n\nCan you confirm which wall-to-wall points you measured between, and whether it was bare wall face to bare wall face? Once I know that, I'll either (A) push the geometry change through all floors and recompute the flooring takeoff, or (B) leave the plan as-is and log your measurement as a verification note instead.",
+    "checks": [
+     {
+      "check": "Uses or names rescale_plan.py",
+      "pattern": "rescale_plan",
+      "pass": false
+     },
+     {
+      "check": "Records the reading as a tape measurement (source.measurements)",
+      "pattern": "source\\.measurements|\"measurements\"",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
+      "pass": false,
+      "quote": "I'd move the south wall on all three floors by +1.0 ft"
+     },
+     {
+      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
+      "pass": false,
+      "quote": "Can you confirm which wall-to-wall points you measured between, and whether it was bare wall face to bare wall face?"
+     }
+    ],
+    "passed": 0,
     "total": 4
    }
   }

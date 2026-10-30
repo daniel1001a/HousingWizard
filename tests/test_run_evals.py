@@ -76,6 +76,67 @@ class KeyTests(unittest.TestCase):
             self.assertEqual(re_.cache_key('claude', None, CASE, False, root=d), base_before)
 
 
+class FixtureTests(unittest.TestCase):
+    def make_root(self, d):
+        os.makedirs(os.path.join(d, 'tools'))
+        with open(os.path.join(d, 'tools', 'shared_rules.md'), 'w') as fh:
+            fh.write('rules')
+        fx = os.path.join(d, 'evals', 'fixtures', 'f1', 'homes')
+        os.makedirs(fx)
+        with open(os.path.join(fx, 'README.md'), 'w') as fh:
+            fh.write('Ceiling 7 ft 2 in\n')
+        return dict(CASE, fixtures='f1')
+
+    def test_fixture_files_are_in_the_key_on_both_sides(self):
+        with tempfile.TemporaryDirectory() as d:
+            case = self.make_root(d)
+            plain = dict(CASE)
+            keys = [re_.cache_key('claude', None, case, False, root=d), re_.cache_key('claude', None, plain, False, root=d)]
+            self.assertNotEqual(keys[0], keys[1])
+            with open(os.path.join(d, 'evals', 'fixtures', 'f1', 'homes', 'README.md'), 'w') as fh:
+                fh.write('Ceiling 6 ft 4 in\n')
+            self.assertNotEqual(re_.cache_key('claude', None, case, False, root=d), keys[0])
+            self.assertEqual(re_.cache_key('claude', None, plain, False, root=d), keys[1])
+
+    def test_sandbox_changes(self):
+        self.assertEqual(re_.sandbox_changes({'a.md': 'x\n'}, {'a.md': 'x\n'}), '')
+        note = re_.sandbox_changes({'a.md': 'old\n', 'gone.md': 'g'}, {'a.md': 'new\n', 'b.md': 'added'})
+        self.assertIn('-old', note)
+        self.assertIn('+new', note)
+        self.assertIn('New file b.md:\nadded', note)
+        self.assertIn('Deleted gone.md', note)
+        long = re_.sandbox_changes({}, {'big.txt': 'x' * (re_.MAX_FILE_CHARS + 10)})
+        self.assertIn('[cut at', long)
+
+    def test_claude_adapter_places_fixtures_and_reports_edits(self):
+        with tempfile.TemporaryDirectory() as d:
+            case = self.make_root(d)
+            seen = {}
+
+            def fake_run(cmd, cwd):
+                seen['cmd'] = cmd
+                path = os.path.join(cwd, 'homes', 'README.md')
+                with open(path) as fh:
+                    seen['fixture'] = fh.read()
+                with open(path, 'w') as fh:
+                    fh.write('Ceiling 6 ft 4 in [seen]\n')
+                return json.dumps({'result': 'Updated the case file.'})
+            a = re_.parse(['--agent', 'claude'])
+            with mock.patch.object(re_, 'ROOT', d), mock.patch.object(re_, '_run', fake_run):
+                answer = re_.claude_answer(a, case, False)
+            self.assertEqual(seen['fixture'], 'Ceiling 7 ft 2 in\n')
+            self.assertIn('acceptEdits', seen['cmd'])
+            self.assertIn('Bash(python3 *)', seen['cmd'])
+            self.assertTrue(answer.startswith('Updated the case file.'))
+            self.assertIn('+Ceiling 6 ft 4 in [seen]', answer)
+
+    def test_missing_fixture_folder_is_an_agent_error(self):
+        with tempfile.TemporaryDirectory() as d:
+            with mock.patch.object(re_, 'ROOT', d):
+                with self.assertRaises(re_.AgentError):
+                    re_._place_fixtures(dict(CASE, fixtures='nope'), d)
+
+
 class CheckAndGradeTests(unittest.TestCase):
     def test_checks(self):
         case = {'checks': [{'type': 'regex', 'pattern': 'human check', 'flags': 'i', 'expect': True},
@@ -151,6 +212,8 @@ class RunTests(Sandbox):
         self.assertIn('0 agent call(s), up to 0 grader call(s)', out)
         rc, out = self.main('--dry-run', '--changed')
         self.assertIn('0 case(s)', out)
+        rc, out = self.main('--dry-run', '--refresh', '--case', '1')
+        self.assertIn('1 case(s), 1 agent call(s), up to 1 grader call(s)', out)
 
     def test_grader_error_is_reported_not_looped(self):
         with mock.patch.dict(os.environ, {'HW_FAKE_GRADE': 'not json'}):
@@ -180,6 +243,8 @@ class RealEvalsTests(unittest.TestCase):
                 self.assertIn(ch['type'], ('regex', 'absent'))
                 if ch.get('assertion'):
                     self.assertIn(ch['assertion'], c['assertions'])
+            if c.get('fixtures'):
+                self.assertTrue(os.path.isdir(re_.fixture_dir(c)), c['fixtures'])
         self.assertTrue(skills <= {c['skill'] for c in cases} | {'house-buying'})
 
 
