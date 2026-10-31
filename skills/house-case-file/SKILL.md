@@ -39,9 +39,9 @@ When the buyer brings a new fact:
 
 1. Put it in **Now** (current status), **Timeline** (dated), and **Open items** (add, close, or re-order).
 2. Tag it with its source (rule 1). A seller's email is `[seller said]` until it appears in a signed document.
-3. If it **overturns an earlier conclusion** anywhere in the file or in the documents the file lists, rewrite the conclusion in place and add a line to **What changed**: what was believed, what is true now, the source, the date. This is the step people skip, and it is why old numbers keep coming back.
+3. If it **overturns an earlier conclusion** anywhere in the file or in the documents the file lists, rewrite the conclusion in place and add a line to **What changed**: what was believed, what is true now, the source, the date. This is the step people skip, and it is why old numbers keep coming back. When the conclusion is about legality (a legal bedroom, a permit, a zoning use), the new conclusion is that it is now in doubt, with the rule to confirm and who confirms it (architect, building department, attorney). Do not write a code minimum or a verdict from memory as fact; quote a rule only with the page and the date you actually read it.
 4. If a document is now out of date but still useful as history, mark its status in the **Documents** table instead of deleting it.
-5. Show the buyer a short summary of what you changed.
+5. Show the buyer a short summary of what you changed, and end with the human check (rule 4): which changed conclusions a person must confirm, and by whom.
 
 ## Money and decisions
 
