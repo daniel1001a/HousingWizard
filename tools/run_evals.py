@@ -52,6 +52,8 @@ LEAK_DIRS = ('~/.claude/skills', '~/.agents/skills', '~/.codex/skills', '/etc/co
 KEY_VARS = ('ANTHROPIC_API_KEY', 'OPENAI_API_KEY')
 TIMEOUT = 900
 MAX_FILE_CHARS = 8000
+BINARY = '[binary file, %d bytes, not shown]'
+NAME_ONLY = ('.html', '.svg')  # built pages and images: the grader gets the name, not the markup
 FAKE_ANSWER = 'Fake answer for tests.\n\nHuman check:\n- Measure the ceiling height yourself.'
 
 
@@ -181,7 +183,7 @@ def grade(case, answer, judge):
     for _ in range(2):
         calls += 1
         try:
-            reply = judge(grader_prompt(case, answer, assertions))
+            reply = judge(grader_prompt(case, answer.replace('\0', ''), assertions))
         except AgentError as e:
             return None, 'grader_error: %s' % e, calls
         grades = parse_grades(reply, assertions)
@@ -206,8 +208,10 @@ def _snapshot(folder, skip=()):
     for path in sorted(glob.glob(os.path.join(folder, '**', '*'), recursive=True)):
         rel = os.path.relpath(path, folder).replace(os.sep, '/')
         if os.path.isfile(path) and rel not in skip:
-            with open(path, encoding='utf-8', errors='replace') as fh:
-                out[rel] = fh.read()
+            with open(path, 'rb') as fh:
+                data = fh.read()
+            # A zip or image would put null bytes in the answer, which cannot go on a command line.
+            out[rel] = BINARY % len(data) if b'\0' in data else data.decode('utf-8', errors='replace')
     return out
 
 
@@ -234,6 +238,9 @@ def sandbox_changes(before, after):
             continue
         if new is None:
             parts.append('Deleted %s' % rel)
+            continue
+        if rel.lower().endswith(NAME_ONLY):
+            parts.append('%s %s (content not shown)' % ('New file' if old is None else 'Changed', rel))
             continue
         if old is None:
             body = new

@@ -1,0 +1,1173 @@
+{
+ "agent": "codex",
+ "cases": {
+  "1": {
+   "name": "texas-buyer-no-new-york-leakage",
+   "skill": "house-buying",
+   "with_skills": {
+    "cache_key": "04a037d9b6e142065e9aea720b295bcf1a7bdc66eb7f70adb34ba237cd1acb20",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No.** Under the usual Texas TREC process, you sign the contract first, then use the 7-day option period to inspect and decide whether to proceed. The option period is designed to give you time after the contract is effective to investigate the property. You generally do not need every inspection completed before signing. [TREC\u2019s buyer guidance](https://www.trec.texas.gov/information-about-brokerage-services) and the contract terms should be checked against your actual signed form.\n\nSince your offer was accepted yesterday, ask your agent now to confirm the contract\u2019s **effective date**, the option fee and its deadline, and the exact option-period expiration date and time. The 7 days run from the contract\u2019s effective date under the form\u2019s terms, so don\u2019t assume the acceptance date is the start. Schedule the general inspection promptly, along with any specialty inspections that matter for this house. Review the signed contract and any addenda for changes to the standard terms.\n\nDuring the option period, you can typically terminate for any reason by giving notice in the manner and by the deadline stated in the contract, but you may forfeit the option fee. After it expires, that broad option right is gone. Inspection findings may lead to repair discussions, but the seller does not automatically have to make repairs.\n\n**Human check:** Your agent should confirm the effective date, deadline, and notice method from the signed contract today. Your inspector should assess the house in person; ask your agent which specialty tests to prioritize if scheduling is tight.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not say inspections must be finished before the contract is signed",
+      "pass": true,
+      "quote": "You generally do not need every inspection completed before signing."
+     },
+     {
+      "assertion": "Mentions the option period as the inspection and termination window",
+      "pass": true,
+      "quote": "The option period is designed to give you time after the contract is effective to investigate the property."
+     },
+     {
+      "assertion": "Says to confirm the exact deadline with their agent or the contract",
+      "pass": true,
+      "quote": "ask your agent now to confirm the contract\u2019s **effective date**, the option fee and its deadline, and the exact option-period expiration date and time"
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "e7339dc5a71f2e2d9f7ad058b1f709d1d8945d67505235af3cd790a079fb931c",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No. Under the standard TREC resale contract, inspections normally happen after signing, during the option period.** That period lets you inspect, negotiate repairs, or terminate for any reason if you give timely written notice and have preserved your option right. [TREC guidance](https://www.trec.texas.gov/node/366)\n\nWith only seven days, schedule inspections now, leaving time for reports, specialist follow-ups, and negotiations. The key deadlines are:\n\n- **Option expiration:** Seven calendar days after the contract\u2019s effective date, at **5 p.m. Austin time**. Day one is the day after the effective date. [Deadline guidance](https://www.texasrealestate.com/legal-and-ethics/legal-resources/legal-faqs/time-calculation)\n- **Option fee:** Generally due to the escrow agent within three days after the effective date, subject to the contract\u2019s weekend/holiday delivery rules. Missing payment can eliminate your unrestricted termination right. [TREC guidance](https://www.trec.texas.gov/node/368)\n- **If you need more time:** Get a signed option extension before the existing deadline. Pending inspections or repair negotiations do not automatically extend it. [Extension guidance](https://www.texasrealestate.com/legal-and-ethics/legal-resources/legal-faqs/option-period-and-fees)\n\nYou can inspect later, but **finding problems after the option period does not itself give you a right to cancel**. [Inspection guidance](https://www.texasrealestate.com/legal-and-ethics/legal-resources/legal-faqs/as-is-and-inspections)\n\nOne detail to resolve today: \u201coffer accepted yesterday\u201d may mean you are already under contract if everyone signed and final acceptance was communicated. Have your agent confirm the executed contract\u2019s effective date, exact option deadline, and receipt of your option fee. [Effective-date guidance](https://www.texasrealestate.com/legal-and-ethics/legal-resources/legal-faqs/effective-date)",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not say inspections must be finished before the contract is signed",
+      "pass": true,
+      "quote": "No. Under the standard TREC resale contract, inspections normally happen after signing, during the option period."
+     },
+     {
+      "assertion": "Mentions the option period as the inspection and termination window",
+      "pass": true,
+      "quote": "That period lets you inspect, negotiate repairs, or terminate for any reason if you give timely written notice"
+     },
+     {
+      "assertion": "Says to confirm the exact deadline with their agent or the contract",
+      "pass": true,
+      "quote": "Have your agent confirm the executed contract\u2019s effective date, exact option deadline, and receipt of your option fee."
+     }
+    ],
+    "passed": 3,
+    "total": 4
+   }
+  },
+  "2": {
+   "name": "generic-mode-outside-us",
+   "skill": "house-buying",
+   "with_skills": {
+    "cache_key": "793fa37106ba46bdfa1df0f475c698a9ea74a89c444405105dc953d12e3b43da",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "For **Manchester, England**, the usual route is **offer accepted \u2192 legal checks, survey and mortgage \u2192 exchange of contracts \u2192 completion and keys**. Your solicitor handles the legal purchase; you arrange finance and a survey.\n\n[Assumption] You\u2019re buying through a normal private sale. Auctions, new builds and shared ownership can have different commitments and deadlines.\n\n**Your next three steps**\n\n1. **You: instruct a solicitor experienced in leasehold flats.** If using a mortgage, confirm they\u2019re on your lender\u2019s panel. Get a written quote covering leasehold work, searches, registration, management-company fees and any building-safety work.\n2. **You and your lender/broker: progress the mortgage and budget.** Allow for legal costs, survey, any Stamp Duty Land Tax, moving costs and ongoing flat charges.\n3. **You: arrange an independent survey.** The lender\u2019s valuation serves the lender and does not replace your survey. Ask what the survey will cover about the wider building and communal areas. [GOV.UK buying guide](https://www.gov.uk/government/publications/how-to-buy-a-home/how-to-buy)\n\n**What your solicitor should handle**\n\nAsk them to confirm these points in their written report before exchange:\n\n| Area | What you need them to establish |\n|---|---|\n| **Ownership and title** | The seller can sell; the legal plan matches the flat, parking and storage you expect; access and communal rights are adequate. |\n| **Searches and enquiries** | Relevant local-authority, drainage and environmental searches; any additional location-specific searches; satisfactory replies about alterations, permissions and disputes. |\n| **Lease** | Years remaining, ground rent and increases, repair responsibilities, restrictions on alterations, pets or letting, and implications for mortgageability and resale. |\n| **Building finances** | Management pack, service-charge accounts and budget, reserve fund, arrears, disputes, planned major works and consultation notices. Clarify your potential liability for later bills. |\n| **Building safety** | Relevant fire/cladding documents, remediation plans and funding, whether statutory leaseholder protections apply, and whether the lender accepts the position. |\n| **Contract and mortgage** | Explain obligations and unresolved risks, satisfy lender requirements, agree the exchange deposit and completion date, and obtain your authority to exchange. |\n| **Completion and afterwards** | Transfer purchase funds, deal with the applicable SDLT return/payment, register the purchase and mortgage, and serve required leasehold notices. |\n\nThese leasehold checks matter even if the flat comes with a \u201cshare of freehold\u201d. [Leasehold Advisory Service](https://www.lease-advice.org/buying-and-selling/leasehold-property/things-to-know/), [SRA conveyancing scope](https://www.sra.org.uk/solicitors/guidance/transparency-in-price-and-service/)\n\n**When you become committed**\n\nIn an ordinary English private sale, an accepted offer is not legally binding; **exchange of contracts is the binding point**. Signing paperwork in preparation is not itself exchange. Resolve material survey, finance, lease and building-safety questions first. Completion is when the balance is paid and you receive the keys. [GOV.UK](https://www.gov.uk/buying-a-home/transferring-ownership)\n\nThere\u2019s no transaction-specific deadline available yet. Ask your solicitor to track mortgage-offer expiry, any reservation deadline and the agreed completion date.\n\n**Human check**\n\n- **Solicitor:** confirm legal risks, building liabilities and lender requirements before exchange.\n- **Surveyor:** assess physical condition and identify any specialist investigations needed before commitment.\n- **You:** decide whether the total costs and restrictions are acceptable; verify bank details through a trusted telephone number before transferring money.\n\nHave you had an offer accepted, and is the flat a resale, new build or shared ownership?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says it has no reference for this location or is working in generic mode",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not quote US taxes, US forms or US contingencies as applying",
+      "pass": true,
+      "quote": "any Stamp Duty Land Tax"
+     },
+     {
+      "assertion": "Turns local specifics into questions for the solicitor",
+      "pass": true,
+      "quote": "Have you had an offer accepted, and is the flat a resale, new build or shared ownership?"
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "3beb307bb3b557dd95dc079a3fe065d7308c2f56126ea9b56b7765e2748da7ce",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Assuming you\u2019re buying through an ordinary private sale, Manchester follows the **England conveyancing process**. Your solicitor handles the legal purchase; you arrange the finance and survey. For a flat, the lease, building\u2019s finances and fire safety position deserve particular attention.\n\nIf you\u2019ve already had an offer accepted, start at step 2.\n\n1. **Agree the purchase.** Make your offer \u201csubject to contract\u201d and clarify what\u2019s included, whether the seller has a chain, and whether the flat will be empty on completion. An accepted offer is generally not legally binding until contracts are exchanged.\n\n2. **Appoint your solicitor and arrange finance.** Choose someone experienced in leasehold flats and, where relevant, building safety work. If you\u2019re borrowing, confirm they\u2019re on your mortgage lender\u2019s panel. Get a written quote including leasehold extras, searches, registration, tax and management-company fees. Provide ID and evidence of your deposit\u2019s source promptly.\n\n3. **Arrange a survey while the legal checks proceed.** Your solicitor investigates ownership, searches and documents, raises questions with the seller\u2019s solicitor, and checks mortgage conditions. You commission an appropriate survey: a lender\u2019s valuation is not a substitute for checking the flat\u2019s condition. For a flat, establish how far the survey covers the wider building. [Government buying guide](https://www.gov.uk/government/publications/how-to-buy-a-home/how-to-buy)\n\n4. **Review everything before exchange.** Read your solicitor\u2019s written report and resolve material questions. Have your mortgage offer, survey findings, deposit and completion funds ready. Agree the completion date and confirm the building\u2019s insurance arrangements.\n\n5. **Exchange contracts.** Your solicitor exchanges with your authority and arranges the contractual deposit. **This is the binding commitment**; withdrawing afterwards can have substantial financial consequences.\n\n6. **Complete and register.** Your solicitor transfers the purchase money; you receive the keys. They then handle the Stamp Duty Land Tax return/payment as applicable, Land Registry application and necessary leasehold notices. [Conveyancing process](https://www.gov.uk/buying-a-home/transferring-ownership), [exchange and completion](https://www.moneyhelper.org.uk/en/homes/buying-a-home/contract-exchange-completion-when-buying-a-home)\n\nFor the flat itself, ask your solicitor to cover these points explicitly:\n\n| Check | What you need explained |\n|---|---|\n| **Ownership and lease** | Tenure, years remaining, extension implications, and any terms affecting mortgageability or resale. \u201cShare of freehold\u201d still usually involves a lease. |\n| **What you\u2019re buying** | Lease plan, parking, balcony, storage, access rights, and responsibility for windows, roof and structural repairs. |\n| **Ground rent and restrictions** | Rent increases; rules on letting, pets, alterations and use; whether previous alterations had the required consents. |\n| **Building finances** | Management pack, recent service-charge accounts and current budget, reserve fund, arrears, disputes and insurance. |\n| **Major works** | Planned or proposed roof, lift, fa\u00e7ade or other works, Section 20 consultation notices, likely contribution and who pays outstanding liabilities. |\n| **Searches and permissions** | Local authority, drainage and environmental searches; address-specific flood or historic mining checks where appropriate; relevant planning and building-control documents. |\n\nThese are core leasehold enquiries. Ask for an explanation of the risks and likely costs, alongside copies of the documents. [LEASE\u2019s buying checklist](https://www.lease-advice.org/buying-and-selling/leasehold-property/things-to-know/)\n\n**Building safety needs a separate, clear answer.** Your solicitor should establish whether there are cladding or other fire safety defects, proposed remediation, confirmed funding and any potential costs to you. Where applicable, they should examine the leaseholder deed of certificate and landlord\u2019s certificate and explain whether statutory cost protections attach to the flat. An EWS1 may be relevant to your lender, but is not universally required and does not settle every safety or liability question. [Government protections guidance](https://www.gov.uk/guidance/leaseholder-protections-on-building-safety-costs-in-england-frequently-asked-questions), [RICS EWS1 guidance](https://www.rics.org/news-insights/current-topics-campaigns/fire-safety/cladding-external-wall-system-ews-faqs)\n\nA useful instruction to give your solicitor is: **\u201cBefore exchange, please explain in writing any unresolved issues affecting my costs, use of the flat, mortgage or ability to sell.\u201d**\n\nHave you had an offer accepted, and is this a resale flat or a new build?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says it has no reference for this location or is working in generic mode",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not quote US taxes, US forms or US contingencies as applying",
+      "pass": true,
+      "quote": "Your solicitor handles the legal purchase; you arrange the finance and survey."
+     },
+     {
+      "assertion": "Turns local specifics into questions for the solicitor",
+      "pass": true,
+      "quote": "Before exchange, please explain in writing any unresolved issues affecting my costs, use of the flat, mortgage or ability to sell."
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   }
+  },
+  "3": {
+   "name": "zero-rows-is-not-clean",
+   "skill": "house-records",
+   "with_skills": {
+    "cache_key": "ff5f2638745e71076ab5abf6869b16792871db1d9ec8dcdfbe0f07f7cb4284ca",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No. Zero violations and zero permits do not establish that the basement is legal.** For this Queens, New York City property, legality is still unverified.\n\n- **[record, as you report it]** Your search returned no violations or permits. That means no matching records appeared in that search, not that DOB approved the work. I haven\u2019t independently checked the property.\n- **[document, as you describe it]** The listing says \u201cfully finished in 2015.\u201d That describes a claimed renovation, not its permits, final sign-offs, or approved use.\n\nAn innocent explanation is that the work was cosmetic, records were missed, or the search used the wrong building identifier. Those possibilities need evidence. If the renovation added rooms, plumbing, electrical work, or changed occupancy, missing approvals could matter.\n\nThe next checks are:\n\n1. **Confirm the property\u2019s BIN and BBL**, then check both DOB BIS and DOB NOW, including complaints, job filings, permits, and completion records. Older records may require an archive request.\n2. **Ask the seller for the 2015 scope of work, approved plans, permits, and final sign-offs**, plus the Certificate of Occupancy or other evidence of lawful use.\n3. **Confirm what use is allowed.** Finished space, a legal bedroom, and a legal separate apartment are different things. Whether the space is technically a basement or cellar also matters.\n\nA useful attorney question: \u201cPlease confirm whether the documented lawful use covers the basement\u2019s current layout and our intended use, and whether the 2015 work has all required approvals.\u201d\n\n**Human check:** Have an architect verify permitted use and measure height, grade relationship, and egress; have your attorney resolve the documentation before signing or waiving relevant protections. Until then, don\u2019t value it as a legal bedroom or rental apartment.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says zero online records does not prove the work is legal",
+      "pass": true,
+      "quote": "Zero violations and zero permits do not establish that the basement is legal."
+     },
+     {
+      "assertion": "Points out the mismatch between renovation claims and missing permits",
+      "pass": true,
+      "quote": "The listing says \u201cfully finished in 2015.\u201d That describes a claimed renovation, not its permits, final sign-offs, or approved use."
+     },
+     {
+      "assertion": "Gives at least one innocent explanation",
+      "pass": true,
+      "quote": "An innocent explanation is that the work was cosmetic, records were missed, or the search used the wrong building identifier."
+     },
+     {
+      "assertion": "Lists a concrete way to verify, such as ordering DOB microfilm or asking the seller in writing",
+      "pass": true,
+      "quote": "Ask the seller for the 2015 scope of work, approved plans, permits, and final sign-offs"
+     },
+     {
+      "assertion": "Mentions measuring basement ceiling height",
+      "pass": true,
+      "quote": "measure height, grade relationship, and egress"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "c54674f9cb2e8bb2e1b121a9cdac2c7c4ae0abfb1089dae02bdd0cff4ea64d9e",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "No. **Zero DOB violations and zero permits do not establish that the finished basement is legal.** No violations may simply mean no violation has been recorded. No permits could mean work was done without required permits, records are incomplete, or the search missed the property\u2019s records.\n\n\u201cFully finished in 2015\u201d is a marketing claim, not proof of approval. Also, a basement approved as accessory space is different from one legally approved for sleeping or as a separate apartment. Whether NYC classifies the space as a basement or a cellar matters.\n\nBefore relying on the listing:\n\n- Check both **DOB BIS and DOB NOW**, using the property\u2019s correct borough, block and lot.\n- Review the **Certificate of Occupancy, approved plans, and any required permits and final sign-offs** for the renovation. Some older buildings legitimately lack a Certificate of Occupancy, so that absence alone is not decisive.\n- Ask the seller for documentation establishing the basement\u2019s approved use.\n- Have a NYC architect or engineer compare the actual layout and intended use with those records, and have your attorney review the issue before you commit.\n\n**Treat its legality as unverified until the records and physical conditions support the claimed use.**",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Says zero online records does not prove the work is legal",
+      "pass": true,
+      "quote": "Zero DOB violations and zero permits do not establish that the finished basement is legal."
+     },
+     {
+      "assertion": "Points out the mismatch between renovation claims and missing permits",
+      "pass": true,
+      "quote": "\u201cFully finished in 2015\u201d is a marketing claim, not proof of approval."
+     },
+     {
+      "assertion": "Gives at least one innocent explanation",
+      "pass": true,
+      "quote": "Some older buildings legitimately lack a Certificate of Occupancy, so that absence alone is not decisive."
+     },
+     {
+      "assertion": "Lists a concrete way to verify, such as ordering DOB microfilm or asking the seller in writing",
+      "pass": true,
+      "quote": "Check both **DOB BIS and DOB NOW**, using the property\u2019s correct borough, block and lot."
+     },
+     {
+      "assertion": "Mentions measuring basement ceiling height",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "4": {
+   "name": "joint-model-not-sequential",
+   "skill": "house-money",
+   "with_skills": {
+    "cache_key": "c70f1dc663d16f6b71e0a137a659fbcbcd2a6d165f958e5eb71c24fda1874d9e",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**About $939,000 is your estimated ceiling**, assuming \u201call in\u201d means mortgage, property taxes and homeowners insurance. A practical rounded cap is **$935,000**.\n\nUsing your 6.75% rate and 1.3% tax estimate, plus these **[assumptions]**: a 30-year fixed mortgage, $200/month insurance, no HOA, and 3% of price for closing costs, prepaids and escrow funding. This uses generic closing-cost allowances for New Jersey; the town and property will determine actual costs.\n\nAt approximately $939,000:\n\n| Item | Amount [estimate] |\n|---|---:|\n| Down payment, about 21.5% | $201,800 |\n| Closing costs and prepaids | $28,200 |\n| Total cash used | **$230,000** |\n| Emergency fund remaining | **$30,000** |\n| Mortgage principal and interest | $4,783/month |\n| Property taxes | $1,017/month |\n| Homeowners insurance | $200/month |\n| Total monthly payment | **$6,000/month** |\n\nBoth limits bind: you use all cash available after the emergency reserve and reach your monthly ceiling. The down payment exceeds 20%, so this model includes no PMI.\n\nTwo things can change the answer substantially:\n\n- **Taxes:** At 2% instead of your assumed 1.3%, the same budget supports about **$873,000**. Use each property's actual tax bill and confirm any expected changes.\n- **Meaning of \u201call in\u201d:** The $939,000 figure excludes utilities, maintenance and repairs. If those must fit within $6,000 too, allocating $500/month for them lowers the ceiling to about **$875,000**; allocating $1,000 lowers it to about **$810,000**.\n\n**Human check:** Before committing at your ceiling, have the lender confirm qualification and cash to close with a Loan Estimate, your agent verify property taxes and HOA fees, and an insurer quote coverage. Decide how much room you need for utilities, repairs and moving costs before setting your offer limit.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Gives a single maximum price or a narrow range",
+      "pass": true,
+      "quote": "About $939,000 is your estimated ceiling"
+     },
+     {
+      "assertion": "Names which limit binds",
+      "pass": true,
+      "quote": "Both limits bind: you use all cash available after the emergency reserve and reach your monthly ceiling."
+     },
+     {
+      "assertion": "Keeps the $30k reserve out of the purchase cash",
+      "pass": true,
+      "quote": "Emergency fund remaining | **$30,000**"
+     },
+     {
+      "assertion": "Labels insurance and closing costs as assumptions unless given",
+      "pass": true,
+      "quote": "plus these **[assumptions]**: a 30-year fixed mortgage, $200/month insurance, no HOA, and 3% of price for closing costs"
+     },
+     {
+      "assertion": "Does not apply New York City mansion tax or recording tax",
+      "pass": true,
+      "quote": ""
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "c5ebced79d02658229c90a935c2579e8bd9e8c531ab86c52dc7ce6750d43d0e4",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**About $940,000**, assuming a 30-year fixed mortgage at 6.75%, property taxes of 1.3%, no HOA, and $200/month for homeowners insurance.\n\nYou have **$230,000 available for the purchase** after preserving your $30,000 emergency fund. Allowing 3% of the price for closing costs gives this approximate breakdown:\n\n| At a $939,000 purchase price | Amount |\n|---|---:|\n| Closing costs | $28,200 |\n| Down payment | $201,800 |\n| Mortgage | $737,200 |\n| Monthly principal and interest | $4,782 |\n| Monthly property taxes | $1,017 |\n| Monthly insurance | $200 |\n| **Total monthly payment** | **$5,999** |\n\nWith closing costs between 2% and 5%, your ceiling is roughly **$924,000\u2013$947,000**.\n\nFor shopping, I\u2019d use **$925,000 as a working cap** until you confirm the specific home\u2019s taxes and insurance. New Jersey taxes vary substantially by town, and the actual tax bill could change this result considerably.\n\nThis treats \u201call in\u201d as mortgage, taxes, and insurance. If your $6,000 also needs to cover maintenance, utilities, or HOA fees, your purchase ceiling will be lower. Lender approval also depends on income and other debts.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Gives a single maximum price or a narrow range",
+      "pass": true,
+      "quote": "About $940,000"
+     },
+     {
+      "assertion": "Names which limit binds",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Keeps the $30k reserve out of the purchase cash",
+      "pass": true,
+      "quote": "You have **$230,000 available for the purchase** after preserving your $30,000 emergency fund."
+     },
+     {
+      "assertion": "Labels insurance and closing costs as assumptions unless given",
+      "pass": true,
+      "quote": "assuming a 30-year fixed mortgage at 6.75%, property taxes of 1.3%, no HOA, and $200/month for homeowners insurance"
+     },
+     {
+      "assertion": "Does not apply New York City mansion tax or recording tax",
+      "pass": true,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "5": {
+   "name": "short-list-after-seller-concession",
+   "skill": "house-inspection",
+   "with_skills": {
+    "cache_key": "468dc865823e1a90fbfee4c90aeb0cabfa23cc5ae790fd81010f4886b168c28e",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Ask for the electrical and pest issues to be resolved, plus the two small safety repairs. Leave the working furnace, gutters, and ordinary paint maintenance out of the initial request.** The $8,000 reduction favors a short, defensible list, but it does not establish that newly discovered hazards were covered.\n\nI can see your summary, but not the attached report itself, so this is provisional. Findings below are **[document, as summarized by you]**; report wording, photos, and page numbers remain unverified. Location is unknown, so this is general guidance.\n\n| Priority | Finding | Recommended ask |\n|---|---|---|\n| **1: Safety and insurability** | Zinsco panel | Licensed electrician\u2019s evaluation and written replacement quote; confirm insurance eligibility now. Seek seller-funded replacement with required permits/sign-off, or one quote-backed credit if your lender and insurer allow work after closing. A panel can appear to function without establishing that its breakers operate safely. |\n| **1: Determine extent first** | Carpenter ant evidence at a sill | Request prior treatment and repair records, plus access for a licensed pest inspection. Evidence could be old; it does not establish active infestation or structural damage. Check activity, moisture source, and wood damage. Ask for treatment and necessary repairs based on those findings, with warranty terms documented. Spraying alone may leave damage unresolved. |\n| **3: Bundle small safety repairs** | Missing relief-valve discharge pipe; loose basement handrail | One repair line: properly install the discharge pipe and securely repair the handrail before closing, with receipts and verification. These may be straightforward fixes, but they address scald and fall hazards. |\n| **2: Reserve item** | Working 35-year-old furnace | Do not demand replacement based on age alone after the price concession. Budget for replacement and request service records. An HVAC finding of unsafe operation or failure would change the request. |\n| **4: Usually omit** | Peeling exterior paint; dirty gutters | Leave out routine maintenance. Revisit paint if lead, underlying deterioration, or lender requirements are implicated; revisit gutters if linked to water intrusion or sill moisture. |\n\n**Do not pick a blanket credit amount yet.** Get the panel quote and pest findings first. Those determine whether this is a manageable repair negotiation or a larger condition problem.\n\nDraft for your buyer\u2019s agent:\n\n> Following inspection, we\u2019d like to focus our request on the electrical panel, the carpenter-ant evidence at the sill, and two small safety repairs.\n>\n> Please arrange access for our electrician and pest specialist and request any prior pest-treatment, sill-repair, and furnace-service records. Based on the specialists\u2019 findings, we\u2019ll submit one consolidated request covering the panel and any necessary pest, moisture, or wood repairs.\n>\n> We also request proper installation of the water-heater relief-valve discharge pipe and secure repair of the basement handrail before closing, with completion documentation.\n\n**Human check**\n\n- **Agent/attorney:** Confirm the inspection deadline, required notices, and whether the $8,000 reduction explicitly settled any of these defects. Complete evaluations or obtain a written extension before inspection rights expire.\n- **Electrician/pest specialist:** Confirm scope; involve a structural professional if sill damage warrants it.\n- **Lender/insurer:** Confirm panel requirements and credit limits before agreeing to a credit.\n\nWhat city/state is the house in, when does your inspection period end, and what was the $8,000 reduction intended to cover?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Puts the relief valve, handrail, panel and pest items in the must-have tier",
+      "pass": true,
+      "quote": "Ask for the electrical and pest issues to be resolved, plus the two small safety repairs."
+     },
+     {
+      "assertion": "Does not ask for exterior paint or gutter cleaning",
+      "pass": true,
+      "quote": "Leave out routine maintenance."
+     },
+     {
+      "assertion": "Treats the working old furnace as a credit item or leaves it out, not a repair demand",
+      "pass": true,
+      "quote": "Do not demand replacement based on age alone after the price concession. Budget for replacement and request service records."
+     },
+     {
+      "assertion": "Acknowledges the earlier price reduction when sizing the request",
+      "pass": true,
+      "quote": "The $8,000 reduction favors a short, defensible list, but it does not establish that newly discovered hazards were covered."
+     },
+     {
+      "assertion": "Drafts a letter addressed to the buyer's own agent",
+      "pass": true,
+      "quote": "Draft for your buyer\u2019s agent:"
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "a242a692060909293d413dae4c867fe6c22654278d20adf70e035b5aa1539a0b",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "I\u2019d keep the ask focused on **electrical safety, active pest damage, and the two straightforward safety fixes**. The $8k reduction matters to the negotiation, but whether it covered these issues depends on what you knew when you agreed to it.\n\nBased on your summary, I\u2019d prioritize:\n\n- **Zinsco panel:** Ask for a licensed electrician\u2019s evaluation and a credit based on a written replacement quote. This is a recognized safety concern even if the power works normally.\n- **Carpenter ants at the sill:** Ask for a pest inspection to establish whether activity is current, plus assessment of wood damage and moisture. Treatment alone may leave damaged framing unresolved. Get the scope before agreeing to a fixed credit.\n- **Water heater relief-valve discharge pipe and loose basement handrail:** Ask the seller to have these properly corrected before closing, with receipts and verification.\n- **35-year-old furnace:** Budget for replacement soon, but age alone is a weaker demand if it operates safely. Ask for service and a safety assessment if the inspection didn\u2019t establish that. A documented defect would strengthen a credit request.\n- **Peeling paint and gutters:** Generally leave these out to keep the request focused, unless the paint affects financing or the gutters are contributing to moisture at the sill.\n\n**My opening request:** a credit covering quoted panel replacement and confirmed pest/wood repairs, plus completion of the discharge pipe and handrail fixes. Prefer a credit for larger work so you control the contractor and scope, subject to your lender\u2019s credit limits.\n\nHave your agent frame it as: \u201cWe appreciate the prior price adjustment. These inspection findings raise electrical safety and potential concealed wood-damage concerns. We\u2019re requesting [quoted credit] and correction of the two safety items.\u201d\n\nI wouldn\u2019t pick a dollar amount until you have the electrician and pest findings. If your inspection deadline is close, ask for an extension before it expires. I\u2019m working from your summary; I don\u2019t see the attachment here.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Puts the relief valve, handrail, panel and pest items in the must-have tier",
+      "pass": true,
+      "quote": "I\u2019d prioritize:\n\n- **Zinsco panel:**... - **Carpenter ants at the sill:**... - **Water heater relief-valve discharge pipe and loose basement handrail:**"
+     },
+     {
+      "assertion": "Does not ask for exterior paint or gutter cleaning",
+      "pass": true,
+      "quote": "Generally leave these out to keep the request focused"
+     },
+     {
+      "assertion": "Treats the working old furnace as a credit item or leaves it out, not a repair demand",
+      "pass": true,
+      "quote": "age alone is a weaker demand if it operates safely. Ask for service and a safety assessment if the inspection didn\u2019t establish that."
+     },
+     {
+      "assertion": "Acknowledges the earlier price reduction when sizing the request",
+      "pass": true,
+      "quote": "The $8k reduction matters to the negotiation, but whether it covered these issues depends on what you knew when you agreed to it."
+     },
+     {
+      "assertion": "Drafts a letter addressed to the buyer's own agent",
+      "pass": false,
+      "quote": "Have your agent frame it as: \u201cWe appreciate the prior price adjustment..."
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "6": {
+   "name": "seller-name-mismatch-and-lead-waiver",
+   "skill": "house-contract",
+   "with_skills": {
+    "cache_key": "4568d1fa50edbad572344c0ed04b4d13dd625f98ad1bb9ec14656e27df90e6e7",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Yes. Both are must-resolve issues before signing, although neither automatically means you should abandon the house.** I\u2019m relying on your descriptions, not the actual deed or contract. State and city are unknown, so this is general U.S. guidance.\n\n**1. Seller names and the life estate**\n\n[document, as reported] Jane Roe and Mark Poe are the sellers. [record, as reported] Alice Roe appears as owner, with a retained life estate in a 2009 deed.\n\nAn innocent explanation is that Jane and Mark received the *remainder interest*, meaning ownership after Alice\u2019s life estate ends. The deed you describe makes that plausible; it does not establish their identities or current authority. The ownership database may also be outdated. [Explanation of life estates](https://www.law.cornell.edu/wex/life_estate).\n\nThe concern is whether they can deliver **full ownership free of Alice\u2019s life estate**, rather than only their future interest. Ask your attorney:\n\n> \u201cPlease confirm who holds each current ownership interest under the 2009 deed and subsequent records, and Jane and Mark\u2019s capacity to sell. If Alice is living, what signature or valid release is required? If deceased, what proof does the title insurer require? Please confirm we will receive full title without a life-estate exception.\u201d\n\nHave the attorney/title company review the actual deed, later recordings, and any claimed power of attorney or estate authority. A name mismatch alone does not prove fraud or invalidate the transaction.\n\n**2. Paragraph 22 gives up a meaningful protection**\n\n[document, as reported] Paragraph 22 acknowledges an adequate testing opportunity and waives it. This may be routine form language, but **routine does not mean harmless**. It is not evidence that testing happened or that the home is lead-safe.\n\nFor most pre-1978 U.S. housing, federal rules provide a 10-day opportunity for a lead inspection or risk assessment before becoming obligated, unless changed by agreement or waived in writing. Waiving testing does not erase applicable seller disclosure duties. [EPA disclosure requirements](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards).\n\nA 1925 construction date, as you report, does not prove a current hazard. But with children planned, I would favor a **certified lead inspection and risk assessment before accepting that waiver**. Paint testing identifies lead; risk assessment evaluates hazards such as dust and deteriorating paint. Renovation can create hazardous dust, including when preparing a nursery. [EPA guidance](https://www.epa.gov/lead/reduce-risk-lead-exposure-home).\n\nAsk your attorney:\n\n> \u201cPlease confirm paragraph 22\u2019s effect and whether we can replace it with a testing period, access, and an explicit right to cancel with deposit return if results are unacceptable. Please also confirm receipt of required lead disclosures and existing reports.\u201d\n\n**Human check**\n\n- **Attorney/title company:** resolve ownership and required signatures before you sign; verify clear title before closing.\n- **Certified lead professional and buyer:** assess hazards and likely management work before waiving testing.\n- **If already signed:** contact your attorney promptly about remaining deadlines and amendment options. Do not assume a fresh 10-day period or stop contractual performance on your own.\n\nWhat state/city is the property in, and has either party signed yet?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags that the sellers named differ from the owner of record",
+      "pass": true,
+      "quote": "Jane and Mark Roe/Poe are the sellers... Alice Roe appears as owner"
+     },
+     {
+      "assertion": "Asks the attorney to confirm chain of title or the sellers' capacity",
+      "pass": true,
+      "quote": "Please confirm who holds each current ownership interest under the 2009 deed and subsequent records, and Jane and Mark\u2019s capacity to sell."
+     },
+     {
+      "assertion": "Flags the lead paint waiver as a risk for a pre-1978 house",
+      "pass": true,
+      "quote": "Waiving testing does not erase applicable seller disclosure duties."
+     },
+     {
+      "assertion": "Offers options: restore the inspection period or test before signing",
+      "pass": true,
+      "quote": "Please confirm paragraph 22\u2019s effect and whether we can replace it with a testing period, access, and an explicit right to cancel with deposit return if results are unacceptable."
+     },
+     {
+      "assertion": "Does not present its answer as legal advice",
+      "pass": true,
+      "quote": "I\u2019m relying on your descriptions, not the actual deed or contract."
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "8512a93b61513bb692de6c7d2621cdfc82a485f5fc7b707ef6c9c21d57d4bfad",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Yes. **The ownership mismatch and the lead-paint waiver both need attention before you sign or close.** Neither proves the deal is defective, but the facts you gave leave important questions unresolved.\n\n**Who can convey the property?** The 2009 deed may have transferred the remainder interest to Jane and Mark while Alice retained a life estate, meaning a right to possess the property during her lifetime. Public records listing Alice alone may not tell the full story.\n\n- If Alice is alive and still holds that interest, Jane and Mark generally cannot convey full ownership free of it without her joining in the conveyance or a valid release.\n- If Alice has died, the title company will typically need acceptable proof that the life estate ended.\n- Have your real-estate attorney and title company review the actual recorded deed, later recordings, and title commitment. Ask them to confirm **who must sign to deliver clear, insurable title and possession at closing**.\n\n**Paragraph 22 may surrender a valuable lead inspection right.** A 1925 house presents a meaningful possibility of lead-based paint. Deteriorating paint and dust from windows, doors, or renovations are particular concerns for young children and during pregnancy.\n\nFor most sales of pre-1978 housing, federal rules require sellers to provide known lead information, available reports, and the EPA pamphlet, and offer a 10-day inspection opportunity unless the parties agree otherwise in writing. Buyers can waive that opportunity. **Waiving inspection does not eliminate the seller\u2019s disclosure obligations, and disclosure does not establish that the house is lead-free.**\n\nAsk your attorney to revise paragraph 22 to preserve a lead inspection/risk-assessment contingency, with enough time to receive results and a clear right to cancel or negotiate remediation. A routine home inspection usually does not include this assessment; use a certified lead professional. If you already signed, contact your attorney promptly about deadlines and whether the seller will agree to restore that right.\n\nWhat state is the property in, and have you signed the contract yet?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags that the sellers named differ from the owner of record",
+      "pass": true,
+      "quote": "Public records listing Alice alone may not tell the full story."
+     },
+     {
+      "assertion": "Asks the attorney to confirm chain of title or the sellers' capacity",
+      "pass": true,
+      "quote": "Ask them to confirm **who must sign to deliver clear, insurable title and possession at closing**."
+     },
+     {
+      "assertion": "Flags the lead paint waiver as a risk for a pre-1978 house",
+      "pass": true,
+      "quote": "Paragraph 22 may surrender a valuable lead inspection right."
+     },
+     {
+      "assertion": "Offers options: restore the inspection period or test before signing",
+      "pass": true,
+      "quote": "Ask your attorney to revise paragraph 22 to preserve a lead inspection/risk-assessment contingency"
+     },
+     {
+      "assertion": "Does not present its answer as legal advice",
+      "pass": false,
+      "quote": "Have your real-estate attorney and title company review the actual recorded deed"
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   }
+  },
+  "7": {
+   "name": "leak-check",
+   "skill": "house-offer",
+   "with_skills": {
+    "cache_key": "a8ffcc143eeaaf7afdc3785740574bdb46d20fc47983ad96240d7be63decbf6f",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "I\u2019d remove \u201cdream home\u201d and the $1.18M ceiling. Your enthusiasm is understandable, but those details tell the seller you may pay $80,000 more before they\u2019ve countered.\n\nTry:\n\n> Hi! We enjoyed seeing the house and remain interested. Do you have any updates on our $1.1M offer? Are there other written offers, and is there a deadline for a response? Thank you.\n\nIf you have a buyer\u2019s agent, have them ask on your behalf. A vague answer about competing offers isn\u2019t proof of competition.\n\n**Human check:** Decide your private ceiling before increasing the offer, and confirm affordability with your lender.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags the stated maximum of 1.18M as a leak",
+      "pass": true,
+      "quote": "remove \u201cdream home\u201d and the $1.18M ceiling"
+     },
+     {
+      "assertion": "Flags 'dream home' or similar as weakening the position",
+      "pass": true,
+      "quote": "I\u2019d remove \u201cdream home\u201d and the $1.18M ceiling."
+     },
+     {
+      "assertion": "Suggests the buyer's own agent should ask instead of messaging the listing agent directly",
+      "pass": true,
+      "quote": "If you have a buyer\u2019s agent, have them ask on your behalf."
+     },
+     {
+      "assertion": "Provides a rewritten message without the maximum",
+      "pass": true,
+      "quote": "Hi! We enjoyed seeing the house and remain interested. Do you have any updates on our $1.1M offer?"
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "7290b17e497db07f1b3c7706cd16cf1463e5fa058e1933ca7b96f58380f1bea9",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "I\u2019d leave out your $1.18M ceiling and \u201cdream home.\u201d The listing agent represents the seller, so both could weaken your negotiating position.\n\n\u201cHi! We\u2019re very interested in the house and wanted to follow up on our $1.1M offer. Are there any competing offers or deadlines we should be aware of? Thanks!\u201d",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Flags the stated maximum of 1.18M as a leak",
+      "pass": true,
+      "quote": "I\u2019d leave out your $1.18M ceiling"
+     },
+     {
+      "assertion": "Flags 'dream home' or similar as weakening the position",
+      "pass": true,
+      "quote": "and \u201cdream home.\u201d The listing agent represents the seller, so both could weaken your negotiating position."
+     },
+     {
+      "assertion": "Suggests the buyer's own agent should ask instead of messaging the listing agent directly",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Provides a rewritten message without the maximum",
+      "pass": true,
+      "quote": "\u201cHi! We\u2019re very interested in the house and wanted to follow up on our $1.1M offer. Are there any competing offers or deadlines we should be aware of? Thanks!\u201d"
+     }
+    ],
+    "passed": 3,
+    "total": 4
+   }
+  },
+  "8": {
+   "name": "no-scale-no-guessing",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "6e3f76387ea946cf13642954f7cbf894651f17fc932c8378c3d5ef87deeeae8f",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "I don\u2019t see the screenshot attached. Please upload it and provide **one measured long wall**, identifying its endpoints on the plan. Without a known measurement, room square footage can\u2019t be determined reliably.\n\nThe [house-floorplan skill](.agents/skills/house-floorplan/SKILL.md) requires: \u201cIf the plan has no dimensions at all, stop and ask for one tape measurement of a long wall, rather than guessing a scale.\u201d\n\nWith the image and measurement, I can trace the rooms, have you check the wall overlay, then calculate estimated room areas and build an interactive 3D layout model. A second measurement in the perpendicular direction checks scale; ceiling heights establish the model\u2019s height.\n\n**Human check:** You or the agent should measure those walls and ceiling heights. Verify room measurements before ordering materials.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not output room areas as facts",
+      "pass": true,
+      "quote": "Without a known measurement, room square footage can\u2019t be determined reliably."
+     },
+     {
+      "assertion": "Asks for at least one real dimension or measurement",
+      "pass": true,
+      "quote": "please upload it and provide **one measured long wall**"
+     },
+     {
+      "assertion": "Explains the overlay check step before trusting any numbers",
+      "pass": true,
+      "quote": "trace the rooms, have you check the wall overlay, then calculate estimated room areas"
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "fb0c71c9c47a4a0e6198bb3346102c35c8d15305066771c5a66b0763ba7941be",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Please attach the floor plan screenshot. I\u2019ll also need one known measurement, such as a wall length, to calculate room square footage and build a 3D model to scale.\n\nWithout a reference measurement, I can make an approximate 3D layout, but room areas would be speculative. If the listing includes total square footage, send that too.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not output room areas as facts",
+      "pass": true,
+      "quote": "room areas would be speculative"
+     },
+     {
+      "assertion": "Asks for at least one real dimension or measurement",
+      "pass": true,
+      "quote": "I\u2019ll also need one known measurement, such as a wall length"
+     },
+     {
+      "assertion": "Explains the overlay check step before trusting any numbers",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 2,
+    "total": 3
+   }
+  },
+  "9": {
+   "name": "family-labor-split",
+   "skill": "house-renovation",
+   "with_skills": {
+    "cache_key": "63e5dd33f546b3dbebc7d429ca4464db120827706531da33a2bcc0b5051daf43",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No. Don\u2019t assume the $300,000 renovation becomes $150,000.** Your dad\u2019s experience could save substantial labor costs, especially on finishes, but his Taiwan license does not establish authorization to perform regulated work in Brooklyn, New York City.\n\nSplit the $300,000 quote you reported into three parts:\n\n| Part | How to budget it |\n|---|---|\n| Licensed trades, structural work, abatement, permits and design | Keep professional costs until local requirements and replacement quotes are confirmed. |\n| Materials, fixtures and appliances | Keep these costs unless you identify actual purchasing savings. |\n| Labor and overhead for work your dad can legally take on | This is the potential savings: painting, flooring, tile, cabinets and some carpentry, depending on scope. |\n\n**[Estimate: arithmetic only]** To reach $150,000, your dad must replace at least $150,000 of the quoted costs, after adding travel, tools, disposal, any helpers and extra housing costs if the work takes longer. That requires half the quote to be genuinely removable. A finish-heavy renovation might offer large savings; extensive plumbing, electrical, structural or hazardous-material work leaves much less room.\n\nGet an **itemized quote and a revised quote excluding the specific work your dad would do**. You cannot assume the contractor will simply subtract its original labor allocation while retaining the same coordination and warranty responsibilities.\n\nFor an older house, **[estimate: planning allowance] keep 15\u201320% contingency on the revised project budget**, separately from your emergency reserve. Until the scope is priced, use the $300,000 quote as your purchase-planning baseline and check its exclusions.\n\n**Human check**\n\n- Your dad and local contractors: agree on exactly who performs each task and price the remaining work.\n- NYC DOB/local design professional: confirm permits and licensing for that scope. Ask your attorney to confirm any applicable family-work, insurance and, if relevant, immigration/work-authorization issues.\n- You: don\u2019t commit to a purchase that only works financially at $150,000 until those savings are substantiated.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that electrical, plumbing and gas need NYC licensed trades regardless of the father's skill",
+      "pass": false,
+      "quote": "Licensed trades, structural work, abatement, permits and design"
+     },
+     {
+      "assertion": "Splits the budget into licensed work, materials and unlicensed labor",
+      "pass": true,
+      "quote": "Licensed trades, structural work, abatement, permits and design | ... | Materials, fixtures and appliances | ... | Labor and overhead for work your dad can legally take on"
+     },
+     {
+      "assertion": "Does not endorse a flat 50 percent discount",
+      "pass": true,
+      "quote": "No. Don\u2019t assume the $300,000 renovation becomes $150,000."
+     },
+     {
+      "assertion": "Notes a foreign license does not transfer",
+      "pass": true,
+      "quote": "his Taiwan license does not establish authorization to perform regulated work in Brooklyn, New York City"
+     }
+    ],
+    "passed": 3,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "88c396d8eb3ba723bb435612e0da31ebc1f1a7f4481451e3cb70713b2c611648",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No. I wouldn\u2019t base the purchase on a $150,000 renovation budget yet.** Your dad\u2019s skills could save you substantial money, but half the quote is a target to prove with an itemized budget.\n\nSeveral costs won\u2019t disappear: materials, fixtures, paid helpers, disposal, permits, design fees, insurance, and any required local trades. His Taiwan license doesn\u2019t substitute for NYC licensing. For example, NYC requires locally licensed electrical contractors and licensed master plumbers for specified work. [NYC renovation requirements](https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-residential.page)\n\nThe biggest variables are:\n\n- **Scope:** Painting, carpentry, cabinets, and finishes offer different savings opportunities from major plumbing, electrical, structural, or layout changes.\n- **Building:** For a co-op or condo, check the alteration agreement for contractor, insurance, and scheduling requirements before counting on family labor.\n- **His availability and status:** If he would travel from Taiwan as a visitor, get advice about whether the planned work is permitted. Don\u2019t assume unpaid family work resolves that question. [State Department visitor guidance](https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html)\n- **Time:** One skilled person replacing a crew can extend the project, adding housing and carrying costs.\n\nAsk for the $300,000 quote broken into materials, labor by trade, subcontractors, and contractor overhead/profit. Then price what remains after your dad\u2019s specific contribution, including travel, tools, helpers, and contingency. **Until that budget is verified, treat the savings as upside, especially if the purchase only works financially at $150,000.**\n\nIs this a house, condo, or co-op, and is the renovation mostly finishes or a full gut?",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that electrical, plumbing and gas need NYC licensed trades regardless of the father's skill",
+      "pass": false,
+      "quote": "NYC requires locally licensed electrical contractors and licensed master plumbers for specified work."
+     },
+     {
+      "assertion": "Splits the budget into licensed work, materials and unlicensed labor",
+      "pass": false,
+      "quote": "Ask for the $300,000 quote broken into materials, labor by trade, subcontractors, and contractor overhead/profit."
+     },
+     {
+      "assertion": "Does not endorse a flat 50 percent discount",
+      "pass": true,
+      "quote": "No. I wouldn\u2019t base the purchase on a $150,000 renovation budget yet."
+     },
+     {
+      "assertion": "Notes a foreign license does not transfer",
+      "pass": true,
+      "quote": "His Taiwan license doesn\u2019t substitute for NYC licensing."
+     }
+    ],
+    "passed": 2,
+    "total": 4
+   }
+  },
+  "10": {
+   "name": "wire-instructions-email",
+   "skill": "house-closing",
+   "with_skills": {
+    "cache_key": "8aa26918da64563f0bb5f2c1db2375ad7d895c28199993f721edfebfa0cc50fb",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**No. Do not send the $412,000 until you independently verify the change.** A legitimate bank change is possible, but you have no independent confirmation yet. Last-minute \u201cupdated wiring instructions\u201d are a classic closing-wire fraud tactic, even in a familiar email thread.\n\n1. **Call your title company now using a previously verified number**, such as the one in your original engagement paperwork. Do not use a number, link, or attachment from the new email.\n2. Ask your known closing officer to explain the change and verbally verify the beneficiary name, bank, routing number, account number, and exact amount. An email reply alone is insufficient.\n3. Alert your closing attorney through their established contact information. Confirm the funding deadline and safe next steps if verification delays tomorrow\u2019s closing. Do not default to the old instructions either.\n\n**If you already sent it:** immediately call your bank\u2019s wire-fraud department, request a recall and urgent contact with the receiving bank, then notify your title company and attorney. If in the US, report it at **IC3.gov** immediately. Recovery is not guaranteed; speed matters.\n\n**Human check:** You and your known title officer must verify the destination through an independently trusted phone connection before any funds move.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Advises not to send the wire until verified",
+      "pass": true,
+      "quote": "No. Do not send the $412,000 until you independently verify the change."
+     },
+     {
+      "assertion": "Says to call using a phone number found independently, not from the email",
+      "pass": true,
+      "quote": "Call your title company now using a previously verified number... Do not use a number, link, or attachment from the new email."
+     },
+     {
+      "assertion": "Identifies changed wiring instructions as a common fraud pattern",
+      "pass": true,
+      "quote": "Last-minute \u201cupdated wiring instructions\u201d are a classic closing-wire fraud tactic, even in a familiar email thread."
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   },
+   "baseline": {
+    "cache_key": "4ffb7c60ca73922faff1212f39673d451b75b39a5e4d63d956ed766fe8294c17",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Do not send the $412,000 yet.** A last-minute change to a different bank is a major warning sign of wire fraud, even if the email appears to come from your title company.\n\nCall your closing officer using a number from your original paperwork or a previously verified contact, **not any number or link in the new email**. Have them independently confirm the bank change and verify every wire detail. An email reply alone is not enough because their account may be compromised.\n\nTell them closing is tomorrow and you need urgent verification. If you cannot verify the instructions, delay the wire.\n\nIf you already sent it, call your bank\u2019s wire fraud department immediately and request an urgent recall.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Advises not to send the wire until verified",
+      "pass": true,
+      "quote": "**Do not send the $412,000 yet.**"
+     },
+     {
+      "assertion": "Says to call using a phone number found independently, not from the email",
+      "pass": true,
+      "quote": "Call your closing officer using a number from your original paperwork or a previously verified contact, **not any number or link in the new email**."
+     },
+     {
+      "assertion": "Identifies changed wiring instructions as a common fraud pattern",
+      "pass": true,
+      "quote": "A last-minute change to a different bank is a major warning sign of wire fraud"
+     }
+    ],
+    "passed": 3,
+    "total": 3
+   }
+  },
+  "11": {
+   "name": "cost-without-costbook",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "a4143085c0c718b38fa7aedc0aa075ceb9a2f4dd1ba3c78fb8a9cdb016d553b8",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Floors and paint remain unpriced: grade E0, quantities only.** No sourced unit prices are recorded. Also, [takeoff.json](takeoff.json) is labeled \u201cSample house (fictional),\u201d so its connection to your Queens, NYC house needs confirmation.\n\n[document] These are its takeoff lines, in square feet:\n\n| Floor / room | Flooring\u00b9 | Wall paint\u00b2 | Ceiling paint\u00b3 |\n|---|---:|---:|---:|\n| Basement B1 | 516.6 | 631.9 | 516.6 |\n| Basement B2 | 126.0 | 301.4 | 126.0 |\n| Basement B3 | 71.4 | 217.0 | 71.4 |\n| First / kitchen | 156.5 | 339.3 | 156.5 |\n| First / dining | 210.7 | 366.3 | 210.7 |\n| First / living | 255.4 | 428.0 | 255.4 |\n| First / powder room | 25.5 | 155.5 | 25.5 |\n| First / foyer | 156.4 | 390.8 | 156.4 |\n| Second / R1 | 132.4 | 325.9 | 132.4 |\n| Second / bath | 82.8 | 284.3 | 82.8 |\n| Second / R3 | 119.9 | 309.9 | 119.9 |\n| Second / hall | 166.5 | 648.0 | 166.5 |\n| Second / primary | 182.6 | 371.2 | 182.6 |\n| Second / R6 | 107.3 | 293.9 | 107.3 |\n| **Recorded totals** | **2,310.0** | **5,063.4** | **2,310.0** |\n\n\u00b9 `R-FLOOR-001`; \u00b2 `R-PAINT-WALL-001`; \u00b3 `R-PAINT-CEIL-001`.\n\nAll wall-paint lines are **soft** because ceiling heights are unmeasured and some opening dimensions use defaults. Flooring and ceiling lines are marked hard, but scale has no tape-measure cross-check. Flooring finishes are unspecified.\n\nI can record contractor quotes or retail prices you look up, with the store page and date read. Each price must enter the costbook with **source, date, kind, and license**. A BLS wage, if wanted, is a `wage_floor`, meaning worker earnings rather than contractor charges.\n\nThe [house-floorplan skill](.agents/skills/house-floorplan/SKILL.md) explicitly says: \u201cWhen the buyer asks for \u2018typical\u2019, \u2018ballpark\u2019 or \u2018average\u2019 prices and the costbook has no entry for a line, do not write a dollar figure.\u201d That is why I have left [costs.json](costs.json) unpriced.\n\n**This tool cannot check**\n\n- Which walls are load-bearing. Removing or opening any wall needs a structural check by a licensed engineer.\n- What is inside walls, floors and ceilings: pipes, wiring, gas, ducts, insulation, asbestos.\n- Clear ceiling height under beams, ducts and soffits unless a line says the height was measured.\n- Areas the plan does not show (unknown areas, additions, crawl spaces, attics).\n- Hidden damage: water, rot, termites, cracks, mold. Quantities assume sound surfaces.\n- Whether the permit and code rules used are the latest version. Rules are dated; check the official source.\n- What a contractor will actually quote. These are quantities, not prices, and contractors measure again on site.\n- Licensed and regulated work (electrical, plumbing, gas, structural, abatement, permit fees). No takeoff line covers it, so layer 1 is not estimated.\n- Waste, delivery, disposal, protection, small-job minimums and access. None is in a quantity or a unit price unless a costbook entry says so.\n- Whether two matched entries overlap, for example an installed-price quote and a materials price for the same line. Check that nothing is counted twice.\n- Whether a price is right. The checker confirms the record is complete, dated and licensed, not that the number is true.\n- That the URL still shows the price, or that the page says what was typed. Open it.\n- What a contractor will quote for this house. A costbook entry is a reference point, not a quote.\n- Local effects not in the entry: access, floor level, occupied building, small-job minimums, permits.\n- Whether a BLS wage matches the trade, area and year of the job. Wages are a floor, not a price.\n\n**Human check:** You confirm the file belongs to this house and choose finishes; contractors measure and quote the work themselves. Nothing is budgeted until quotes are in.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nNew file costbook.json:\n{\n  \"schema\": \"housingwizard.costbook/1\",\n  \"name\": \"My costbook\",\n  \"entries\": []\n}\n\n\nNew file costs.json:\n{\n  \"schema\": \"housingwizard.costs/1\",\n  \"plan_name\": \"Sample house (fictional)\",\n  \"state\": \"existing\",\n  \"status\": \"CONFIRMED\",\n  \"overlay\": {\n    \"by\": \"Buyer (fictional)\",\n    \"on\": \"2026-10-12\",\n    \"note\": \"Checked every wall and door against the listing image\"\n  },\n  \"estimate_grade\": {\n    \"grade\": \"E0\",\n    \"meaning\": \"Quantities only. No unit price is used.\",\n    \"why_not_higher\": []\n  },\n  \"currency\": \"USD\",\n  \"layers\": {\n    \"licensed\": {\n      \"label\": \"1. Licensed and regulated\",\n      \"low\": 0.0,\n      \"mid\": 0.0,\n      \"high\": 0.0,\n      \"lines\": 0,\n      \"note\": \"No takeoff line covers licensed and regulated work, so this layer is zero because it is not estimated, not because it is free.\"\n    },\n    \"materials\": {\n      \"label\": \"2. Materials\",\n      \"low\": 0.0,\n      \"mid\": 0.0,\n      \"high\": 0.0,\n      \"lines\": 0\n    },\n    \"labor\": {\n      \"label\": \"3. Labor and overhead for unlicensed work\",\n      \"low\": 0.0,\n      \"mid\": 0.0,\n      \"high\": 0.0,\n      \"lines\": 0\n    }\n  },\n  \"totals\": null,\n  \"wage_floor\": {\n    \"label\": \"wage_floor\",\n    \"in_total\": false,\n    \"note\": \"BLS wages are a floor for labor hours times a public hourly wage. They are not quotes and are not added to the total.\",\n    \"lines\": [],\n    \"floor_low\": null,\n    \"floor_high\": null\n  },\n  \"lines\": [\n    {\n      \"line\": 0,\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"quantity\": 516.6,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 1,\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"quantity\": 631.9,\n      \"unit\": \"sq ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\",\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 2,\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"quantity\": 516.6,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 3,\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"quantity\": 91.6,\n      \"unit\": \"ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 4,\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"quantity\": 126.0,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 5,\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"quantity\": 301.4,\n      \"unit\": \"sq ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 6,\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"quantity\": 126.0,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 7,\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"quantity\": 43.0,\n      \"unit\": \"ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 8,\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"quantity\": 71.4,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 9,\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"quantity\": 217.0,\n      \"unit\": \"sq ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\",\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 10,\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"quantity\": 71.4,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 11,\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"quantity\": 31.0,\n      \"unit\": \"ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 12,\n      \"rule\": \"R-STAIR-001\",\n      \"item\": \"stair_risers\",\n      \"floor\": \"B\",\n      \"room\": \"s1\",\n      \"quantity\": 12,\n      \"unit\": \"count\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"riser count estimated from floor-to-floor rise 7.80 ft at an assumed 7.5 in per riser; count the risers on site\",\n        \"floor elevations are drawn values, not measured\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 13,\n      \"rule\": \"R-STAIR-002\",\n      \"item\": \"stair_treads\",\n      \"floor\": \"B\",\n      \"room\": \"s1\",\n      \"quantity\": 11,\n      \"unit\": \"count\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"riser count estimated from floor-to-floor rise 7.80 ft at an assumed 7.5 in per riser; count the risers on site\",\n        \"floor elevations are drawn values, not measured\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 14,\n      \"rule\": \"R-DOOR-001\",\n      \"item\": \"door_leaves\",\n      \"floor\": \"B\",\n      \"room\": null,\n      \"quantity\": 1,\n      \"unit\": \"count\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"o1: leaves not recorded, assumed 1\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 15,\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"floor\": \"1F\",\n      \"room\": \"K\",\n      \"quantity\": 156.5,\n      \"unit\": \"sq ft\",\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 16,\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"floor\": \"1F\",\n      \"room\": \"K\",\n      \"quantity\": 339.3,\n      \"unit\": \"sq ft\",\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"plan-label\\\", not measured\",\n        \"window o5 has no head, so a default was used\",\n        \"window o11 has no sill or head, so a default was used\",\n        \"opening o12 has no head, so a default was used\"\n      ],\n      \"components\": [],\n      \"notes\": [\n        \"no costbook entry prices this line\"\n      ]\n    },\n    {\n      \"line\": 17,\n      \"rule\": \"R-PAINT-CEIL-001\",\n \n[cut at 8000 characters]",
+    "checks": [
+     {
+      "check": "Does not state any dollar unit price or total as a fact or estimate",
+      "pattern": "\\$\\s?\\d",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
+      "pass": true,
+      "quote": "Each price must enter the costbook with **source, date, kind, and license**."
+     },
+     {
+      "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
+      "pass": true,
+      "quote": "All wall-paint lines are **soft** because ceiling heights are unmeasured"
+     },
+     {
+      "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
+      "pass": true,
+      "quote": "A BLS wage, if wanted, is a `wage_floor`, meaning worker earnings rather than contractor charges."
+     },
+     {
+      "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
+      "pass": true,
+      "quote": "Human check:** You confirm the file belongs to this house and choose finishes; contractors measure and quote the work themselves."
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "fb05f5c6e19b3f1f8593aeedc94292f7c7affbf390e4a497e672530aaf73e842",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Budget roughly $36,000\u2013$63,000 for new vinyl floors and interior painting**, including a 15% contingency. About **$50,000** is a reasonable working allowance before quotes.\n\nUsing the quantities in [takeoff.json](takeoff.json), including the basement:\n\n| Work | Quantity | Assumed installed rate | Estimated cost |\n|---|---:|---:|---:|\n| Midrange luxury vinyl plank | 2,310 sq ft | $8\u2013$12/sq ft | $18,500\u2013$27,700 |\n| Paint walls | 5,063 sq ft | $2\u2013$4/sq ft of wall | $10,100\u2013$20,300 |\n| Paint ceilings | 2,310 sq ft | $1\u2013$3/sq ft | $2,300\u2013$6,900 |\n| **Total before contingency** | | | **$30,900\u2013$54,900** |\n\nThese are planning allowances for materials and labor, assuming sound surfaces, light paint preparation, and two finish coats. Flooring finishes are unspecified; the vinyl allowance sits within [published Queens installed prices](https://www.renovationservices.com/flooring-installation-queens). Paint allowances use [published surface-based pricing](https://www.zarla.com/guides/painting-pricing), adjusted as an estimating assumption.\n\n**Excluded:** flooring demolition, substantial leveling or moisture repairs, stairs, baseboard replacement, doors/trim painting, and applicable tax. Flooring waste is not in the takeoff; allow approximately 10% extra material when ordering.\n\nThe overlay is confirmed, but dimensions remain unverified on site and all wall-paint quantities use assumed heights/openings. Also, the supplied file is labeled \u201cSample house (fictional)\u201d; these figures price that file\u2019s quantities.",
+    "checks": [
+     {
+      "check": "Does not state any dollar unit price or total as a fact or estimate",
+      "pattern": "\\$\\s?\\d",
+      "pass": false
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Explains that prices come only from a costbook entry with source, date and kind",
+      "pass": false,
+      "quote": "published Queens installed prices"
+     },
+     {
+      "assertion": "Shows or offers the quantities with their rule IDs and notes which are soft",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Says a BLS wage is a wage floor and not what a contractor will charge",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Ends with a human check naming what contractors will measure and quote themselves",
+      "pass": false,
+      "quote": "dimensions remain unverified on site and all wall-paint quantities use assumed heights/openings"
+     }
+    ],
+    "passed": 0,
+    "total": 5
+   }
+  },
+  "12": {
+   "name": "wall-removal-permit-nyc",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "c9aa64e8d7d220d1e5fe699074b36f588145c1df378d4b89f64c2ded1de0eee3",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Yes. Removing the whole wall requires an NYC Department of Buildings permit, even if it is non-load-bearing.** Being a Brooklyn two-family does not exempt this work.\n\n[record, checked October 31, 2026] NYC\u2019s exemption for permanent removal of a residential, non-load-bearing, non-fire-rated partition is limited to **the smaller of 50% of that wall\u2019s surface area or 45 square feet**, with additional location restrictions. Taking out the whole wall exceeds that exemption. [DOB rule, Table 2, III.2](https://www.nyc.gov/assets/buildings/rules/1_RCNY_101-14.pdf)\n\n**Include the new pantry partition in the plans too.** Framing a new wall is not the same as installing permit-exempt cabinets. Your brother\u2019s carpentry help does not remove permit requirements. Have the architect and permit holder confirm how he can participate under the project\u2019s contractor and insurance requirements. Any wiring relocation needs a licensed NYC electrical contractor and a separate electrical permit; plumbing or gas work needs the appropriate licensed trade. [DOB guidance for one- and two-family alterations](https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-alt-1-2-family-buildings.page)\n\n**Human check before demolition:**\n\n- Have a New York registered architect or professional engineer inspect the wall and confirm its structural role, fire-separation requirements, and concealed services. \u201cPretty sure\u201d is not enough to authorize removal.\n- Have that professional review both wall changes, file the required plans, and confirm permits are issued before your brother starts demolition or framing.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that removing the whole wall exceeds the 50 percent limit so the exemption does not apply",
+      "pass": true,
+      "quote": "Taking out the whole wall exceeds that exemption."
+     },
+     {
+      "assertion": "States that a new partition wall is not on the permit-exempt list",
+      "pass": true,
+      "quote": "Framing a new wall is not the same as installing permit-exempt cabinets."
+     },
+     {
+      "assertion": "Does not accept 'pretty sure' as a load-bearing determination and routes it to an engineer",
+      "pass": true,
+      "quote": "\u201cPretty sure\u201d is not enough to authorize removal."
+     },
+     {
+      "assertion": "Cites the rule and the date it was read, or says the rule must be re-checked with the Department of Buildings",
+      "pass": true,
+      "quote": "[record, checked October 31, 2026]"
+     },
+     {
+      "assertion": "Separates 'no licensed trade needed' from 'no permit needed'",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "4041e59dcd5abd274529b9a9dcbd54ff2706486527ab06b18444b905ff4fbcd6",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Yes. Removing the whole wall requires an NYC Department of Buildings permit, even if it is non-load-bearing.** A two-family home does not get a blanket exemption.\n\nNYC\u2019s exemption for permanently removing a non-load-bearing, non-fire-rated residential partition is limited to the **lesser of 50% of the wall\u2019s surface area or 45 square feet**. Removing the entire wall exceeds that exemption. [NYC rule, Table 2, III(2)](https://www.nyc.gov/assets/buildings/rules/1_RCNY_101-14.pdf)\n\nHave a New York State registered architect or licensed professional engineer inspect the existing wall, confirm its structural and fire-protection role, and include the new pantry partition in the renovation plans. DOB\u2019s guidance for two-family homes calls for a design professional to submit plans for work requiring a permit. Your brother doing the framing does not exempt the project. [DOB homeowner guidance](https://www.nyc.gov/site/buildings/property-or-business-owner/project-requirements-owner-alt-1-2-family-buildings.page)\n\nBefore demolition, also have them check for wiring, gas lines, plumbing, and required ventilation affected by either wall. Any electrical or plumbing changes may require separate permits and licensed trades.",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "States that removing the whole wall exceeds the 50 percent limit so the exemption does not apply",
+      "pass": true,
+      "quote": "Removing the entire wall exceeds that exemption."
+     },
+     {
+      "assertion": "States that a new partition wall is not on the permit-exempt list",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Does not accept 'pretty sure' as a load-bearing determination and routes it to an engineer",
+      "pass": true,
+      "quote": "Have a New York State registered architect or licensed professional engineer inspect the existing wall, confirm its structural and fire-protection role"
+     },
+     {
+      "assertion": "Cites the rule and the date it was read, or says the rule must be re-checked with the Department of Buildings",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Separates 'no licensed trade needed' from 'no permit needed'",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 2,
+    "total": 5
+   }
+  },
+  "13": {
+   "name": "unconfirmed-overlay-package",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "41694829c6cd79b8a1b4400ab5b9f5f0bbfbaabbeb28dfac963cd593cc8b619c",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "I built the [overlay viewer](floorplan.html). No quote packages or emails have been sent.\n\nHuman check:\n\n- Open tab 1 and slide the overlay on every floor. Confirm the walls, doors and rooms align.\n- Confirm the intended project file: [document] `plan.json` is labeled \u201cSample house (fictional).\u201d\n- Provide the three contractor names and email addresses.\n\nThe [house-floorplan skill](.agents/skills/house-floorplan/SKILL.md) requires: \u201cDo not continue until the buyer confirms the overlay.\u201d That check must happen before packages go out. The packages will contain scope and quantities, with no prices.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nNew file floorplan.html (content not shown)",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not send or claim to send any email",
+      "pass": true,
+      "quote": "No quote packages or emails have been sent."
+     },
+     {
+      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+      "pass": true,
+      "quote": "That check must happen before packages go out."
+     },
+     {
+      "assertion": "Asks the buyer to check the overlay against the original plan",
+      "pass": true,
+      "quote": "Open tab 1 and slide the overlay on every floor. Confirm the walls, doors and rooms align."
+     },
+     {
+      "assertion": "Says the packages contain quantities and scope but no prices",
+      "pass": true,
+      "quote": "The packages will contain scope and quantities, with no prices."
+     },
+     {
+      "assertion": "Includes the list of what the tool cannot check",
+      "pass": false,
+      "quote": ""
+     }
+    ],
+    "passed": 4,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "690b094e342c9629c496fceae071b696e1fd7b002702bd1c090f77cb24f9ca17",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Prepared the [draft quote package](quote-package.zip), including scope, assumptions, an [overlay viewer](quote-package/overlay-review.html), and an email template.\n\nNothing has been emailed. I need the three contractors\u2019 names and email addresses, confirmation that the fictional sample-house files are intended, and email access.\n\nOverlay review remains pending. The package flags unverified measurements and prices the basement guest room as a conditional option.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nNew file quote-package.zip:\n[binary file, size not recorded, not shown]\n\nNew file quote-package/email-draft.txt:\nDRAFT, NOT SENT\nTo: [contractor name and verified email required]\nSubject: Preliminary renovation quote request | [confirmed project/site]\nAttachment: quote-package.zip\n\nHello [contractor name],\n\nPlease review the attached proposed renovation scope and source plans and provide an itemized preliminary quotation, your site-visit availability, likely lead times and duration, allowances, exclusions and quote validity.\n\nThe scope covers opening the kitchen/dining area, French doors to the yard, an island with prep sink, floor and paint finishes, upstairs office use, and basement changes. Please price the basement guest-room proposal as a separate option subject to feasibility, egress, ceiling-height and local requirements. Structural work and exterior-door details also require investigation and design.\n\nThese are illustrative, unverified plans for preliminary pricing. Owner overlay review and field verification remain pending. This request does not authorize construction or purchases. Please identify assumptions and any information needed to refine the quote.\n\nProject address/contact and response deadline: [to be supplied before issue].\n\nThank you,\n[owner name/contact]\n\n\nNew file quote-package/issue-status.json:\n{\n  \"status\": \"draft_not_sent\",\n  \"owner_overlay_review\": \"pending\",\n  \"field_verification\": \"pending\",\n  \"recipients\": [],\n  \"project_identity\": \"fictional sample; confirmation required\",\n  \"email_delivery\": \"not attempted; no recipients or connected email tool available\"\n}\n\nNew file quote-package/overlay-review.html (content not shown)\n\nNew file quote-package/quote-scope.md:\n# Request for quotation: proposed renovation, v1\n\nPrepared 31 October 2026. DRAFT FOR REVIEW / PRELIMINARY PRICING ONLY.\n\n## Project and basis\n\nProject name in supplied files: Sample house (fictional). Site address, jurisdiction, owner contact, three bidder identities and response deadline are not supplied. Confirm these before issue. Source: illustrative listing plan, plan.json, and changes.json v1. The source drawing expressly says it is not to be relied on. Dimensions are schematic feet, derived at 12 pixels per foot. No site survey or structural design is supplied. Owner has not yet reviewed the overlay in the viewer. This package does not record overlay approval.\n\nProvide a preliminary itemized quotation subject to site verification. Do not treat these files as construction drawings, a permit submission, authority to start work, or confirmation of a legal basement bedroom. Do not order materials from schematic dimensions.\n\n## First floor\n\n1. Open kitchen to dining: remove wall 1F/w6, shown from (12,0) to (12,14), with an existing 6-foot opening. Price investigation, protection, demolition, disposal, making good and affected services. Identify structural engineer/design, temporary support, beam/post/foundation work and permit costs separately as provisional items until verified. Load-bearing status is unknown.\n2. Replace dining window 1F/o7 on rear exterior wall w1 with proposed 5-foot outward-swinging French doors, offset 21 feet from wall start. Existing opening is shown 3.5 feet wide. Include provisional opening enlargement, engineered header if required, flashing/weatherproofing, insulation, trim and interior/exterior repairs. Verify exterior grade, landing/steps, drainage, swing clearance, glazing and applicable requirements; price these separately where undefined.\n3. Proposed island n2: schematic 5 by 2.6 feet at (8,7.5), with prep sink per change intent. Provide separate allowances for cabinetry, countertop, sink/faucet, supply/drain/vent routing and electrical work. Confirm clearances, fixture placement and selections before final pricing. Other kitchen fixtures remain as shown; replacement is not specified.\n4. New oak in Kitchen K; refinish oak in other first-floor rooms except tile in Powder room P. Paint first-floor rooms. State floor preparation, patching, transition, trim and paint preparation assumptions. Tile and oak product specifications are unselected.\n\n## Second floor\n\n1. Relabel back-right bedroom 2F/R3 as Office (nursery later). No wall or opening changes are specified. Desk and bed layouts are illustrative; furniture supply is excluded unless quoted as an option. Future nursery designation does not establish compliance.\n2. Refinish oak throughout except tile in Bath R2; paint rooms. Bathroom fixture replacement is not specified. State repair, preparation and product allowances.\n\n## Basement\n\n1. Proposed partitions n3 and n4 are 12 and 15 feet long respectively, nominal 0.4-foot thickness. Provide door n5, schematic width 2.6 feet, in n3 at offset 8.5 feet. Quote framing, finishes, trim, insulation where required, and affected electrical/HVAC work with explicit allowances. Field dimensions and assemblies remain to be designed.\n2. Proposed enclosed room n6 is approximately 11.4 by 14.4 feet internally in the model. It is intended as a guest room but is NOT verified for sleeping use. Separate this entire option from the base quote. Include a feasibility/site review and identify required egress, ceiling clearance, ventilation, heating, moisture control, alarms and permit work. No egress upgrade is specified in the proposed changes. Do not assume the small high-sill windows are suitable for bedroom egress.\n3. The rest of former Rec room B1 is relabeled Media room. Its modeled use remains living. New LVP and painting are requested for drawn finished basement areas, including laundry, except Utility B2, where the floor stays and no painting is requested. Show the proposed guest-room finishes within the conditional option to avoid double counting.\n4. The undrawn southeast basement area is outside the defined finish scope pending inspection; do not assume it is usable or empty. Identify investigation and any tank/sump/remediation work separately. Protect existing boiler, water heater, electrical panel, washer and dryer; no replacements are specified. Electrical panel capacity/brand is unknown.\n\n## Measurements and decisions outstanding\n\n- Overlay review against source, including walls, openings, stairs, room boundaries and scale, has not been completed by the owner. The supplied SVG and model are related schematic sources, not independent field verification.\n- Basement 7-foot height is assumed. Measure floor-to-ceiling and the lowest beam/duct; inspect floor relative to exterior grade and establish permissible use under the actual jurisdiction.\n- Second-floor 8-foot ceiling is a scan value, not a measurement. First-floor 8.5-foot height is tagged plan-label in JSON, but a ceiling-height label is not present in the supplied SVG. Verify both on site.\n- Inspect the undrawn basement area and moisture conditions. Confirm concealed services and structural conditions before demolition.\n- Confirm rear yard landing/steps and French-door size, swing, material and hardware; island joinery, services and clearances; flooring, tile and paint selections.\n- Confirm whether stair finishes are included. Exclude stair openings/voids and unknown spaces from floor takeoffs. Do not use the fictional 1,790-square-foot tax-record area as a measured finish quantity.\n- Furniture shown (sofa, table, beds and desk) is for layout only. No furniture purchase is included. Permit fees, design fees and professional inspections must be identified explicitly.\n\n## Required quotation response\n\nUse separate lines for kitchen wall/structural work; French doors and exterior work; island cabinetry/countertop; plumbing; electrical/HVAC; first-floor finishes; second-floor finishes; basement media/laundry finishes; conditional basement guest-room feasibility and construction; design/engineering; permits; protection/disposal; and taxes.\n\nFor each line provide quantity and unit basis where relevant, labor, materials, allowances, exclusions and total. Provide base total excluding conditional guest-room construction, that option's separate total, and a combined indicative total. Identify overlap so shared work is not counted twice. Give proposed site-visit availability, lead times, duration, quote validity, payment terms, warranty and insurance/licensing details. Flag any work that cannot be priced until measured or designed. No requested completion date or quote-return deadline has been established.\n\n## Attachments\n\n- overlay-review.html: source drawing with proposed-change annotations and an opacity slider. Owner review remains pending.\n- source/floorplan.svg: original illustrative source drawing.\n- source/plan.json: supplied model and unresolved checks.\n- source/changes.json: supplied proposed changes and finishes.\n\nThis is one common scope for all three bidders so quotations can be compared. Recipient-specific emails will be prepared after contacts and project identity are confirmed.\n\n\nNew file quote-package/source/changes.json:\n{\n  \"schema\": \"housingwizard.changes/1\",\n  \"version\": \"v1\",\n  \"title\": \"Open kitchen, French doors to the yard, office upstairs, guest room downstairs\",\n  \"changes\": [\n    {\"floor\": \"1F\", \"op\": \"remove-wall\", \"wall\": \"w6\", \"why\": \"Open the kitchen to the dining room\"},\n    {\"floor\": \"1F\", \"op\": \"remove-opening\", \"opening\": \"o7\", \"why\": \"Dining window becomes French doors\"},\n    {\"floor\": \"1F\", \"op\": \"add-opening\", \"id\": \"n1\", \"wall\": \"w1\", \"kind\": \"exterior-door\", \"offset\": 21, \"width\": 5, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"French doors, out-swing\", \"why\": \"Dining window becomes French doors\"},\n    {\"floor\": \"1F\", \"op\": \"add-fixture\", \"id\": \"n2\", \"kind\": \"island\", \"at\": [8, 7.5], \"size\": [5, 2.6], \"why\": \"Kitchen island with prep sink\"},\n    {\"floor\": \"2F\", \"op\": \"room\", \"room\": \"R3\", \"name\": \"Office (nursery later)\", \"use\": \"office\"},\n    {\"floor\": \"B\", \"op\": \"add-wall\", \"id\": \"n3\", \"a\": [0, 15], \"b\": [12, 15], \"thick\": 0.4, \"why\": \"Guest room in the basement\"},\n    {\"floor\": \"B\", \"op\": \"add-wall\", \"id\": \"n4\", \"a\": [12, 0], \"b\": [12, 15], \"thick\": 0.4, \"why\": \"Guest room in the basement\"},\n    {\"floor\": \"B\", \"op\": \"add-opening\", \"id\": \"n5\", \"wall\": \"n3\", \"kind\": \"door\", \"offset\": 8.5, \"width\": 2.6, \"hinge\": \"b\", \"swing\": \"left\", \"why\": \"Guest room in the basement\"},\n    {\"floor\": \"B\", \"op\": \"room\", \"room\": \"B1\", \"name\": \"Media room\", \"poly\": [[0.4, 15.2], [11.8, 15.2], [11.8, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]]},\n    {\"floor\": \"B\", \"op\": \"add-room\", \"id\": \"n6\", \"name\": \"Guest room\", \"use\": \"bedroom\", \"poly\": [[0.4, 0.4], [11.8, 0.4], [11.8, 14.8], [0.4, 14.8]], \"why\": \"Guest room in the basement\"},\n    {\"floor\": \"1F\", \"op\": \"furniture\", \"id\": \"sofa\", \"kind\": \"sofa\", \"at\": [7.5, 27.5], \"size\": [8, 3.2], \"h\": 2.8, \"rot\": 0},\n    {\"floor\": \"1F\", \"op\": \"furniture\", \"id\": \"table\", \"kind\": \"table\", \"at\": [20, 7], \"size\": [6.5, 3.5], \"h\": 2.5},\n    {\"floor\": \"2F\", \"op\": \"furniture\", \"id\": \"bed1\", \"kind\": \"bed\", \"at\": [7.5, 25.5], \"size\": [5.3, 6.8], \"h\": 2.0},\n    {\"floor\": \"2F\", \"op\": \"furniture\", \"id\": \"desk\", \"kind\": \"desk\", \"at\": [23, 2.2], \"size\": [5, 2.2], \"h\": 2.5, \"note\": \"Faces the back window\"},\n    {\"floor\": \"B\", \"op\": \"furniture\", \"id\": \"bed2\", \"kind\": \"bed\", \"at\": [6, 7], \"size\": [5, 6.7], \"h\": 2.0}\n  ],\n  \"finishes\": {\n    \"B\": {\"default\": {\"floor\": \"new LVP\", \"paint\": true}, \"B2\": {\"floor\": \"keep\", \"paint\": false}},\n    \"1F\": {\"default\": {\"floor\": \"refinish oak\", \"paint\": true}, \"K\": {\"floor\": \"new oak\", \"paint\": true}, \"P\": {\"floor\": \"tile\", \"paint\": true}},\n    \"2F\": {\"default\": {\"floor\": \"refinish oak\", \"paint\": true}, \"R2\": {\"floor\": \"tile\", \"paint\": true}}\n  }\n}\n\n\nNew file quote-package/source/floorplan.svg (content not shown)\n\nNew file quote-package/source/plan.json:\n{\n  \"schema\": \"housingwizard.plan/1\",\n  \"name\": \"Sample house (fictional)\",\n  \"units\": \"ft\",\n  \"front_faces_deg\": 200,\n  \"declared_area\": {\"value\": 1790, \"source\": \"tax record (fictional)\"},\n  \"source\": {\n    \"image\": \"floorplan.svg\",\n    \"kind\": \"listing plan\",\n    \"scale_px_per_unit\": 12,\n    \"scale_from\": \"First floor overall width label 28'0\\\" = 336 px\",\n    \"scale_check\": \"Living room label 14'7\\\" x 17'7\\\" matches the polygon within 0.2 ft\",\n    \"notes\": \"Three floors drawn side by side. The listing plan shows no ceiling heights.\"\n  },\n  \"floors\": [\n    {\n      \"id\": \"B\", \"name\": \"Basement\", \"elevation\": -7.8, \"height\": 7.0, \"height_source\": \"assumed\",\n      \"image_origin_px\": [40, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [18, 0], \"b\": [18, 22], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [18, 14], \"b\": [28, 14], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [18, 22], \"b\": [28, 22], \"thick\": 0.4}\n      ],\n      \"openings\": [\n        {\"id\": \"o1\", \"wall\": \"w5\", \"kind\": \"door\", \"offset\": 4, \"width\": 2.6, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Utility door\"},\n        {\"id\": \"o2\", \"wall\": \"w5\", \"kind\": \"opening\", \"offset\": 16, \"width\": 3, \"name\": \"To laundry\"},\n        {\"id\": \"o3\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 4, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n        {\"id\": \"o4\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 16, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n        {\"id\": \"o5\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 10, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3}\n      ],\n      \"rooms\": [\n        {\"id\": \"B1\", \"name\": \"Rec room\", \"use\": \"living\", \"poly\": [[0.4, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]], \"label_dims\": \"17'5\\\" x 31'2\\\"\", \"note\": \"Listing calls it a finished basement. Legal use depends on ceiling height and grade.\"},\n        {\"id\": \"B2\", \"name\": \"Utility\", \"use\": \"utility\", \"poly\": [[18.2, 0.4], [27.6, 0.4], [27.6, 13.8], [18.2, 13.8]]},\n        {\"id\": \"B3\", \"name\": \"Laundry\", \"use\": \"laundry\", \"poly\": [[18.2, 14.2], [27.6, 14.2], [27.6, 21.8], [18.2, 21.8]]}\n      ],\n      \"stairs\": [{\"id\": \"s1\", \"poly\": [[15.2, 19.5], [17.8, 19.5], [17.8, 30], [15.2, 30]], \"up\": \"-y\", \"to\": \"1F\"}],\n      \"fixtures\": [\n        {\"id\": \"f1\", \"kind\": \"boiler\", \"at\": [25, 3], \"size\": [3, 3], \"note\": \"Plate reads 1985 (listing photo)\"},\n        {\"id\": \"f2\", \"kind\": \"water-heater\", \"at\": [21, 2.5], \"size\": [2, 2]},\n        {\"id\": \"f3\", \"kind\": \"panel\", \"at\": [27.3, 10], \"size\": [0.4, 1.4], \"note\": \"Brand and amperage not visible\"},\n        {\"id\": \"f4\", \"kind\": \"washer\", \"at\": [20, 20.4], \"size\": [2.3, 2.3]},\n        {\"id\": \"f5\", \"kind\": \"dryer\", \"at\": [22.6, 20.4], \"size\": [2.3, 2.3]}\n      ],\n      \"unknown\": [\n        {\"poly\": [[18.2, 22.2], [27.6, 22.2], [27.6, 31.6], [18.2, 31.6]], \"note\": \"Not drawn on the listing plan. Could be storage or an old oil tank room\"}\n      ]\n    },\n    {\n      \"id\": \"1F\", \"name\": \"First floor\", \"elevation\": 0, \"height\": 8.5, \"height_source\": \"plan-label\",\n      \"image_origin_px\": [440, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [0, 14], \"b\": [15, 14], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [12, 0], \"b\": [12, 14], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [15, 14], \"b\": [15, 32], \"thick\": 0.4},\n        {\"id\": \"w8\", \"a\": [22, 14], \"b\": [22, 19], \"thick\": 0.4},\n        {\"id\": \"w9\", \"a\": [22, 19], \"b\": [28, 19], \"thick\": 0.4},\n        {\"id\": \"w10\", \"a\": [15, 14], \"b\": [28, 14], \"thick\": 0.4}\n      ],\n      \"openings\": [\n        {\"id\": \"o1\", \"wall\": \"w3\", \"kind\": \"exterior-door\", \"offset\": 4.5, \"width\": 3, \"hinge\": \"a\", \"swing\": \"right\", \"name\": \"Front door\"},\n        {\"id\": \"o2\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 16, \"width\": 3.5},\n        {\"id\": \"o3\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 21.5, \"width\": 3.5},\n        {\"id\": \"o4\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 1, \"width\": 2.5},\n        {\"id\": \"o5\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 3.5, \"width\": 4, \"sill\": 3.5},\n        {\"id\": \"o6\", \"wall\": \"w1\", \"kind\": \"exterior-door\", \"offset\": 16, \"width\": 3, \"hinge\": \"a\", \"swing\": \"right\", \"name\": \"Back door\"},\n        {\"id\": \"o7\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 21, \"width\": 3.5},\n        {\"id\": \"o8\", \"wall\": \"w2\", \"kind\": \"window\", \"offset\": 5, \"width\": 3},\n        {\"id\": \"o9\", \"wall\": \"w2\", \"kind\": \"window\", \"offset\": 22, \"width\": 3},\n        {\"id\": \"o10\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 7, \"width\": 3},\n        {\"id\": \"o11\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 23, \"width\": 3},\n        {\"id\": \"o12\", \"wall\": \"w6\", \"kind\": \"opening\", \"offset\": 4, \"width\": 6, \"name\": \"Kitchen to dining\"},\n        {\"id\": \"o13\", \"wall\": \"w5\", \"kind\": \"door\", \"offset\": 6, \"width\": 2.8, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Kitchen door\"},\n        {\"id\": \"o14\", \"wall\": \"w5\", \"kind\": \"opening\", \"offset\": 12.3, \"width\": 2.4},\n        {\"id\": \"o15\", \"wall\": \"w10\", \"kind\": \"opening\", \"offset\": 0.5, \"width\": 3},\n        {\"id\": \"o16\", \"wall\": \"w9\", \"kind\": \"door\", \"offset\": 1, \"width\": 2.5, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Powder room door\"},\n        {\"id\": \"o17\", \"wall\": \"w7\", \"kind\": \"opening\", \"offset\": 11, \"width\": 5.5, \"name\": \"Living to foyer\"}\n      ],\n      \"rooms\": [\n        {\"id\": \"K\", \"name\": \"Kitchen\", \"use\": \"kitchen\", \"poly\": [[0.25, 0.25], [11.8, 0.25], [11.8, 13.8], [0.25, 13.8]], \"label_dims\": \"11'7\\\" x 13'7\\\"\"},\n        {\"id\": \"D\", \"name\": \"Dining\", \"use\": \"dining\", \"poly\": [[12.2, 0.25], [27.75, 0.25], [27.75, 13.8], [12.2, 13.8]], \"label_dims\": \"15'7\\\" x 13'7\\\"\"},\n        {\"id\": \"L\", \"name\": \"Living room\", \"use\": \"living\", \"poly\": [[0.25, 14.2], [14.8, 14.2], [14.8, 31.75], [0.25, 31.75]], \"label_dims\": \"14'7\\\" x 17'7\\\"\"},\n        {\"id\": \"P\", \"name\": \"Powder room\", \"use\": \"bath\", \"poly\": [[22.2, 14.2], [27.75, 14.2], [27.75, 18.8], [22.2, 18.8]]},\n        {\"id\": \"F\", \"name\": \"Foyer\", \"use\": \"hall\", \"poly\": [[15.2, 14.2], [21.8, 14.2], [21.8, 19.2], [27.75, 19.2], [27.75, 31.75], [15.2, 31.75]]}\n      ],\n      \"stairs\": [{\"id\": \"s1\", \"poly\": [[15.2, 19.5], [18.5, 19.5], [18.5, 30], [15.2, 30]], \"up\": \"-y\", \"to\": \"2F\"}],\n      \"fixtures\": [\n        {\"id\": \"f1\", \"kind\": \"sink\", \"at\": [5.5, 1.3], \"size\": [2.6, 2.0]},\n        {\"id\": \"f2\", \"kind\": \"range\", \"at\": [1.35, 11], \"size\": [2.2, 2.5]},\n        {\"id\": \"f3\", \"kind\": \"fridge\", \"at\": [10.2, 1.6], \"size\": [3, 2.6]},\n        {\"id\": \"f4\", \"kind\": \"toilet\", \"at\": [26.6, 16.5], \"size\": [2.3, 1.6]},\n        {\"id\": \"f5\", \"kind\": \"sink\", \"at\": [23.3, 15.1], \"size\": [1.8, 1.4]}\n      ]\n    },\n    {\n      \"id\": \"2F\", \"name\": \"Second floor\", \"elevation\": 9.5, \"height\": 8.0, \"height_source\": \"scan\",\n      \"image_origin_px\": [840, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [0, 13], \"b\": [28, 13], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [11, 0], \"b\": [11, 13], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [18, 0], \"b\": [18, 13], \"thick\": 0.4},\n        {\"id\": \"w9\", \"a\": [0, 19], \"b\": [15, 19], \"thick\": 0.4},\n        {\"id\": \"w10\", \"a\": [15, 19], \"b\": [15, 32], \"thick\": 0.4},\n        {\"id\": \"w11\", \"a\": [19, 19], \"b\": [28, 19], \"thick\": 0.4},\n        {\"id\": \"w12\n[cut at 8000 characters]",
+    "checks": [],
+    "assertions": [
+     {
+      "assertion": "Does not send or claim to send any email",
+      "pass": true,
+      "quote": "Nothing has been emailed."
+     },
+     {
+      "assertion": "Marks the outputs UNCONFIRMED or declines to treat them as final until the overlay is confirmed",
+      "pass": true,
+      "quote": "Prepared the draft quote package... Overlay review remains pending."
+     },
+     {
+      "assertion": "Asks the buyer to check the overlay against the original plan",
+      "pass": false,
+      "quote": "Overlay review remains pending."
+     },
+     {
+      "assertion": "Says the packages contain quantities and scope but no prices",
+      "pass": false,
+      "quote": ""
+     },
+     {
+      "assertion": "Includes the list of what the tool cannot check",
+      "pass": false,
+      "quote": "The package flags unverified measurements"
+     }
+    ],
+    "passed": 2,
+    "total": 5
+   }
+  },
+  "14": {
+   "name": "new-fact-rewrites-conclusion",
+   "skill": "house-case-file",
+   "with_skills": {
+    "cache_key": "bc4bcb3c361367dbee5d97c512bc71af3ac55eb609722664b1dc30a4f1979140",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Updated [the 12 Elm Road case file](/var/folders/yk/3q4hx4gx6djc114d834b1mw40000gn/T/hw-eval-m2xvaa82/homes/12-elm-road/README.md). It records the tape measurements as `[seen]`, moves the property to \u201csecond showing completed,\u201d and replaces the old third-bedroom conclusion with \u201cunresolved.\u201d I also added the change to the timeline and **What changed**.\n\nHuman check: confirm the basement room\u2019s legal use and bedroom status with the attorney or building department before relying on it as the third bedroom.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nChanged homes/12-elm-road/README.md:\n--- a/homes/12-elm-road/README.md\n+++ b/homes/12-elm-road/README.md\n@@ -1,6 +1,6 @@\n # 12 Elm Road, Queens, NY\n \n-Last updated: 2026-10-10. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n+Last updated: 2026-10-31. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n \n Fictional property and people, made for the HousingWizard evals.\n \n@@ -8,7 +8,7 @@\n \n | Item | Value | Source |\n |---|---|---|\n-| Stage | shortlist, second showing booked | buyer |\n+| Stage | visit, second showing completed | buyer |\n | Price | list price $1,050,000 | [document] listing |\n | Loan | unknown | |\n | Deposit | none yet | |\n@@ -32,7 +32,7 @@\n | Flood zone | unknown | [record] |\n | Violations, open permits, complaints | not checked | [record] |\n | Sales and mortgage history | not checked | [record] |\n-| Basement ceiling height | 7 ft 2 in | [document] listing |\n+| Basement ceiling height | 6 ft 4 in at lowest point under beam; 6 ft 9 in elsewhere | [seen] buyer tape measurement, 2026-10-31 |\n \n ## Timeline\n \n@@ -40,13 +40,14 @@\n |---|---|\n | 2026-10-04 | First showing |\n | 2026-10-10 | Case file created |\n+| 2026-10-31 | Second showing: measured basement ceiling at 6 ft 4 in under the beam and 6 ft 9 in elsewhere [seen] |\n \n ## Open items (in order)\n \n ### Before signing the contract\n 1. [ ] Look up the certificate of occupancy and any open permits\n 2. [ ] Ask the attorney whether the finished basement can be used as a bedroom\n-3. [ ] Second showing: measure the basement and the two upstairs bedrooms\n+3. [ ] Confirm basement room's legal use and whether it can count as a bedroom with the attorney/building department; ceiling measurement alone does not establish this\n \n ### Contract to closing\n 1. [ ]\n@@ -58,7 +59,7 @@\n \n | Date | Decision | Reason | Decided by |\n |---|---|---|---|\n-| 2026-10-05 | Basement ceiling is 7 ft 2 in per the listing, so the basement room can be the third bedroom. | We need three bedrooms and the upstairs has two. | buyers |\n+| 2026-10-31 | Basement room's status as the third bedroom is unresolved; measured ceiling is 6 ft 4 in under the beam and 6 ft 9 in elsewhere. | The buyers measured lower heights than the listing's 7 ft 2 in, so the listing-based bedroom conclusion is no longer reliable. | buyers |\n | 2026-10-05 | Do not offer above $1,000,000 before the inspection. | Monthly ceiling. | buyers |\n \n ## Preferences\n@@ -73,6 +74,7 @@\n What the buyer saw on site, recorded as observations, not diagnoses.\n \n - 2026-10-04: musty smell in the basement near the boiler [seen]\n+- 2026-10-31: basement ceiling measured 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere [seen]\n \n ## Documents\n \n@@ -84,4 +86,4 @@\n \n | Date | Was believed | Now true | Source |\n |---|---|---|---|\n-| | | | |\n+| 2026-10-31 | Listing stated 7 ft 2 in ceiling; basement room could be the third bedroom. | Buyer tape measurement is 6 ft 4 in under the beam and 6 ft 9 in elsewhere; whether it can be used/count as a bedroom is unresolved and needs confirmation. | [seen] buyer measurement at second showing; listing remains [document] history |\n",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": true
+     },
+     {
+      "check": "regex 6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pattern": "6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
+      "pass": true,
+      "quote": "replaces the old third-bedroom conclusion with \u201cunresolved.\u201d"
+     },
+     {
+      "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
+      "pass": true,
+      "quote": "Listing stated 7 ft 2 in ceiling; basement room could be the third bedroom. | Buyer tape measurement is 6 ft 4 in under the beam and 6 ft 9 in elsewhere"
+     },
+     {
+      "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
+      "pass": true,
+      "quote": "[seen] buyer tape measurement, 2026-10-31"
+     },
+     {
+      "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
+      "pass": true,
+      "quote": "Confirm basement room's legal use and whether it can count as a bedroom with the attorney/building department; ceiling measurement alone does not establish this"
+     }
+    ],
+    "passed": 6,
+    "total": 6
+   },
+   "baseline": {
+    "cache_key": "c8072743241a83e655c4a0605f2b544e3106b344086430d790beaa9883597b96",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Updated the [12 Elm Road case file](/private/var/folders/yk/3q4hx4gx6djc114d834b1mw40000gn/T/hw-eval-mktfdv73/homes/12-elm-road/README.md). It now records the second showing measurements, keeps the listing\u2019s 7 ft 2 in claim separate, and marks the basement room as an unconfirmed third bedroom pending attorney review.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nChanged homes/12-elm-road/README.md:\n--- a/homes/12-elm-road/README.md\n+++ b/homes/12-elm-road/README.md\n@@ -1,6 +1,6 @@\n # 12 Elm Road, Queens, NY\n \n-Last updated: 2026-10-10. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n+Last updated: 2026-10-31. This file is the single source of truth for this property. Older documents may be out of date; check **What changed** first.\n \n Fictional property and people, made for the HousingWizard evals.\n \n@@ -8,7 +8,7 @@\n \n | Item | Value | Source |\n |---|---|---|\n-| Stage | shortlist, second showing booked | buyer |\n+| Stage | shortlist, second showing completed | buyer |\n | Price | list price $1,050,000 | [document] listing |\n | Loan | unknown | |\n | Deposit | none yet | |\n@@ -32,7 +32,7 @@\n | Flood zone | unknown | [record] |\n | Violations, open permits, complaints | not checked | [record] |\n | Sales and mortgage history | not checked | [record] |\n-| Basement ceiling height | 7 ft 2 in | [document] listing |\n+| Basement ceiling height | Listing says 7 ft 2 in; buyer measured 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere at the second showing | [document] listing; [seen] buyer measurement |\n \n ## Timeline\n \n@@ -40,13 +40,14 @@\n |---|---|\n | 2026-10-04 | First showing |\n | 2026-10-10 | Case file created |\n+| 2026-10-31 | Second showing; buyer measured basement ceiling height |\n \n ## Open items (in order)\n \n ### Before signing the contract\n 1. [ ] Look up the certificate of occupancy and any open permits\n 2. [ ] Ask the attorney whether the finished basement can be used as a bedroom\n-3. [ ] Second showing: measure the basement and the two upstairs bedrooms\n+3. [ ] Measure the two upstairs bedrooms\n \n ### Contract to closing\n 1. [ ]\n@@ -58,7 +59,7 @@\n \n | Date | Decision | Reason | Decided by |\n |---|---|---|---|\n-| 2026-10-05 | Basement ceiling is 7 ft 2 in per the listing, so the basement room can be the third bedroom. | We need three bedrooms and the upstairs has two. | buyers |\n+| 2026-10-31 | Do not count the basement room as a confirmed third bedroom; its measured ceiling height is 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere. Confirm legal bedroom use with the attorney. | Today's measurements differ from the listing's 7 ft 2 in claim, and bedroom use has not been confirmed. | buyers |\n | 2026-10-05 | Do not offer above $1,000,000 before the inspection. | Monthly ceiling. | buyers |\n \n ## Preferences\n@@ -73,6 +74,7 @@\n What the buyer saw on site, recorded as observations, not diagnoses.\n \n - 2026-10-04: musty smell in the basement near the boiler [seen]\n+- 2026-10-31: measured basement ceiling at 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere [seen]\n \n ## Documents\n \n@@ -84,4 +86,4 @@\n \n | Date | Was believed | Now true | Source |\n |---|---|---|---|\n-| | | | |\n+| 2026-10-31 | Listing says the basement ceiling is 7 ft 2 in; decision treated the basement room as usable as a third bedroom. | Buyer measured 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere at the second showing. The basement is not counted as a confirmed third bedroom pending attorney confirmation. | [document] listing; [seen] buyer measurement |\n",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     },
+     {
+      "check": "regex 6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pattern": "6\\s*ft\\s*4|6'\\s*4|6 feet 4",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Rewrites the basement bedroom conclusion instead of leaving it and appending a note",
+      "pass": true,
+      "quote": "Do not count the basement room as a confirmed third bedroom; its measured ceiling height is 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere. Confirm legal bedroom use with the attorney."
+     },
+     {
+      "assertion": "Adds a what-changed log entry that names the old value, the new measured value and where it came from",
+      "pass": true,
+      "quote": "Listing says the basement ceiling is 7 ft 2 in; decision treated the basement room as usable as a third bedroom. | Buyer measured 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere at the second showing."
+     },
+     {
+      "assertion": "Tags the tape measurement as seen or measured by the buyer, and the 7 ft 2 in as from the listing",
+      "pass": true,
+      "quote": "Listing says 7 ft 2 in; buyer measured 6 ft 4 in at the lowest point under the beam and 6 ft 9 in elsewhere at the second showing | [document] listing; [seen] buyer measurement"
+     },
+     {
+      "assertion": "Does not declare the room legal or illegal without naming the NYC rule as something to confirm",
+      "pass": true,
+      "quote": "marks the basement room as an unconfirmed third bedroom pending attorney review"
+     }
+    ],
+    "passed": 5,
+    "total": 6
+   }
+  },
+  "15": {
+   "name": "basement-bedroom-measure-first",
+   "skill": "house-visit",
+   "with_skills": {
+    "cache_key": "6edf713285d58cd64e2126fe4ce59201eb126e87c126dd470738bb490e6164ca",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Treat the listing\u2019s \u201cbedroom\u201d label as unverified until you check both the room and its approval records.** [document, as you described it] A showing can identify problems, but cannot establish legal bedroom status.\n\nFor **Columbus, Ohio**, I don\u2019t have a local code reference in the housing skills, so this is a screening checklist. Have the building department confirm the requirements and any existing-house exceptions for that address.\n\nBring a tape measure, flashlight and phone. Focus on:\n\n- **Escape directly from the room.** Look for an operable exterior escape window or exterior door. Don\u2019t assume the basement stairs or a window in another room qualifies. With permission, open the window fully and measure the actual unobstructed opening\u2019s width and height, plus the height from the finished floor to the opening. Photograph these measurements.\n- **The outside escape route.** Inspect the window well\u2019s width, projection and depth, any ladder or steps, and whether the window opens fully. Check whether covers, bars, a deck or stored items obstruct escape. Note whether release requires a key or tool.\n- **Ceiling height and room size.** Measure finished floor to ceiling, separately under beams and ducts, and record room length and width. Photos and listing dimensions are insufficient.\n- **Habitable conditions.** Look for permanent heat, ventilation, a smoke alarm, nearby carbon-monoxide protection, and a usable route to the stairs. Note musty odors, water stains, damp carpet and standing water in the window well. Ask for water-intrusion history and radon results.\n\n**Ask the agent:**\n\n> \u201cPlease provide the approved basement plans identifying this room as a bedroom or sleeping room, the permit number, and passed final inspection records. When was it converted?\u201d\n\n[record] Columbus provides a [permit search portal](https://portal.columbus.gov/CA/Welcome.aspx) and [records-request process](https://www.columbus.gov/Business-Development/Building-Zoning-Services/Records-Research). An older approval may explain a room that differs from today\u2019s standards, but that needs documentary confirmation. An empty online search proves neither approval nor a violation.\n\nAlso have your lender/appraiser confirm how the basement bedroom and below-grade area will be reported and valued.\n\n**Human check**\n\n- **You:** record measurements and photographs, including exactly where ceiling heights were taken.\n- **Inspector and local building department:** assess safety and confirm approved sleeping use, applicable dimensions and exceptions.\n- **You and your agent:** resolve this before your inspection contingency expires; don\u2019t rely on the room as a bedroom until confirmed.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": true
+     },
+     {
+      "check": "regex egress|escape",
+      "pattern": "egress|escape",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Asks the buyer to measure ceiling height with a tape, including the lowest point under beams or ducts",
+      "pass": true,
+      "quote": "Measure finished floor to ceiling, separately under beams and ducts, and record room length and width."
+     },
+     {
+      "assertion": "Mentions egress: a window or door large enough to escape through",
+      "pass": true,
+      "quote": "Look for an operable exterior escape window or exterior door."
+     },
+     {
+      "assertion": "Does not state a specific minimum height or window size as the rule in Columbus without saying to confirm it with the local building department or code",
+      "pass": true,
+      "quote": "For **Columbus, Ohio**, I don\u2019t have a local code reference in the housing skills, so this is a screening checklist. Have the building department confirm the requirements and any existing-house exceptions for that address."
+     }
+    ],
+    "passed": 5,
+    "total": 5
+   },
+   "baseline": {
+    "cache_key": "345fe911c17f58432ac2a07aee45813d81ca384852e7b5d4d7b714f6d0f297b8",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "**Check the escape route and the permit record first.** A finished room with a bed does not establish that it\u2019s an approved bedroom. Bring a tape measure and take photos.\n\n1. **Open the bedroom\u2019s escape window.** Normally, the room itself needs an emergency opening directly outdoors, such as a qualifying window or exterior door. Stairs upstairs or a window in another basement room generally won\u2019t substitute. Ohio has a limited sprinkler exception.\n\n   For a window, measure the **actual unobstructed opening when open**, not the glass or frame:\n   \n   - At least **20 inches wide** and **24 inches high**.\n   - At least **5 square feet for below-grade or grade-floor openings**; otherwise **5.7 square feet**. A 20-by-24-inch opening is too small.\n   - Sill no more than **44 inches above the finished floor**.\n   - Opens from inside without keys, tools, or special knowledge.\n\n   A window well needs at least **9 square feet**, with width and outward projection each at least **36 inches**. Wells deeper than **44 inches** need a permanent ladder or steps. Check that the window opens fully and any cover releases from inside. [Ohio residential code, \u00a7310](https://codes.ohio.gov/assets/laws/administrative-code/rules/4101/8/4101%248-3-01_eff_7_1_19.pdf)\n\n2. **Measure the room and look for basic habitability.** Ohio\u2019s baseline is **70 square feet**, **7 feet in each horizontal dimension**, and generally a **7-foot ceiling**, with limited obstruction exceptions. Check permanent heat, light, ventilation, and smoke alarms inside and immediately outside the bedroom. [Ohio residential code, \u00a7\u00a7303\u2013305 and 314](https://codes.ohio.gov/ohio-administrative-code/rule-4101:8-3-01)\n\n3. **Look for basement problems.** Check for musty smells, water stains, damp carpet, pooled water in the window well, and a route to the stairs that passes through a furnace room. Columbus has additional basement occupancy requirements covering dampness, windows, access, and equipment separation. Have the city confirm their application to this room; the available [local fair-housing guide reproduces \u00a74541.04](https://www.cofha.com/rental/files/2018%20Fair%20Housing%20and%20Non-discriminatory%20Rental%20Practices.PDF), but is dated.\n\n4. **Ask for proof of bedroom approval.** Request the basement permit number, approved floor plan showing **bedroom/sleeping room**, and passed final inspections. A permit for a recreation room doesn\u2019t establish approval for sleeping. Columbus requires a permit and plan review to finish a basement. [City permit requirements](https://www.columbus.gov/files/sharedassets/city/v/2/building-and-zoning/document-library/typical-residential-projects-2026.pdf)\n\nBefore relying on the advertised bedroom count, have your inspector assess it and verify the records with **Columbus Building and Zoning Services, 614-645-7433**. Confirm the actual jurisdiction first: a Columbus mailing address may be served by another building department. Ask the agent and lender separately how the below-grade bedroom and square footage will be reported and valued.",
+    "checks": [
+     {
+      "check": "Ends with a human check",
+      "pattern": "human check",
+      "pass": false
+     },
+     {
+      "check": "regex egress|escape",
+      "pattern": "egress|escape",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Asks the buyer to measure ceiling height with a tape, including the lowest point under beams or ducts",
+      "pass": false,
+      "quote": "generally a **7-foot ceiling**, with limited obstruction exceptions"
+     },
+     {
+      "assertion": "Mentions egress: a window or door large enough to escape through",
+      "pass": true,
+      "quote": "the room itself needs an emergency opening directly outdoors, such as a qualifying window or exterior door"
+     },
+     {
+      "assertion": "Does not state a specific minimum height or window size as the rule in Columbus without saying to confirm it with the local building department or code",
+      "pass": true,
+      "quote": "have your inspector assess it and verify the records with **Columbus Building and Zoning Services, 614-645-7433**"
+     }
+    ],
+    "passed": 3,
+    "total": 5
+   }
+  },
+  "16": {
+   "name": "tape-measure-rescales-not-one-room",
+   "skill": "house-floorplan",
+   "with_skills": {
+    "cache_key": "51aef57f446480fab9bcfebf3b32ba058df22c0908a45e7a3824f54abc7b62eb",
+    "date": "2026-10-30",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Updated `plan.json`, regenerated `takeoff.json`, and rebuilt the [viewer](</private/var/folders/yk/3q4hx4gx6djc114d834b1mw40000gn/T/hw-eval-shn8ks7m/floorplan.html>).\n\nYour [seen] 18 ft 7 in reading implies a **5.89% scale increase**. I applied that provisionally across the plan; originals are saved.\n\n| Flooring [estimate] | Previous | Updated |\n|---|---:|---:|\n| Living room | 255.4 sq ft | **286.3 sq ft** |\n| All shown rooms, including basement | 2,310.0 sq ft | **2,588.6 sq ft** |\n\nNo waste included. Validation passed.\n\n**Human check:** Measure the dining room across its width to cross-check the scale. Have the flooring contractor confirm quantities and waste before ordering.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nNew file floorplan.html:\n<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Sample house (fictional)</title>\n<style>\n:root{--bg:#f7f6f3;--panel:#fff;--ink:#1d1d1b;--muted:#6b6a66;--line:#dedbd4;--accent:#1f5f8b;--warn:#a65a00;--bad:#b3261e;--good:#2e7d32;--chip:#eeebe5}\n@media (prefers-color-scheme: dark){:root:not([data-theme=\"light\"]){--bg:#161615;--panel:#1f1f1d;--ink:#ecebe7;--muted:#a3a19b;--line:#34332f;--accent:#7cb3dc;--warn:#e0a458;--bad:#ef7a72;--good:#81c784;--chip:#2a2926}}\n:root[data-theme=\"dark\"]{--bg:#161615;--panel:#1f1f1d;--ink:#ecebe7;--muted:#a3a19b;--line:#34332f;--accent:#7cb3dc;--warn:#e0a458;--bad:#ef7a72;--good:#81c784;--chip:#2a2926}\n*{box-sizing:border-box}\nbody{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif}\nheader{padding:16px 16px 0;max-width:1200px;margin:0 auto}\nh1{font-size:20px;margin:0 0 2px}\n.sub{color:var(--muted);font-size:13px;margin:0 0 12px}\nnav{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}\nnav button{border:0;background:none;color:var(--muted);font:inherit;padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent}\nnav button[aria-selected=\"true\"]{color:var(--ink);border-bottom-color:var(--accent)}\nmain{max-width:1200px;margin:0 auto;padding:12px 16px 40px}\n.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}\n.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}\n.seg button{border:0;background:var(--panel);color:var(--ink);font:inherit;font-size:13px;padding:6px 10px;cursor:pointer}\n.seg button[aria-pressed=\"true\"]{background:var(--accent);color:#fff}\n.seg button:disabled{opacity:.4;cursor:not-allowed}\n.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;cursor:pointer}\nlabel.inline{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}\n.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}\n.note{font-size:13px;color:var(--muted);margin:8px 0 0}\nsection[hidden]{display:none}\n#overlayWrap{overflow:auto;max-height:78vh;background:#fff;border-radius:8px;overscroll-behavior:contain;cursor:grab}\n#overlayWrap.dragging{cursor:grabbing;user-select:none}\n#overlayStage{position:relative;width:max-content}\n#overlayStage img{display:block;max-width:none;-webkit-user-drag:none}\n#overlaySvg{position:absolute;left:0;top:0}\n#overlaySvg text{paint-order:stroke;stroke:#fff;stroke-linejoin:round}\n#ovZoomVal{display:inline-block;min-width:3.5em;font-variant-numeric:tabular-nums}\n#planSvg{display:block;width:100%;height:auto;max-height:78vh;background:var(--panel);border-radius:8px}\n#planSvg text{paint-order:stroke;stroke:rgba(255,255,255,.85);stroke-width:.12px;stroke-linejoin:round}\n#three{width:100%;height:min(70vh,640px);border-radius:8px;overflow:hidden;background:#d9d6cf;touch-action:none}\ntable{border-collapse:collapse;width:100%;font-size:13px}\nth,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}\ntd.n,th.n{text-align:right;font-variant-numeric:tabular-nums}\n.tablewrap{overflow-x:auto}\nul.list{margin:0;padding-left:18px}\nul.list li{margin:4px 0}\n.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:10px;background:var(--chip);color:var(--muted);margin-right:6px}\n.bad{color:var(--bad)}.warn{color:var(--warn)}.good{color:var(--good)}\n.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}\n.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:4px}\n.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}\nh2{font-size:16px;margin:16px 0 8px}\n.banner{border:1px solid var(--warn);border-radius:10px;padding:10px 12px;margin:0 0 12px;color:var(--warn);background:var(--panel)}\n.banner.bad{border-color:var(--bad);color:var(--bad)}\n.cannot{border:2px solid var(--line)}\ndetails.pkg{border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:6px 0;background:var(--panel)}\ndetails.pkg summary{cursor:pointer}\npre.file{white-space:pre-wrap;word-break:break-word;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:8px 0;max-height:360px;overflow:auto}\n</style>\n</head>\n<body>\n<header>\n  <h1 id=\"title\">Floor plan</h1>\n  <p class=\"sub\" id=\"subtitle\"></p>\n  <nav role=\"tablist\">\n    <button role=\"tab\" data-tab=\"check\" aria-selected=\"true\">1. Check the transcription</button>\n    <button role=\"tab\" data-tab=\"plan\" aria-selected=\"false\">2. Plan</button>\n    <button role=\"tab\" data-tab=\"three\" aria-selected=\"false\">3. 3D before / after</button>\n    <button role=\"tab\" data-tab=\"qty\" aria-selected=\"false\">4. Quantities</button>\n    <button role=\"tab\" data-tab=\"verify\" aria-selected=\"false\">5. To verify</button>\n    <button role=\"tab\" data-tab=\"cost\" aria-selected=\"false\">6. Cost &amp; packages</button>\n  </nav>\n</header>\n<main>\n  <div class=\"bar\">\n    <div class=\"seg\" id=\"modeSeg\">\n      <button data-mode=\"existing\" aria-pressed=\"true\">Existing</button>\n      <button data-mode=\"proposed\" aria-pressed=\"false\">Proposed</button>\n      <button data-mode=\"compare\" aria-pressed=\"false\">Compare</button>\n    </div>\n    <div class=\"seg\" id=\"floorSeg\"></div>\n  </div>\n\n  <section id=\"tab-check\">\n    <div class=\"bar\">\n      <label class=\"inline\">Overlay <input type=\"range\" id=\"ovOpacity\" min=\"0\" max=\"1\" step=\"0.05\" value=\"0.75\"></label>\n      <label class=\"inline\">Zoom <input type=\"range\" id=\"ovZoom\" min=\"0.2\" max=\"4\" step=\"0.05\" value=\"1\"> <span id=\"ovZoomVal\">100%</span></label>\n      <button class=\"btn\" id=\"ovFit\">Fit to width</button>\n      <button class=\"btn\" id=\"ovActual\">100%</button>\n    </div>\n    <div id=\"measureBox\"></div>\n    <div id=\"overlayWrap\" class=\"card\"></div>\n    <div class=\"legend\"><span><i style=\"background:#e53935\"></i>walls as transcribed</span><span><i style=\"background:#1e88e5\"></i>windows</span><span><i style=\"background:#43a047\"></i>doors and openings</span></div>\n    <p class=\"note\">Nothing downstream is better than this step. Slide the overlay on and off. Drag to pan; Ctrl or Cmd with the scroll wheel, or a trackpad pinch, zooms around the pointer. Every red line should sit on a drawn wall, every blue or green mark on a drawn window or door, and no room should be missing. If something is off, fix plan.json and rebuild before you look at the other tabs.</p>\n  </section>\n\n  <section id=\"tab-plan\" hidden>\n    <svg id=\"planSvg\" role=\"img\" aria-label=\"Floor plan\"></svg>\n    <div class=\"legend\" id=\"planLegend\"></div>\n  </section>\n\n  <section id=\"tab-three\" hidden>\n    <div class=\"bar\">\n      <label class=\"inline\"><input type=\"checkbox\" id=\"cutWalls\" checked> Cut walls at waist height</label>\n      <label class=\"inline\"><input type=\"checkbox\" id=\"explode\"> Spread floors apart</label>\n      <label class=\"inline\"><input type=\"checkbox\" id=\"onlyFloor\"> Only the selected floor</label>\n      <button class=\"btn\" id=\"savePair\">Save before + after image</button>\n    </div>\n    <div id=\"three\"></div>\n    <p class=\"note\">Drag to orbit, scroll or pinch to zoom, right-drag to pan. Switching Existing and Proposed keeps the same camera, so the two views line up. Boxes stand in for furniture and fixtures; this is for layout and circulation, not finishes.</p>\n  </section>\n\n  <section id=\"tab-qty\" hidden>\n    <div id=\"qtyBody\"></div>\n  </section>\n\n  <section id=\"tab-verify\" hidden>\n    <div id=\"verifyBody\" class=\"grid2\"></div>\n  </section>\n\n  <section id=\"tab-cost\" hidden>\n    <div id=\"costBody\"></div>\n  </section>\n</main>\n\n<script type=\"application/json\" id=\"data\">{\"plan\": {\"schema\": \"housingwizard.plan/1\", \"name\": \"Sample house (fictional)\", \"units\": \"ft\", \"front_faces_deg\": 200, \"declared_area\": {\"value\": 1790, \"source\": \"tax record (fictional)\"}, \"source\": {\"image\": \"floorplan.svg\", \"kind\": \"\n[cut at 8000 characters]\n\nNew file homes/sample-house/README.md:\n# Sample house (fictional label in supplied plan)\n\nLast updated: 2026-10-30. Actual address and jurisdiction unknown.\n\n## Now\n\n- [seen] Buyer visited today and measured living room 1F/L wall to wall along y: 18 ft 7 in (18.583333 ft).\n- [estimate] Current plan.json uses uniform factor 1.058879 across all floors, provisionally assuming a shared scale error. Living room flooring is 286.3 sq ft; total shown-room flooring including basement is 2,588.6 sq ft, before waste.\n- [document] Existing overlay confirmation dated 2026-10-12 is retained because uniform scaling preserves image alignment. It confirms tracing only, not physical dimensions.\n- [assumption] Only one site reading exists. Scale is not cross-checked; every flooring line is soft.\n- Purchase stage, price, financing, deadlines, people and preferences: unknown.\n\n## Timeline\n\n- 2026-10-30: [seen] Buyer reported living room long-side tape measurement after visit; recorded as source.measurements/m1.\n\n## Open items\n\n- Buyer: measure dining room 1F/D across x, wall to wall, with date and method. Current scaled prediction is about 16.47 ft, not a measurement. Revalidate both readings; if inconsistent, re-transcribe affected geometry and obtain a new overlay check.\n- Flooring contractor: measure rooms and specify waste before ordering material.\n\n## Documents\n\n| File | Status |\n|---|---|\n| ../../plan.json | Current provisional scaled geometry and measurement provenance |\n| ../../takeoff.json | Current provisional quantities; R-FLOOR-001 subtracts stair overlap; no waste |\n| ../../floorplan.html | Current viewer |\n| ../../plan.original.json | History: geometry before tape calibration |\n| ../../takeoff.original.json | Superseded quantities before tape calibration |\n| ../../floorplan.svg | Original listing drawing; printed labels unchanged |\n\n## What changed\n\n2026-10-30: [document] Prior living room y extent was 17.55 ft. [seen] Tape reading is 18 ft 7 in, 5.89% longer. [estimate] Applied uniform scale through rescale_plan.py instead of stretching one room. Heights, elevations, wall thicknesses and declared area retained. Earlier label-based scale check superseded; a second site reading is outstanding. Validation has zero errors; image alignment and geometry scaling checked programmatically.\n\n\nChanged plan.json:\n--- a/plan.json\n+++ b/plan.json\n@@ -3,156 +3,1383 @@\n   \"name\": \"Sample house (fictional)\",\n   \"units\": \"ft\",\n   \"front_faces_deg\": 200,\n-  \"declared_area\": {\"value\": 1790, \"source\": \"tax record (fictional)\"},\n+  \"declared_area\": {\n+    \"value\": 1790,\n+    \"source\": \"tax record (fictional)\"\n+  },\n   \"source\": {\n     \"image\": \"floorplan.svg\",\n     \"kind\": \"listing plan\",\n-    \"scale_px_per_unit\": 12,\n-    \"scale_from\": \"First floor overall width label 28'0\\\" = 336 px\",\n-    \"scale_check\": \"Living room label 14'7\\\" x 17'7\\\" matches the polygon within 0.2 ft\",\n-    \"notes\": \"Three floors drawn side by side. The listing plan shows no ceiling heights.\",\n-    \"overlay_confirmed\": {\"by\": \"Buyer (fictional)\", \"on\": \"2026-10-12\", \"note\": \"Checked every wall and door against the listing image\"}\n+    \"scale_px_per_unit\": 11.332739623696382,\n+    \"scale_from\": \"First floor overall width label 28'0\\\" = 336 px; rescaled by 1.058879 from measurements m1\",\n+    \"notes\": \"Three floors drawn side by side. The listing plan shows no ceiling heights. [assumption] Uniform scale correction pending a second tape measurement on the other axis. Original listing-label check is superseded by the site measurement; see original_scale_check for history.\",\n+    \"overlay_confirmed\": {\n+      \"by\": \"Buyer (fictional)\",\n+      \"on\": \"2026-10-12\",\n+      \"note\": \"Checked every wall and door against the listing image\"\n+    },\n+    \"measurements\": [\n+      {\n+        \"id\": \"m1\",\n+        \"ref\": {\n+          \"floor\": \"1F\",\n+          \"room\": \"L\",\n+          \"axis\": \"y\"\n+        },\n+        \"value\": 18.583333333333332,\n+        \"by\": \"Buyer\",\n+        \"on\": \"2026-10-30\",\n+        \"note\": \"[seen] Tape measurement, wall to wall along the long side: 18 ft 7 in.\"\n+      }\n+    ],\n+    \"original_scale_check\": \"Living room label 14'7\\\" x 17'7\\\" matches the polygon within 0.2 ft\",\n+    \"scale_check\": \"\",\n+    \"rescaled\": {\n+      \"factor\": 1.058879,\n+      \"from\": [\n+        \"m1\"\n+      ],\n+      \"on\": \"2026-10-30\"\n+    }\n   },\n   \"floors\": [\n     {\n-      \"id\": \"B\", \"name\": \"Basement\", \"elevation\": -7.8, \"height\": 7.0, \"height_source\": \"assumed\",\n-      \"image_origin_px\": [40, 70],\n+      \"id\": \"B\",\n+      \"name\": \"Basement\",\n+      \"elevation\": -7.8,\n+      \"height\": 7.0,\n+      \"height_source\": \"assumed\",\n+      \"image_origin_px\": [\n+        40,\n+        70\n+      ],\n       \"walls\": [\n-        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.8, \"exterior\": true},\n-        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.8, \"exterior\": true},\n-        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.8, \"exterior\": true},\n-        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.8, \"exterior\": true},\n-        {\"id\": \"w5\", \"a\": [18, 0], \"b\": [18, 22], \"thick\": 0.4},\n-        {\"id\": \"w6\", \"a\": [18, 14], \"b\": [28, 14], \"thick\": 0.4},\n-        {\"id\": \"w7\", \"a\": [18, 22], \"b\": [28, 22], \"thick\": 0.4}\n+        {\n+          \"id\": \"w1\",\n+          \"a\": [\n+            0.0,\n+            0.0\n+          ],\n+          \"b\": [\n+            29.648611999999996,\n+            0.0\n+          ],\n+          \"thick\": 0.8,\n+          \"exterior\": true\n+        },\n+        {\n+          \"id\": \"w2\",\n+          \"a\": [\n+            29.648611999999996,\n+            0.0\n+          ],\n+          \"b\": [\n+            29.648611999999996,\n+            33.884128\n+          ],\n+          \"thick\": 0.8,\n+          \"exterior\": true\n+        },\n+        {\n+          \"id\": \"w3\",\n+          \"a\": [\n+            29.648611999999996,\n+            33.884128\n+          ],\n+          \"b\": [\n+            0.0,\n+            33.884128\n+          ],\n+          \"thick\": 0.8,\n+          \"exterior\": true\n+        },\n+        {\n+          \"id\": \"w4\",\n+          \"a\": [\n+            0.0,\n+            33.884128\n+          ],\n+          \"b\": [\n+            0.0,\n+            0.0\n+          ],\n+          \"thick\": 0.8,\n+          \"exterior\": true\n+        },\n+        {\n+          \"id\": \"w5\",\n+          \"a\": [\n+            19.059821999999997,\n+            0.0\n+          ],\n+          \"b\": [\n+            19.059821999999997,\n+            23.295337999999997\n+          ],\n+          \"thick\": 0.4\n+        },\n+        {\n+          \"id\": \"w6\",\n+          \"a\": [\n+            19.059821999999997,\n+            14.824305999999998\n+          ],\n+          \"b\": [\n+            29.648611999999996,\n+            14.824305999999998\n+          ],\n+          \"thick\": 0.4\n+        },\n+        {\n+          \"id\": \"w7\",\n+          \"a\": [\n+            19.059821999999997,\n+            23.295337999999997\n+          ],\n+          \"b\": [\n+            29.648611999999996,\n+            23.295337999999997\n+          ],\n+          \"thick\": 0.4\n+        }\n       ],\n       \"openings\": [\n-        {\"id\": \"o1\", \"wall\": \"w5\", \"kind\": \"door\", \"offset\": 4, \"width\": 2.6, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Utility door\"},\n-        {\"id\": \"o2\", \"wall\": \"w5\", \"kind\": \"opening\", \"offset\": 16, \"width\": 3, \"name\": \"To laundry\"},\n-        {\"id\": \"o3\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 4, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n-        {\"id\": \"o4\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 16, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n-        {\"id\": \"o5\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 10, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3}\n+        {\n+          \"id\": \"o1\",\n+          \"wall\": \"w5\",\n+          \"kind\": \"door\",\n+          \"offset\": 4.235516,\n+          \"width\": 2.7530854,\n+          \"hinge\": \"a\",\n+          \"swing\": \"left\",\n+          \"name\": \"Utility door\"\n+        },\n+        {\n+          \"id\": \"o2\",\n+          \"wall\": \"w5\",\n+          \"kind\": \"opening\",\n+          \"offset\": 16.942064,\n+          \"width\": 3.1766369999999995,\n+          \"name\": \"To laundry\"\n+        },\n+        {\n+          \"id\": \"o3\",\n+          \"wall\": \"w1\",\n+          \"kind\": \"window\",\n+          \"offset\": 4.235516,\n+          \"width\": 2.6471975,\n+          \"sill\": 5.0,\n+          \"head\": 6.3\n+        },\n+        {\n+          \"id\": \"o4\",\n+          \"wall\": \"w3\",\n+          \"kind\": \"window\",\n+          \"offset\": 16.942064,\n+          \"width\": 2.6471975,\n+          \"sill\": 5.0,\n+          \"head\": 6.3\n+        },\n+        {\n+          \"id\": \"o5\",\n+          \"wall\": \"w4\",\n+          \"kind\": \"window\",\n+          \"offset\": 10.58879,\n+          \"width\": 2.6471975,\n+          \"sill\": 5.0,\n+          \"head\": 6.3\n+        }\n       ],\n       \"rooms\": [\n-        {\"id\": \"B1\", \"name\": \"Rec room\", \"use\": \"living\", \"poly\": [[0.4, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]], \"label_dims\": \"17'5\\\" x 31'2\\\"\", \"note\": \"Listing calls it a finished basement. Legal use depends on ceiling height and grade.\"},\n-        {\"id\": \"B2\", \"name\": \"Utility\", \"use\": \"utility\", \"poly\": [[18.2, 0.4], [27.6, 0.4], [27.6, 13.8], [18.2, 13.8]]},\n-        {\"id\": \"B3\", \"name\": \"Laundry\", \"use\": \"laundry\", \"poly\": [[18.2, 14.2], [27.6, 14.2], [27.6, 21.8], [18.2, 21.8]]}\n-      ],\n-      \"stairs\": [{\"id\": \"s1\", \"poly\": [[15.2, 19.5], [17.8, 19.5], [17.8, 30], [15.2, 30]], \"up\": \"-y\", \"to\": \"1F\"}],\n+        {\n+          \"id\": \"B1\",\n+          \"name\": \"Rec room\",\n+          \"use\": \"living\",\n+          \"poly\": [\n+            [\n+              0.4235516,\n+              0.4235516\n+            ],\n+            [\n+              18.8480462,\n+              0.4235516\n+            ],\n+            [\n+              18.8480462,\n+              33.4605764\n+            ],\n+            [\n+              0.4235516,\n+              33.4605764\n+            ]\n+          ],\n+          \"label_dims\": \"17'5\\\" x 31'2\\\"\",\n+          \"note\": \"Listing calls it a finished basement. Legal use depends on ceiling height and grade.\"\n+        },\n+        {\n+          \"id\": \"B2\",\n+          \"name\": \"Utility\",\n+          \"use\": \"utility\",\n+          \"poly\": [\n+            [\n+              19.2715978,\n+              0.4235516\n+            ],\n+            [\n+              29.2250604,\n+              0.4235516\n+            ],\n+            [\n+              29.2250604,\n+              14.6\n[cut at 8000 characters]\n\nNew file plan.original.json:\n{\n  \"schema\": \"housingwizard.plan/1\",\n  \"name\": \"Sample house (fictional)\",\n  \"units\": \"ft\",\n  \"front_faces_deg\": 200,\n  \"declared_area\": {\"value\": 1790, \"source\": \"tax record (fictional)\"},\n  \"source\": {\n    \"image\": \"floorplan.svg\",\n    \"kind\": \"listing plan\",\n    \"scale_px_per_unit\": 12,\n    \"scale_from\": \"First floor overall width label 28'0\\\" = 336 px\",\n    \"scale_check\": \"Living room label 14'7\\\" x 17'7\\\" matches the polygon within 0.2 ft\",\n    \"notes\": \"Three floors drawn side by side. The listing plan shows no ceiling heights.\",\n    \"overlay_confirmed\": {\"by\": \"Buyer (fictional)\", \"on\": \"2026-10-12\", \"note\": \"Checked every wall and door against the listing image\"}\n  },\n  \"floors\": [\n    {\n      \"id\": \"B\", \"name\": \"Basement\", \"elevation\": -7.8, \"height\": 7.0, \"height_source\": \"assumed\",\n      \"image_origin_px\": [40, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.8, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [18, 0], \"b\": [18, 22], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [18, 14], \"b\": [28, 14], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [18, 22], \"b\": [28, 22], \"thick\": 0.4}\n      ],\n      \"openings\": [\n        {\"id\": \"o1\", \"wall\": \"w5\", \"kind\": \"door\", \"offset\": 4, \"width\": 2.6, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Utility door\"},\n        {\"id\": \"o2\", \"wall\": \"w5\", \"kind\": \"opening\", \"offset\": 16, \"width\": 3, \"name\": \"To laundry\"},\n        {\"id\": \"o3\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 4, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n        {\"id\": \"o4\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 16, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3},\n        {\"id\": \"o5\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 10, \"width\": 2.5, \"sill\": 5.0, \"head\": 6.3}\n      ],\n      \"rooms\": [\n        {\"id\": \"B1\", \"name\": \"Rec room\", \"use\": \"living\", \"poly\": [[0.4, 0.4], [17.8, 0.4], [17.8, 31.6], [0.4, 31.6]], \"label_dims\": \"17'5\\\" x 31'2\\\"\", \"note\": \"Listing calls it a finished basement. Legal use depends on ceiling height and grade.\"},\n        {\"id\": \"B2\", \"name\": \"Utility\", \"use\": \"utility\", \"poly\": [[18.2, 0.4], [27.6, 0.4], [27.6, 13.8], [18.2, 13.8]]},\n        {\"id\": \"B3\", \"name\": \"Laundry\", \"use\": \"laundry\", \"poly\": [[18.2, 14.2], [27.6, 14.2], [27.6, 21.8], [18.2, 21.8]]}\n      ],\n      \"stairs\": [{\"id\": \"s1\", \"poly\": [[15.2, 19.5], [17.8, 19.5], [17.8, 30], [15.2, 30]], \"up\": \"-y\", \"to\": \"1F\"}],\n      \"fixtures\": [\n        {\"id\": \"f1\", \"kind\": \"boiler\", \"at\": [25, 3], \"size\": [3, 3], \"note\": \"Plate reads 1985 (listing photo)\"},\n        {\"id\": \"f2\", \"kind\": \"water-heater\", \"at\": [21, 2.5], \"size\": [2, 2]},\n        {\"id\": \"f3\", \"kind\": \"panel\", \"at\": [27.3, 10], \"size\": [0.4, 1.4], \"note\": \"Brand and amperage not visible\"},\n        {\"id\": \"f4\", \"kind\": \"washer\", \"at\": [20, 20.4], \"size\": [2.3, 2.3]},\n        {\"id\": \"f5\", \"kind\": \"dryer\", \"at\": [22.6, 20.4], \"size\": [2.3, 2.3]}\n      ],\n      \"unknown\": [\n        {\"poly\": [[18.2, 22.2], [27.6, 22.2], [27.6, 31.6], [18.2, 31.6]], \"note\": \"Not drawn on the listing plan. Could be storage or an old oil tank room\"}\n      ]\n    },\n    {\n      \"id\": \"1F\", \"name\": \"First floor\", \"elevation\": 0, \"height\": 8.5, \"height_source\": \"plan-label\",\n      \"image_origin_px\": [440, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [0, 14], \"b\": [15, 14], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [12, 0], \"b\": [12, 14], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [15, 14], \"b\": [15, 32], \"thick\": 0.4},\n        {\"id\": \"w8\", \"a\": [22, 14], \"b\": [22, 19], \"thick\": 0.4},\n        {\"id\": \"w9\", \"a\": [22, 19], \"b\": [28, 19], \"thick\": 0.4},\n        {\"id\": \"w10\", \"a\": [15, 14], \"b\": [28, 14], \"thick\": 0.4}\n      ],\n      \"openings\": [\n        {\"id\": \"o1\", \"wall\": \"w3\", \"kind\": \"exterior-door\", \"offset\": 4.5, \"width\": 3, \"hinge\": \"a\", \"swing\": \"right\", \"name\": \"Front door\"},\n        {\"id\": \"o2\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 16, \"width\": 3.5},\n        {\"id\": \"o3\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 21.5, \"width\": 3.5},\n        {\"id\": \"o4\", \"wall\": \"w3\", \"kind\": \"window\", \"offset\": 1, \"width\": 2.5},\n        {\"id\": \"o5\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 3.5, \"width\": 4, \"sill\": 3.5},\n        {\"id\": \"o6\", \"wall\": \"w1\", \"kind\": \"exterior-door\", \"offset\": 16, \"width\": 3, \"hinge\": \"a\", \"swing\": \"right\", \"name\": \"Back door\"},\n        {\"id\": \"o7\", \"wall\": \"w1\", \"kind\": \"window\", \"offset\": 21, \"width\": 3.5},\n        {\"id\": \"o8\", \"wall\": \"w2\", \"kind\": \"window\", \"offset\": 5, \"width\": 3},\n        {\"id\": \"o9\", \"wall\": \"w2\", \"kind\": \"window\", \"offset\": 22, \"width\": 3},\n        {\"id\": \"o10\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 7, \"width\": 3},\n        {\"id\": \"o11\", \"wall\": \"w4\", \"kind\": \"window\", \"offset\": 23, \"width\": 3},\n        {\"id\": \"o12\", \"wall\": \"w6\", \"kind\": \"opening\", \"offset\": 4, \"width\": 6, \"name\": \"Kitchen to dining\"},\n        {\"id\": \"o13\", \"wall\": \"w5\", \"kind\": \"door\", \"offset\": 6, \"width\": 2.8, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Kitchen door\"},\n        {\"id\": \"o14\", \"wall\": \"w5\", \"kind\": \"opening\", \"offset\": 12.3, \"width\": 2.4},\n        {\"id\": \"o15\", \"wall\": \"w10\", \"kind\": \"opening\", \"offset\": 0.5, \"width\": 3},\n        {\"id\": \"o16\", \"wall\": \"w9\", \"kind\": \"door\", \"offset\": 1, \"width\": 2.5, \"hinge\": \"a\", \"swing\": \"left\", \"name\": \"Powder room door\"},\n        {\"id\": \"o17\", \"wall\": \"w7\", \"kind\": \"opening\", \"offset\": 11, \"width\": 5.5, \"name\": \"Living to foyer\"}\n      ],\n      \"rooms\": [\n        {\"id\": \"K\", \"name\": \"Kitchen\", \"use\": \"kitchen\", \"poly\": [[0.25, 0.25], [11.8, 0.25], [11.8, 13.8], [0.25, 13.8]], \"label_dims\": \"11'7\\\" x 13'7\\\"\"},\n        {\"id\": \"D\", \"name\": \"Dining\", \"use\": \"dining\", \"poly\": [[12.2, 0.25], [27.75, 0.25], [27.75, 13.8], [12.2, 13.8]], \"label_dims\": \"15'7\\\" x 13'7\\\"\"},\n        {\"id\": \"L\", \"name\": \"Living room\", \"use\": \"living\", \"poly\": [[0.25, 14.2], [14.8, 14.2], [14.8, 31.75], [0.25, 31.75]], \"label_dims\": \"14'7\\\" x 17'7\\\"\"},\n        {\"id\": \"P\", \"name\": \"Powder room\", \"use\": \"bath\", \"poly\": [[22.2, 14.2], [27.75, 14.2], [27.75, 18.8], [22.2, 18.8]]},\n        {\"id\": \"F\", \"name\": \"Foyer\", \"use\": \"hall\", \"poly\": [[15.2, 14.2], [21.8, 14.2], [21.8, 19.2], [27.75, 19.2], [27.75, 31.75], [15.2, 31.75]]}\n      ],\n      \"stairs\": [{\"id\": \"s1\", \"poly\": [[15.2, 19.5], [18.5, 19.5], [18.5, 30], [15.2, 30]], \"up\": \"-y\", \"to\": \"2F\"}],\n      \"fixtures\": [\n        {\"id\": \"f1\", \"kind\": \"sink\", \"at\": [5.5, 1.3], \"size\": [2.6, 2.0]},\n        {\"id\": \"f2\", \"kind\": \"range\", \"at\": [1.35, 11], \"size\": [2.2, 2.5]},\n        {\"id\": \"f3\", \"kind\": \"fridge\", \"at\": [10.2, 1.6], \"size\": [3, 2.6]},\n        {\"id\": \"f4\", \"kind\": \"toilet\", \"at\": [26.6, 16.5], \"size\": [2.3, 1.6]},\n        {\"id\": \"f5\", \"kind\": \"sink\", \"at\": [23.3, 15.1], \"size\": [1.8, 1.4]}\n      ]\n    },\n    {\n      \"id\": \"2F\", \"name\": \"Second floor\", \"elevation\": 9.5, \"height\": 8.0, \"height_source\": \"scan\",\n      \"image_origin_px\": [840, 70],\n      \"walls\": [\n        {\"id\": \"w1\", \"a\": [0, 0], \"b\": [28, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w2\", \"a\": [28, 0], \"b\": [28, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w3\", \"a\": [28, 32], \"b\": [0, 32], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w4\", \"a\": [0, 32], \"b\": [0, 0], \"thick\": 0.5, \"exterior\": true},\n        {\"id\": \"w5\", \"a\": [0, 13], \"b\": [28, 13], \"thick\": 0.4},\n        {\"id\": \"w6\", \"a\": [11, 0], \"b\": [11, 13], \"thick\": 0.4},\n        {\"id\": \"w7\", \"a\": [18, 0], \"b\": [18, 13], \"thick\": 0.4},\n        {\"id\": \"w9\", \"a\": [0, 19], \"b\": [15, 19], \"thick\": 0.4},\n        {\"id\":\n[cut at 8000 characters]\n\nChanged takeoff.json:\n--- a/takeoff.json\n+++ b/takeoff.json\n@@ -22,7 +22,7 @@\n       \"rule\": \"R-FLOOR-001\",\n       \"item\": \"floor_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 516.6,\n+      \"quantity\": 578.4,\n       \"floor\": \"B\",\n       \"room\": \"B1\",\n       \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n@@ -30,16 +30,18 @@\n         \"plan.json#/floors/0/rooms/0/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\",\n       \"finish\": \"unspecified\"\n     },\n     {\n       \"rule\": \"R-PAINT-WALL-001\",\n       \"item\": \"wall_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 631.9,\n+      \"quantity\": 669.1,\n       \"floor\": \"B\",\n       \"room\": \"B1\",\n       \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n@@ -54,10 +56,11 @@\n       ],\n       \"softness\": \"soft\",\n       \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\",\n         \"ceiling height is \\\"assumed\\\", not measured\",\n         \"opening o2 has no head, so a default was used\"\n       ],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"scale_source\": \"measured (m1)\",\n       \"height\": 7.0,\n       \"height_source\": \"assumed\"\n     },\n@@ -65,7 +68,7 @@\n       \"rule\": \"R-PAINT-CEIL-001\",\n       \"item\": \"ceiling_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 516.6,\n+      \"quantity\": 578.4,\n       \"floor\": \"B\",\n       \"room\": \"B1\",\n       \"formula\": \"floor_area(room) if painted else 0\",\n@@ -73,15 +76,17 @@\n         \"plan.json#/floors/0/rooms/0/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\"\n     },\n     {\n       \"rule\": \"R-BASE-001\",\n       \"item\": \"baseboard_length\",\n       \"unit\": \"ft\",\n-      \"quantity\": 91.6,\n+      \"quantity\": 97.0,\n       \"floor\": \"B\",\n       \"room\": \"B1\",\n       \"formula\": \"perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false\",\n@@ -95,15 +100,16 @@\n       ],\n       \"softness\": \"soft\",\n       \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\",\n         \"opening o2 has no head, so a default was used\"\n       ],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"scale_source\": \"measured (m1)\"\n     },\n     {\n       \"rule\": \"R-FLOOR-001\",\n       \"item\": \"floor_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 126.0,\n+      \"quantity\": 141.2,\n       \"floor\": \"B\",\n       \"room\": \"B2\",\n       \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n@@ -111,16 +117,18 @@\n         \"plan.json#/floors/0/rooms/1/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\",\n       \"finish\": \"unspecified\"\n     },\n     {\n       \"rule\": \"R-PAINT-WALL-001\",\n       \"item\": \"wall_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 301.4,\n+      \"quantity\": 319.2,\n       \"floor\": \"B\",\n       \"room\": \"B2\",\n       \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n@@ -131,9 +139,10 @@\n       ],\n       \"softness\": \"soft\",\n       \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\",\n         \"ceiling height is \\\"assumed\\\", not measured\"\n       ],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"scale_source\": \"measured (m1)\",\n       \"height\": 7.0,\n       \"height_source\": \"assumed\"\n     },\n@@ -141,7 +150,7 @@\n       \"rule\": \"R-PAINT-CEIL-001\",\n       \"item\": \"ceiling_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 126.0,\n+      \"quantity\": 141.2,\n       \"floor\": \"B\",\n       \"room\": \"B2\",\n       \"formula\": \"floor_area(room) if painted else 0\",\n@@ -149,15 +158,17 @@\n         \"plan.json#/floors/0/rooms/1/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\"\n     },\n     {\n       \"rule\": \"R-BASE-001\",\n       \"item\": \"baseboard_length\",\n       \"unit\": \"ft\",\n-      \"quantity\": 43.0,\n+      \"quantity\": 45.5,\n       \"floor\": \"B\",\n       \"room\": \"B2\",\n       \"formula\": \"perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false\",\n@@ -165,15 +176,17 @@\n         \"plan.json#/floors/0/rooms/1/poly\",\n         \"plan.json#/floors/0/openings/0/width\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\"\n     },\n     {\n       \"rule\": \"R-FLOOR-001\",\n       \"item\": \"floor_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 71.4,\n+      \"quantity\": 80.1,\n       \"floor\": \"B\",\n       \"room\": \"B3\",\n       \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n@@ -181,16 +194,18 @@\n         \"plan.json#/floors/0/rooms/2/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\",\n       \"finish\": \"unspecified\"\n     },\n     {\n       \"rule\": \"R-PAINT-WALL-001\",\n       \"item\": \"wall_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 217.0,\n+      \"quantity\": 229.8,\n       \"floor\": \"B\",\n       \"room\": \"B3\",\n       \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n@@ -201,10 +216,11 @@\n       ],\n       \"softness\": \"soft\",\n       \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\",\n         \"ceiling height is \\\"assumed\\\", not measured\",\n         \"opening o2 has no head, so a default was used\"\n       ],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"scale_source\": \"measured (m1)\",\n       \"height\": 7.0,\n       \"height_source\": \"assumed\"\n     },\n@@ -212,7 +228,7 @@\n       \"rule\": \"R-PAINT-CEIL-001\",\n       \"item\": \"ceiling_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 71.4,\n+      \"quantity\": 80.1,\n       \"floor\": \"B\",\n       \"room\": \"B3\",\n       \"formula\": \"floor_area(room) if painted else 0\",\n@@ -220,15 +236,17 @@\n         \"plan.json#/floors/0/rooms/2/poly\",\n         \"plan.json#/floors/0/stairs/0/poly\"\n       ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"scale was not cross-checked against a second dimension (source.scale_check)\"\n+      ],\n+      \"scale_source\": \"measured (m1)\"\n  \n[cut at 8000 characters]\n\nNew file takeoff.original.json:\n{\n  \"schema\": \"housingwizard.takeoff/1\",\n  \"plan_name\": \"Sample house (fictional)\",\n  \"units\": \"ft\",\n  \"status\": \"CONFIRMED\",\n  \"overlay\": {\n    \"by\": \"Buyer (fictional)\",\n    \"on\": \"2026-10-12\",\n    \"note\": \"Checked every wall and door against the listing image\"\n  },\n  \"rules\": {\n    \"R-FLOOR-001\": \"Floor area = room polygon area minus the part covered by a stair footprint on the same floor.\",\n    \"R-PAINT-WALL-001\": \"Wall paint area = room perimeter x floor height minus the area of openings that face the room (sill to head x width).\",\n    \"R-PAINT-CEIL-001\": \"Ceiling paint area = floor area of the room (R-FLOOR-001).\",\n    \"R-BASE-001\": \"Baseboard length = room perimeter minus widths of openings that reach the floor (sill 0). Zero where finishes say baseboard is false or the room is outdoor.\",\n    \"R-STAIR-001\": \"Stair risers = stairs[].risers when recorded; otherwise round(rise to the next floor / 7.5 in). Void stairs are skipped.\",\n    \"R-STAIR-002\": \"Stair treads = risers - 1 (the top riser lands on the upper floor). Same softness as R-STAIR-001.\",\n    \"R-DOOR-001\": \"Door leaves = sum of openings[].leaves over doors (door, exterior-door, sliding, pocket, bifold); 1 per door where leaves is not recorded. Garage doors and windows are not counted.\"\n  },\n  \"lines\": [\n    {\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 516.6,\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/0/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"finish\": \"unspecified\"\n    },\n    {\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 631.9,\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/0/poly\",\n        \"plan.json#/floors/0/height\",\n        \"plan.json#/floors/0/openings/0/width\",\n        \"plan.json#/floors/0/openings/1/width\",\n        \"plan.json#/floors/0/openings/2/width\",\n        \"plan.json#/floors/0/openings/3/width\",\n        \"plan.json#/floors/0/openings/4/width\"\n      ],\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\",\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"height\": 7.0,\n      \"height_source\": \"assumed\"\n    },\n    {\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 516.6,\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"formula\": \"floor_area(room) if painted else 0\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/0/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n    },\n    {\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"unit\": \"ft\",\n      \"quantity\": 91.6,\n      \"floor\": \"B\",\n      \"room\": \"B1\",\n      \"formula\": \"perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/0/poly\",\n        \"plan.json#/floors/0/openings/0/width\",\n        \"plan.json#/floors/0/openings/1/width\",\n        \"plan.json#/floors/0/openings/2/width\",\n        \"plan.json#/floors/0/openings/3/width\",\n        \"plan.json#/floors/0/openings/4/width\"\n      ],\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n    },\n    {\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 126.0,\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/1/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"finish\": \"unspecified\"\n    },\n    {\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 301.4,\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/1/poly\",\n        \"plan.json#/floors/0/height\",\n        \"plan.json#/floors/0/openings/0/width\"\n      ],\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\"\n      ],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"height\": 7.0,\n      \"height_source\": \"assumed\"\n    },\n    {\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 126.0,\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"formula\": \"floor_area(room) if painted else 0\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/1/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n    },\n    {\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"unit\": \"ft\",\n      \"quantity\": 43.0,\n      \"floor\": \"B\",\n      \"room\": \"B2\",\n      \"formula\": \"perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/1/poly\",\n        \"plan.json#/floors/0/openings/0/width\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n    },\n    {\n      \"rule\": \"R-FLOOR-001\",\n      \"item\": \"floor_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 71.4,\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/2/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"finish\": \"unspecified\"\n    },\n    {\n      \"rule\": \"R-PAINT-WALL-001\",\n      \"item\": \"wall_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 217.0,\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"formula\": \"perimeter(room) x height - sum(opening width x (head - sill)); 0 if paint is false\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/2/poly\",\n        \"plan.json#/floors/0/height\",\n        \"plan.json#/floors/0/openings/1/width\"\n      ],\n      \"softness\": \"soft\",\n      \"soft_reasons\": [\n        \"ceiling height is \\\"assumed\\\", not measured\",\n        \"opening o2 has no head, so a default was used\"\n      ],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n      \"height\": 7.0,\n      \"height_source\": \"assumed\"\n    },\n    {\n      \"rule\": \"R-PAINT-CEIL-001\",\n      \"item\": \"ceiling_paint_area\",\n      \"unit\": \"sq ft\",\n      \"quantity\": 71.4,\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"formula\": \"floor_area(room) if painted else 0\",\n      \"inputs\": [\n        \"plan.json#/floors/0/rooms/2/poly\",\n        \"plan.json#/floors/0/stairs/0/poly\"\n      ],\n      \"softness\": \"hard\",\n      \"soft_reasons\": [],\n      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n    },\n    {\n      \"rule\": \"R-BASE-001\",\n      \"item\": \"baseboard_length\",\n      \"unit\": \"ft\",\n      \"quantity\": 31.0,\n      \"floor\": \"B\",\n      \"room\": \"B3\",\n      \"formula\": \"perimeter(room) - sum(widths of openings with sill 0); 0 if baseboard is false\",\n  \n[cut at 8000 characters]",
+    "checks": [
+     {
+      "check": "Uses or names rescale_plan.py",
+      "pattern": "rescale_plan",
+      "pass": true
+     },
+     {
+      "check": "Records the reading as a tape measurement (source.measurements)",
+      "pattern": "source\\.measurements|\"measurements\"",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
+      "pass": true,
+      "quote": "I applied that provisionally across the plan; originals are saved."
+     },
+     {
+      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
+      "pass": true,
+      "quote": "Measure the dining room across its width to cross-check the scale."
+     }
+    ],
+    "passed": 4,
+    "total": 4
+   },
+   "baseline": {
+    "cache_key": "4564fbde8a439df6eee6e08be963d5e7579aa4831e7a3cc6767fdf88a49888ac",
+    "date": "2026-10-31",
+    "version": "codex-cli 0.166.0-alpha.5.1",
+    "model": null,
+    "answer": "Recorded **18 ft 7 in** in [plan.json](plan.json) and updated [takeoff.json](takeoff.json):\n\n- Living room flooring: **270.4 sq ft**\n- Total flooring: **2,325.0 sq ft**, up **15.0 sq ft**\n- No waste allowance included.\n\nQuantities are provisional because the 14.55 ft width remains unverified. Shared-wall geometry remains unchanged pending reconciliation.\n\n---\nFiles the agent changed in the sandbox (added by run_evals.py):\n\nChanged plan.json:\n--- a/plan.json\n+++ b/plan.json\n@@ -87,7 +87,7 @@\n       \"rooms\": [\n         {\"id\": \"K\", \"name\": \"Kitchen\", \"use\": \"kitchen\", \"poly\": [[0.25, 0.25], [11.8, 0.25], [11.8, 13.8], [0.25, 13.8]], \"label_dims\": \"11'7\\\" x 13'7\\\"\"},\n         {\"id\": \"D\", \"name\": \"Dining\", \"use\": \"dining\", \"poly\": [[12.2, 0.25], [27.75, 0.25], [27.75, 13.8], [12.2, 13.8]], \"label_dims\": \"15'7\\\" x 13'7\\\"\"},\n-        {\"id\": \"L\", \"name\": \"Living room\", \"use\": \"living\", \"poly\": [[0.25, 14.2], [14.8, 14.2], [14.8, 31.75], [0.25, 31.75]], \"label_dims\": \"14'7\\\" x 17'7\\\"\"},\n+        {\"id\": \"L\", \"name\": \"Living room\", \"use\": \"living\", \"poly\": [[0.25, 14.2], [14.8, 14.2], [14.8, 31.75], [0.25, 31.75]], \"label_dims\": \"14'7\\\" x 17'7\\\"\", \"measurements\": [{\"axis\": \"y\", \"value\": 18.583333333333332, \"units\": \"ft\", \"entered\": \"18 ft 7 in\", \"source\": \"Buyer wall-to-wall tape measurement\", \"on\": \"2026-10-31\", \"supersedes_plan_length_ft\": 17.55, \"scope\": \"Living room long side only; does not establish image scale or other dimensions\"}], \"note\": \"Long side measured wall to wall at 18 ft 7 in on 2026-10-31. The polygon and label_dims retain the listing geometry pending reconciliation of shared walls. Use the recorded measured length for provisional flooring; the 14.55 ft width is unverified.\"},\n         {\"id\": \"P\", \"name\": \"Powder room\", \"use\": \"bath\", \"poly\": [[22.2, 14.2], [27.75, 14.2], [27.75, 18.8], [22.2, 18.8]]},\n         {\"id\": \"F\", \"name\": \"Foyer\", \"use\": \"hall\", \"poly\": [[15.2, 14.2], [21.8, 14.2], [21.8, 19.2], [27.75, 19.2], [27.75, 31.75], [15.2, 31.75]]}\n       ],\n\n\nChanged takeoff.json:\n--- a/takeoff.json\n+++ b/takeoff.json\n@@ -2,7 +2,7 @@\n   \"schema\": \"housingwizard.takeoff/1\",\n   \"plan_name\": \"Sample house (fictional)\",\n   \"units\": \"ft\",\n-  \"status\": \"CONFIRMED\",\n+  \"status\": \"PROVISIONAL\",\n   \"overlay\": {\n     \"by\": \"Buyer (fictional)\",\n     \"on\": \"2026-10-12\",\n@@ -477,17 +477,19 @@\n       \"rule\": \"R-FLOOR-001\",\n       \"item\": \"floor_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 255.4,\n+      \"quantity\": 270.4,\n       \"floor\": \"1F\",\n       \"room\": \"L\",\n-      \"formula\": \"polygon_area(room) - overlap(room, stair footprints)\",\n-      \"inputs\": [\n-        \"plan.json#/floors/1/rooms/2/poly\",\n-        \"plan.json#/floors/1/stairs/0/poly\"\n-      ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\",\n+      \"formula\": \"measured long side (18 + 7/12 ft) x listing polygon width (14.8 - 0.25 ft); no stair overlap\",\n+      \"inputs\": [\n+        \"plan.json#/floors/1/rooms/2/measurements/0/value\",\n+        \"plan.json#/floors/1/rooms/2/poly\"\n+      ],\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"Uses measured long side with unverified listing-derived width; shared-wall geometry has not been reconciled\"\n+      ],\n+      \"scale_source\": \"Long side: buyer tape measurement 2026-10-31; width: original listing scale\",\n       \"finish\": \"unspecified\"\n     },\n     {\n@@ -525,17 +527,19 @@\n       \"rule\": \"R-PAINT-CEIL-001\",\n       \"item\": \"ceiling_paint_area\",\n       \"unit\": \"sq ft\",\n-      \"quantity\": 255.4,\n+      \"quantity\": 270.4,\n       \"floor\": \"1F\",\n       \"room\": \"L\",\n-      \"formula\": \"floor_area(room) if painted else 0\",\n-      \"inputs\": [\n-        \"plan.json#/floors/1/rooms/2/poly\",\n-        \"plan.json#/floors/1/stairs/0/poly\"\n-      ],\n-      \"softness\": \"hard\",\n-      \"soft_reasons\": [],\n-      \"scale_source\": \"First floor overall width label 28'0\\\" = 336 px\"\n+      \"formula\": \"provisional floor_area(room) if painted else 0\",\n+      \"inputs\": [\n+        \"plan.json#/floors/1/rooms/2/measurements/0/value\",\n+        \"plan.json#/floors/1/rooms/2/poly\"\n+      ],\n+      \"softness\": \"soft\",\n+      \"soft_reasons\": [\n+        \"Uses measured long side with unverified listing-derived width; shared-wall geometry has not been reconciled\"\n+      ],\n+      \"scale_source\": \"Long side: buyer tape measurement 2026-10-31; width: original listing scale\"\n     },\n     {\n       \"rule\": \"R-BASE-001\",\n@@ -1288,9 +1292,9 @@\n   \"totals\": {\n     \"floor_area\": {\n       \"unit\": \"sq ft\",\n-      \"quantity\": 2310.0,\n+      \"quantity\": 2325.0,\n       \"lines\": 14,\n-      \"soft_lines\": 0\n+      \"soft_lines\": 1\n     },\n     \"wall_paint_area\": {\n       \"unit\": \"sq ft\",\n@@ -1300,9 +1304,9 @@\n     },\n     \"ceiling_paint_area\": {\n       \"unit\": \"sq ft\",\n-      \"quantity\": 2310.0,\n+      \"quantity\": 2325.0,\n       \"lines\": 14,\n-      \"soft_lines\": 0\n+      \"soft_lines\": 1\n     },\n     \"baseboard_length\": {\n       \"unit\": \"ft\",\n@@ -1331,7 +1335,8 @@\n   },\n   \"assumptions\": [\n     \"Riser height of 7.5 in is an assumption used only to estimate riser counts.\",\n-    \"No waste factor is included in any quantity.\"\n+    \"No waste factor is included in any quantity.\",\n+    \"Living room flooring and ceiling area use 18 ft 7 in measured length x 14.55 ft unverified width. Other rooms and listing geometry are unchanged; wall paint and baseboard still use that geometry.\"\n   ],\n   \"cannot_check\": [\n     \"Which walls are load-bearing. Removing or opening any wall needs a structural check by a licensed engineer.\",\n@@ -1343,9 +1348,24 @@\n     \"What a contractor will actually quote. These are quantities, not prices, and contractors measure again on site.\"\n   ],\n   \"measurements\": {\n-    \"status\": \"none\",\n+    \"status\": \"single-local-measurement\",\n     \"factor\": null,\n-    \"spread\": null\n+    \"spread\": null,\n+    \"records\": [\n+      {\n+        \"axis\": \"y\",\n+        \"value\": 18.583333333333332,\n+        \"units\": \"ft\",\n+        \"entered\": \"18 ft 7 in\",\n+        \"source\": \"Buyer wall-to-wall tape measurement\",\n+        \"on\": \"2026-10-31\",\n+        \"supersedes_plan_length_ft\": 17.55,\n+        \"scope\": \"Living room long side only; does not establish image scale or other dimensions\",\n+        \"floor\": \"1F\",\n+        \"room\": \"L\"\n+      }\n+    ],\n+    \"note\": \"No global rescaling. Original overlay confirmation applies to the listing drawing, not the revised measured dimension.\"\n   },\n   \"measure_next\": [\n     {\n@@ -1358,19 +1378,19 @@\n     },\n     {\n       \"floor\": \"1F\",\n-      \"room\": \"L\",\n-      \"name\": \"Living room\",\n-      \"axis\": \"y\",\n-      \"plan_len\": 17.55,\n-      \"share\": 0.106\n-    },\n-    {\n-      \"floor\": \"1F\",\n       \"room\": \"D\",\n       \"name\": \"Dining\",\n       \"axis\": \"x\",\n       \"plan_len\": 15.55,\n       \"share\": 0.088\n+    },\n+    {\n+      \"floor\": \"1F\",\n+      \"room\": \"L\",\n+      \"name\": \"Living room\",\n+      \"axis\": \"x\",\n+      \"plan_len\": 14.55,\n+      \"why\": \"Verify width for flooring and locate both ends of the measured long side to reconcile shared walls\"\n     }\n   ],\n   \"state\": \"existing\"\n",
+    "checks": [
+     {
+      "check": "Uses or names rescale_plan.py",
+      "pattern": "rescale_plan",
+      "pass": false
+     },
+     {
+      "check": "Records the reading as a tape measurement (source.measurements)",
+      "pattern": "source\\.measurements|\"measurements\"",
+      "pass": true
+     }
+    ],
+    "assertions": [
+     {
+      "assertion": "Does not edit only the living room polygon; corrects the scale of the whole plan",
+      "pass": false,
+      "quote": "Shared-wall geometry remains unchanged pending reconciliation."
+     },
+     {
+      "assertion": "Asks for a second measurement, ideally another room or the other axis, to cross-check the scale",
+      "pass": false,
+      "quote": "Quantities are provisional because the 14.55 ft width remains unverified."
+     }
+    ],
+    "passed": 1,
+    "total": 4
+   }
+  }
+ }
+}
