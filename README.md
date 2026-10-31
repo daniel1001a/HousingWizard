@@ -194,7 +194,7 @@ Behavior checks for each skill are in `evals/evals.json`. `python3 tools/run_eva
 
 ### Results
 
-The latest run, with and without the skills, is in [evals/results/summary.md](evals/results/summary.md), and every answer and grade is in [evals/results/claude.json](evals/results/claude.json). Totals: 63/71 with the skills, 40/71 without (Claude Code). Cases that refer to a plan, takeoff or case file get fictional files from `evals/fixtures/`, and the agent may edit them and run the skills' Python scripts in its sandbox. Known gaps with the skills: case 11 gives no price, as intended, but leaves out rule IDs, the wage-floor note and the human check, and case 13 does not say the packages carry no prices.
+The latest run, with and without the skills, is in [evals/results/summary.md](evals/results/summary.md), and every answer and grade is in [evals/results/claude.json](evals/results/claude.json). Totals: 63/71 with the skills, 40/71 without (Claude Code). Cases that refer to a plan, takeoff or case file get fictional files from `evals/fixtures/`, and the agent may edit them and run the skills' Python scripts in its sandbox. Known gaps with the skills: case 11 gives no price, as intended, but still skips some of the required parts (rule IDs, the full wage-floor note); case 14 sometimes states a code minimum as fact and skips the human check; case 13 holds the packages but does not copy the "cannot check" list. Each case runs once, and cases 8, 11 and 14 moved by one or two points between two runs of the same skill text, so read single-point differences as noise.
 
 ## License
 
