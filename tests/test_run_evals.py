@@ -107,6 +107,21 @@ class FixtureTests(unittest.TestCase):
         self.assertIn('Deleted gone.md', note)
         long = re_.sandbox_changes({}, {'big.txt': 'x' * (re_.MAX_FILE_CHARS + 10)})
         self.assertIn('[cut at', long)
+        page = re_.sandbox_changes({'v.html': 'a'}, {'v.html': '<html>b', 'p.svg': '<svg>'})
+        self.assertIn('Changed v.html (content not shown)', page)
+        self.assertIn('New file p.svg (content not shown)', page)
+        self.assertNotIn('<', page)
+
+    def test_snapshot_marks_binary_files(self):
+        with tempfile.TemporaryDirectory() as d:
+            with open(os.path.join(d, 'pkg.zip'), 'wb') as fh:
+                fh.write(b'PK\x03\x04\x00\x00')
+            with open(os.path.join(d, 'a.md'), 'w') as fh:
+                fh.write('text\n')
+            snap = re_._snapshot(d)
+        self.assertEqual(snap['pkg.zip'], re_.BINARY % 6)
+        self.assertEqual(snap['a.md'], 'text\n')
+        self.assertNotIn('\0', re_.sandbox_changes({}, snap))
 
     def test_claude_adapter_places_fixtures_and_reports_edits(self):
         with tempfile.TemporaryDirectory() as d:
